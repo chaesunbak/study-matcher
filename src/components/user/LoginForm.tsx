@@ -1,12 +1,17 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Form, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
+import Input from "./\bInputForm";
 
-// const loginSchema = z.object({
-// 	email: z.string().email(),
-// 	password: z.string().min(8).max(16),
-// });
+export const loginSchema = z.object({
+	email: z.string().email({ message: "이메일 형식이 아닙니다." }),
+	password: z
+		.string()
+		.min(8, { message: "비밀번호는 8자 이상으로 입력하세요" })
+		.max(16, { message: "비밀번호는 16자 이하로 입력하세요" }),
+});
 
 const LoginForm = () => {
 	const [form, setForm] = useState({ email: "", password: "" });
@@ -15,12 +20,8 @@ const LoginForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
-
-	// const forms = useForm<z.infer<typeof loginSchema>>({
-	// 	resolver: zodResolver(loginSchema),
-	// 	defaultValues: { email: "", password: "" },
-	// });
+		control,
+	} = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
 	const onSubmit = () => {
 		// 다음 페이지로 로그인 정보 전송
@@ -38,6 +39,10 @@ const LoginForm = () => {
 		{ label: "kakao", color: "yellow" },
 	];
 
+	const handleSubmitButton = (button: { label: string; color: string }) => {
+		alert(`소셜 로그인 ${button.label}`);
+	};
+
 	return (
 		<>
 			{/* 로그인 폼 */}
@@ -53,6 +58,7 @@ const LoginForm = () => {
 						<button
 							key={index}
 							className="rounded-full bg-gray-100 p-3 shadow transition hover:bg-gray-200"
+							onClick={() => handleSubmitButton(button)}
 						>
 							<i className={`fab fa-${button.label} text-${button.color}-600`}></i>
 						</button>
@@ -61,26 +67,24 @@ const LoginForm = () => {
 
 				{/* 이메일 및 비밀번호 입력 */}
 				<form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-					<input
+					<Input
 						className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						name="email"
+						type="text"
+						control={control}
 						placeholder="이메일을 입력하세요"
-						{...register("email", {
-							required: { value: true, message: "이메일을 입력해주세요" },
-							pattern: { value: /^\S+@\S+$/i, message: "이메일 형식이 올바르지 않습니다" },
-						})}
+						errors={errors}
 					/>
-					{errors?.email && <p className="text-red-500">{String(errors?.email?.message)}</p>}
-					<input
+
+					<Input
 						className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						name="password"
 						type="password"
+						control={control}
 						placeholder="비밀번호를 입력하세요"
-						{...register("password", {
-							required: { value: true, message: "비밀번호를 입력해주세요" },
-							minLength: { value: 8, message: "비밀번호는 8자 이상 입력하세요" },
-							maxLength: { value: 16, message: "비밀번호는 16자 이하로 입력하세요" },
-						})}
+						errors={errors}
 					/>
-					{errors?.password && <p className="text-red-500">{String(errors?.password?.message)}</p>}
+
 					<div className="text-right">
 						<a href="#" className="text-sm text-indigo-500 hover:underline">
 							비밀번호를 잃어버렸나요?
