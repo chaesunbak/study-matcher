@@ -1,15 +1,37 @@
-import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Input from "./\bInputForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const SignUpSchema = z
+	.object({
+		email: z
+			.string()
+			.nonempty({ message: "이메일을 입력하세요" })
+			.email({ message: "이메일 형식이 아닙니다." }),
+		password: z
+			.string()
+			.nonempty({ message: "비밀번호를 입력하세요" })
+			.min(8, { message: "비밀번호는 8자 이상으로 입력하세요" })
+			.max(16, { message: "비밀번호는 16자 이하로 입력하세요" }),
+		passwordConfirm: z.string().nonempty({ message: "확인 비밀번호를 입력하세요" }),
+	})
+	.refine((data) => data.password === data.passwordConfirm, {
+		message: "비밀번호가 일치하지 않습니다.",
+		path: ["passwordConfirm"],
+	});
 
 const SignUpForm = () => {
 	const {
-		register,
 		handleSubmit,
 		formState: { errors },
-		watch,
-	} = useForm();
+		control,
+	} = useForm<z.infer<typeof SignUpSchema>>({
+		resolver: zodResolver(SignUpSchema),
+		defaultValues: { email: "", password: "", passwordConfirm: "" },
+	});
 
-	const onSubmit = (data) => {
+	const onSubmit = (data: { email: string; password: string; passwordConfirm: string }) => {
 		localStorage.setItem(
 			"register",
 			JSON.stringify({ email: data.email, password: data.password }),
@@ -22,9 +44,6 @@ const SignUpForm = () => {
 		{ label: "github", color: "black" },
 		{ label: "kakao", color: "yellow" },
 	];
-
-	const password = useRef();
-	password.current = watch("password");
 
 	return (
 		<div>
@@ -50,41 +69,31 @@ const SignUpForm = () => {
 
 				{/* 이메일 및 비밀번호 입력 */}
 				<form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-					<input
+					<Input
 						className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						name="email"
+						type="text"
+						control={control}
 						placeholder="이메일을 입력하세요"
-						{...register("email", {
-							required: { value: true, message: "이메일을 입력해주세요" },
-							pattern: { value: /^\S+@\S+$/i, message: "이메일 형식이 올바르지 않습니다" },
-						})}
+						errors={errors}
 					/>
-					{errors?.email && <p className="text-red-500">{String(errors?.email?.message)}</p>}
-					<input
+
+					<Input
 						className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						name="password"
 						type="password"
+						control={control}
 						placeholder="비밀번호를 입력하세요"
-						{...register("password", {
-							required: { value: true, message: "비밀번호를 입력해주세요" },
-							minLength: { value: 8, message: "비밀번호는 8자 이상 입력하세요" },
-							maxLength: { value: 16, message: "비밀번호는 16자 이하로 입력하세요" },
-						})}
+						errors={errors}
 					/>
-					{errors?.password && <p className="text-red-500">{String(errors?.password?.message)}</p>}
-					<input
+					<Input
 						className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+						name="passwordConfirm"
 						type="password"
+						control={control}
 						placeholder="비밀번호를 확인해주세요"
-						{...register("passwordConfirm", {
-							required: { value: true, message: "비밀번호를 확인해주세요" },
-							validate: (value) => value === password.current,
-						})}
+						errors={errors}
 					/>
-					{errors?.passwordConfirm?.type === "required" && (
-						<p className="text-red-500">{String(errors?.passwordConfirm?.message)}</p>
-					)}
-					{errors?.passwordConfirm?.type === "validate" && (
-						<p className="text-red-500">비밀번호가 일치하지 않습니다.</p>
-					)}
 					<button
 						type="submit"
 						className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-600"
