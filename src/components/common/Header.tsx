@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <header className="flex items-center justify-between p-4">
+    <header className="sticky top-0 flex items-center justify-between bg-white p-4">
       <Link to="/">
         <h1 className="text-4xl font-bold">LOGO</h1>
       </Link>
