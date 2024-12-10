@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import Input from "./\bInputForm";
@@ -17,7 +17,6 @@ const LoginForm = () => {
 	const [form, setForm] = useState({ email: "", password: "" });
 	const navigate = useNavigate();
 	const {
-		register,
 		handleSubmit,
 		formState: { errors },
 		control,
