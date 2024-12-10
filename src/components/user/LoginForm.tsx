@@ -43,6 +43,10 @@ const LoginForm = () => {
 		alert(`소셜 로그인 ${button.label}`);
 	};
 
+	const handleClick = () => {
+		navigate("/forgot-password");
+	};
+
 	return (
 		<>
 			{/* 로그인 폼 */}
@@ -86,9 +90,9 @@ const LoginForm = () => {
 					/>
 
 					<div className="text-right">
-						<a href="#" className="text-sm text-indigo-500 hover:underline">
+						<div className="text-sm text-indigo-500 hover:underline" onClick={handleClick}>
 							비밀번호를 잃어버렸나요?
-						</a>
+						</div>
 					</div>
 					<button
 						type="submit"
