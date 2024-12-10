@@ -1,10 +1,10 @@
 {
-  "singleQuote": false,
-  "parser": "typescript",
-  "semi": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "useTabs": true,
   "printWidth": 100,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "useTabs": false,
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "bracketSameLine": false
 }
