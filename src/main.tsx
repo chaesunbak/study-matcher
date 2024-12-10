@@ -26,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
           {/* 유저관련 */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/users/:user_id" element={<Profile />} />
           {/* 그룹관련 */}
           <Route path="/groups/:group_id" element={<GroupMain />} />
