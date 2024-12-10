@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const SignUp = () => {
+const SignUpForm = () => {
 
     const [form, setForm] = useState({ email: '', password: '', passwordCheck: ''});
 
@@ -18,8 +18,8 @@ export const SignUp = () => {
         //     return;
         // }
 
-        localStorage.setItem('login', JSON.stringify(form));
-
+        localStorage.setItem('login', JSON.stringify({email : form.email, password : form.password}));
+        setForm({ email: '', password: '', passwordCheck: ''});
     }
 
     return(
@@ -52,6 +52,7 @@ export const SignUp = () => {
             <form className="space-y-4" onSubmit={onSubmit}>
                 <input
                 type="email"
+                name="email"
                 value={form.email}
                 onChange={onChange}
                 placeholder="이메일"
@@ -59,6 +60,7 @@ export const SignUp = () => {
                 />
                 <input
                 type="password"
+                name="password"
                 value={form.password}
                 onChange={onChange}
                 placeholder="비밀번호"
@@ -66,11 +68,13 @@ export const SignUp = () => {
                 />
                 <input
                 type="password"
+                name="passwordCheck"
                 value={form.passwordCheck}
                 onChange={onChange}
                 placeholder="비밀번호 확인"
                 className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
+                {form.password !== form.passwordCheck ? <span className="text-red-500">비밀번호가 일치하지 않습니다.</span> : null}
                 <button
                 type="submit"
                 className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition"
@@ -82,3 +86,5 @@ export const SignUp = () => {
         </div>
     )
 }
+
+export default SignUpForm;

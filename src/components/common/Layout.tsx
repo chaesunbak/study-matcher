@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 const Layout = () => {
 	return (
-		<div className="mx-auto flex min-h-screen flex-col lg:max-w-6xl">
+		<div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-50 to-indigo-100 w-1/2 mx-auto">
 			<Header />
 			<Outlet />
 			<Footer />

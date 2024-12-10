@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-function Login() {
+const LoginForm = () => {
     const [form, setForm] = useState({ email: '', password: '' });
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        console.log(form);
         setForm({ ...form, [name]: value });
     };
 
@@ -68,7 +67,7 @@ function Login() {
                             href="#"
                             className="text-sm text-indigo-500 hover:underline"
                         >
-                            비밀번호를 잃어버렸나요?
+                            비밀번호를 잃어버렸나요?
                         </a>
                     </div>
                     <button
@@ -83,4 +82,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginForm;

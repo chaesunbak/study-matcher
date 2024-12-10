@@ -1,4 +1,4 @@
-import { SignUp } from "../components/user/SignUp";
+import SignUpForm  from "../components/user/SignUpForm";
 
 const Signup = () => {
 	return (
@@ -8,7 +8,7 @@ const Signup = () => {
 			{/* 배경 박스 */}
 			<div className="absolute inset-0 bg-indigo-50 rounded-xl shadow-lg"></div>
 	
-			<SignUp />
+			<SignUpForm />
 			
 			</div>
 		</>

@@ -1,3 +1,5 @@
+import LoginForm from "../components/user/LoginForm";
+
 const Login = () => {
 	return (
 		<>
@@ -6,7 +8,7 @@ const Login = () => {
 			{/* 배경 박스 */}
 			<div className="absolute inset-0 bg-indigo-50 rounded-xl shadow-lg"></div>
 	
-			<Login />
+			<LoginForm />
 		  </div>
 	
 		  <p className="text-sm text-gray-500 mt-6">
