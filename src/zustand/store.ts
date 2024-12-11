@@ -1,31 +1,27 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface State {
-	email: string;
-	password: string;
+  userId: string;
 }
 
 interface Actions {
-	actions: {
-		setEmail: (email: string) => void;
-		setPassword: (password: string) => void;
-		logOutUser: () => void;
-	};
+  actions: {
+    loginUser: (email: string) => void;
+    logOutUser: () => void;
+  };
 }
 
 const initialState: State = {
-	email: "",
-	password: "",
+  userId: '',
 };
 
 export const useUserStore = create(
-	devtools<State & Actions>((set) => ({
-		...initialState,
-		actions: {
-			setEmail: (email: string) => set({ email: email }),
-			setPassword: (password: string) => set({ password: password }),
-			logOutUser: () => set(initialState),
-		},
-	})),
+  devtools<State & Actions>((set) => ({
+    ...initialState,
+    actions: {
+      loginUser: (userId: string) => set({ userId: userId }),
+      logOutUser: () => set(initialState),
+    },
+  }))
 );
