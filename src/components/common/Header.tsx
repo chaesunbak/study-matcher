@@ -2,6 +2,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { LuAlignJustify } from 'react-icons/lu';
 import { useState, useEffect, useRef } from 'react';
+import { useUserStore } from '../../zustand/store';
+import Profile from '../../pages/Profile';
 
 const CATEGORY_LIST = [
   { link: '/', name: '홈' },
@@ -15,6 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const isLogin = useUserStore((state) => state);
 
   const toggleMenu = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
@@ -56,7 +59,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex items-center justify-center gap-2">
-        <button onClick={() => navigate('/login')}>로그인</button>
+        {isLogin.userId ? <Profile /> : <button onClick={() => navigate('/login')}>로그인</button>}
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
