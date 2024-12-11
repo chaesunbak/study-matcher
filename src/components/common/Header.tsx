@@ -16,7 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const isLogin = useUserStore((state) => state);
 
   const toggleMenu = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
@@ -58,11 +57,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex items-center justify-center gap-2">
-        {isLogin.userId ? (
-          <UserHeaderForm />
-        ) : (
-          <button onClick={() => navigate('/login')}>로그인</button>
-        )}
+        <UserHeaderForm />
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
