@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Input from "./\bInputForm";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router";
 
 const SignUpSchema = z
 	.object({
@@ -22,6 +23,7 @@ const SignUpSchema = z
 	});
 
 const SignUpForm = () => {
+	const navigate = useNavigate();
 	const {
 		handleSubmit,
 		formState: { errors },
@@ -36,6 +38,8 @@ const SignUpForm = () => {
 			"register",
 			JSON.stringify({ email: data.email, password: data.password }),
 		);
+		alert("회원가입 성공");
+		navigate("/login");
 	};
 
 	const buttonList = [
