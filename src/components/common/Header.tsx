@@ -9,7 +9,6 @@ const CATEGORY_LIST = [
   { link: '/', name: '홈' },
   { link: '/search', name: '모임 찾기' },
   { link: '/groups/create', name: '모임 만들기' },
-  { link: '/profile', name: '마이 페이지' },
 ];
 
 const Header = () => {
