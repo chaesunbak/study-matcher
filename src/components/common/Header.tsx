@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { LuAlignJustify } from 'react-icons/lu';
 import { useState, useEffect, useRef } from 'react';
@@ -12,6 +12,7 @@ const CATEGORY_LIST = [
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -55,7 +56,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex items-center justify-center gap-2">
-        <button>로그인</button>
+        <button onClick={() => navigate('/login')}>로그인</button>
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
