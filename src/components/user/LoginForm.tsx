@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
@@ -16,23 +15,33 @@ export const loginSchema = z.object({
 
 const LoginForm = () => {
 	const navigate = useNavigate();
-	const store = useUserStore((state) => state.actions);
+	const { email, password } = useUserStore((state) => state);
+	const { setEmail, setPassword } = useUserStore((state) => state.actions);
 	const {
 		handleSubmit,
 		formState: { errors },
 		control,
 	} = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
-	const onSubmit = (data) => {
-		// 다음 페이지로 로그인 정보 전송
+	const onSubmit = (data: { email: string; password: string }) => {
 		const registerData = localStorage.getItem("register");
 		if (registerData) {
 			const loginData = JSON.parse(registerData);
+
+			if (email === data.email && password === data.password) {
+				alert("이미 로그인 되었습니다");
+				return;
+			}
+
 			if (loginData.email === data.email && loginData.password === data.password) {
 				alert("로그인 성공");
-				store.setEmail(data.email);
-				store.setPassword(data.password);
+				setEmail(data.email);
+				setPassword(data.password);
+			} else {
+				alert("로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다");
 			}
+		} else {
+			alert("회원가입 정보가 없습니다. 먼저 회원가입을 진행해주세요.");
 		}
 	};
 
