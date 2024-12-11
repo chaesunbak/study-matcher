@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { LuAlignJustify } from 'react-icons/lu';
 import { useState, useEffect, useRef } from 'react';
 import { useUserStore } from '../../zustand/store';
-import Profile from '../../pages/Profile';
+import UserHeaderForm from '../user/UserHeaderForm';
 
 const CATEGORY_LIST = [
   { link: '/', name: '홈' },
@@ -58,7 +58,11 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex items-center justify-center gap-2">
-        {isLogin.userId ? <Profile /> : <button onClick={() => navigate('/login')}>로그인</button>}
+        {isLogin.userId ? (
+          <UserHeaderForm />
+        ) : (
+          <button onClick={() => navigate('/login')}>로그인</button>
+        )}
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
