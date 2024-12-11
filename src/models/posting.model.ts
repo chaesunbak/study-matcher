@@ -1,3 +1,5 @@
+import { User } from './user.model';
+
 export interface Posting {
   id: number;
   meeting_id: number;
@@ -22,4 +24,9 @@ export interface ReplyLike {
   reply_id: number;
   user_id: number;
   created_at: Date;
+}
+
+export interface PostingDetail extends Posting {
+  user: User;
+  replies: Reply[];
 }
