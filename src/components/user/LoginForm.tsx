@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import Input from "./\bInputForm";
+import { useUserStore } from "../../zustand/store";
 
 export const loginSchema = z.object({
 	email: z.string().email({ message: "이메일 형식이 아닙니다." }),
@@ -14,21 +15,25 @@ export const loginSchema = z.object({
 });
 
 const LoginForm = () => {
-	const [form, setForm] = useState({ email: "", password: "" });
 	const navigate = useNavigate();
+	const store = useUserStore((state) => state.actions);
 	const {
 		handleSubmit,
 		formState: { errors },
 		control,
 	} = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
-	const onSubmit = () => {
+	const onSubmit = (data) => {
 		// 다음 페이지로 로그인 정보 전송
 		const registerData = localStorage.getItem("register");
-		if (registerData === JSON.stringify(form)) {
-			alert("로그인 성공");
+		if (registerData) {
+			const loginData = JSON.parse(registerData);
+			if (loginData.email === data.email && loginData.password === data.password) {
+				alert("로그인 성공");
+				store.setEmail(data.email);
+				store.setPassword(data.password);
+			}
 		}
-		setForm({ email: "", password: "" });
 	};
 
 	const buttonList = [
