@@ -1,17 +1,19 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { LuAlignJustify } from 'react-icons/lu';
 import { useState, useEffect, useRef } from 'react';
+import { useUserStore } from '../../zustand/store';
+import UserHeaderForm from '../user/UserHeaderForm';
 
 const CATEGORY_LIST = [
   { link: '/', name: '홈' },
   { link: '/search', name: '모임 찾기' },
   { link: '/groups/create', name: '모임 만들기' },
-  { link: '/profile', name: '마이 페이지' },
 ];
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -55,7 +57,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className="flex items-center justify-center gap-2">
-        <button>로그인</button>
+        <UserHeaderForm />
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
