@@ -1,15 +1,14 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import { Outlet } from "react-router";
+import Header from './Header';
+
+import { Outlet } from 'react-router';
 
 const Layout = () => {
-	return (
-		<div className="mx-auto flex min-h-screen flex-col lg:max-w-6xl">
-			<Header />
-			<Outlet />
-			<Footer />
-		</div>
-	);
+  return (
+    <div className="mx-auto flex min-h-screen flex-col lg:max-w-6xl">
+      <Header />
+      <Outlet />
+    </div>
+  );
 };
 
 export default Layout;
