@@ -36,6 +36,7 @@ const LoginForm = () => {
       if (loginData.email === data.email && loginData.password === data.password) {
         alert('로그인 성공');
         loginUser(data.email);
+        navigate('/home');
       } else {
         alert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다');
       }
