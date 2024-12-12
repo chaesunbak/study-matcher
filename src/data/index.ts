@@ -1,5 +1,5 @@
 import { Meeting, MeetingDetail } from '../models/meeting.model';
-import { Topic } from '../models/topic.model';
+import { Category as Topic } from '../models/category.model';
 import { Gender, User } from '../models/user.model';
 import { Posting, PostingDetail } from '../models/posting.model';
 
