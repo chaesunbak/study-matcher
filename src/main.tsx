@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import Layout from './components/common/Layout.tsx';
 import Home from './pages/Home.tsx';
 import Search from './pages/Search.tsx';
+import Signup from './pages/Signup.tsx';
 import Login from './pages/Login.tsx';
 import Profile from './pages/Profile.tsx';
 import GroupMain from './pages/GroupMain.tsx';
@@ -14,7 +15,6 @@ import GroupCreate from './pages/GroupCreate.tsx';
 import PostList from './pages/PostList.tsx';
 import PostDetail from './pages/PostDetail.tsx';
 import PostWrite from './pages/PostWrite.tsx';
-import Signup from './pages/SignUp.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
