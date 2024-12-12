@@ -1,4 +1,4 @@
-export enum Topic {
+export enum Category {
   운동 = '운동',
   자기계발 = '자기계발',
   동네친구 = '동네친구',
