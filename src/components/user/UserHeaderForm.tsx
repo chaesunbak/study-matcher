@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
-import { useUserStore } from '../../zustand/store';
+import { useUserStore } from '../../store/userStore';
 
 const UserHeaderForm = () => {
   const isLogin = useUserStore((state) => state);
