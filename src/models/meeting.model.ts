@@ -1,4 +1,4 @@
-import { Topic } from './topic.model';
+import { Category } from './category.model';
 import { User } from './user.model';
 
 export interface Meeting {
@@ -13,7 +13,7 @@ export interface Meeting {
   age_condition: string;
   owner_user_id: number;
   created_at: Date;
-  topic: Topic;
+  topic: Category;
 }
 
 export interface MeetingDetail extends Meeting {
