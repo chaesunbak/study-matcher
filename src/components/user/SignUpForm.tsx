@@ -35,12 +35,12 @@ const SignUpForm = () => {
     alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
   };
 
-  const buttonList = [
-    { label: 'google', color: 'gray' },
-    { label: 'facebook', color: 'blue' },
-    { label: 'github', color: 'black' },
-    { label: 'kakao', color: 'yellow' },
-  ];
+  // const buttonList = [
+  //   { label: 'google', color: 'gray' },
+  //   { label: 'facebook', color: 'blue' },
+  //   { label: 'github', color: 'black' },
+  //   { label: 'kakao', color: 'yellow' },
+  // ];
 
   return (
     <div>
