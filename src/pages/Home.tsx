@@ -1,7 +1,10 @@
+import SearchInput from '../components/SearchInput';
+
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
+      {/*검색창 컴포넌트 : 검색어 입력시 검색페이지로 이동 */}
+      <SearchInput />
     </div>
   );
 };
