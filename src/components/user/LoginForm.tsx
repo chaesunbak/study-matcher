@@ -1,9 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
 import { z } from 'zod';
-import Input from './\bInputForm';
-import { useUserStore } from '../../zustand/store';
+import Input from './InputForm';
+import { Link } from 'react-router';
 
 export const loginSchema = z.object({
   email: z.string().email({ message: '이메일 형식이 아닙니다.' }),
@@ -14,9 +13,6 @@ export const loginSchema = z.object({
 });
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const { userId } = useUserStore((state) => state);
-  const { loginUser, logOutUser } = useUserStore((state) => state.actions);
   const {
     handleSubmit,
     formState: { errors },
@@ -24,41 +20,19 @@ const LoginForm = () => {
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = (data: { email: string; password: string }) => {
-    const registerData = localStorage.getItem('register');
-    if (registerData) {
-      const loginData = JSON.parse(registerData);
-
-      if (userId === data.email) {
-        alert('이미 로그인 되었습니다');
-        return;
-      }
-
-      if (loginData.email === data.email && loginData.password === data.password) {
-        alert('로그인 성공');
-        loginUser(data.email);
-        navigate('/home');
-      } else {
-        alert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다');
-      }
-    } else {
-      alert('회원가입 정보가 없습니다. 먼저 회원가입을 진행해주세요.');
-    }
+    alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
   };
 
-  const buttonList = [
-    { label: 'google', color: 'gray' },
-    { label: 'facebook', color: 'blue' },
-    { label: 'github', color: 'black' },
-    { label: 'kakao', color: 'yellow' },
-  ];
+  // const buttonList = [
+  //   { label: 'google', color: 'gray' },
+  //   { label: 'facebook', color: 'blue' },
+  //   { label: 'github', color: 'black' },
+  //   { label: 'kakao', color: 'yellow' },
+  // ];
 
-  const handleSubmitButton = (button: { label: string; color: string }) => {
-    alert(`소셜 로그인 ${button.label}`);
-  };
-
-  const handleClick = () => {
-    navigate('/forgot-password');
-  };
+  // const handleSubmitButton = (button: { label: string; color: string }) => {
+  //   alert(`소셜 로그인 ${button.label}`);
+  // };
 
   return (
     <>
@@ -67,10 +41,10 @@ const LoginForm = () => {
         {/* 타이틀 */}
         <h2 className="text-center text-2xl font-bold text-gray-800">로그인</h2>
         <p className="mb-6 mt-2 text-center text-sm text-gray-500">
-          이메일 혹은 소셜로 로그인 하세요
+          이메일과 비밀번호를 입력하세요
         </p>
         {/* 소셜 로그인 버튼 */}
-        <div className="mb-6 flex justify-center gap-3">
+        {/* <div className="mb-6 flex justify-center gap-3">
           {buttonList.map((button, index) => (
             <button
               key={index}
@@ -80,7 +54,7 @@ const LoginForm = () => {
               <i className={`fab fa-${button.label} text-${button.color}-600`}></i>
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -102,10 +76,14 @@ const LoginForm = () => {
             errors={errors}
           />
 
-          <div className="text-right">
-            <div className="text-sm text-indigo-500 hover:underline" onClick={handleClick}>
-              비밀번호를 잃어버렸나요?
-            </div>
+          <div className="flex items-center justify-center text-right text-sm text-gray-500">
+            <span>비밀번호를 잊어버리셨나요?</span>
+            <Link
+              to="/forget-password"
+              className="ml-2 cursor-pointer text-indigo-500 hover:underline"
+            >
+              비밀번호 찾기
+            </Link>
           </div>
           <button
             type="submit"
