@@ -150,7 +150,8 @@ export const dummyMeetingDetail: MeetingDetail = {
   id: 1,
   title: '코딩 공부할 사람?',
   topic_id: 1,
-  description: '코딩 공부를 함께 할 사람을 찾습니다.',
+  description:
+    '코딩 공부를 함께 할 사람을 찾습니다.\n자바스크립트, 파이썬, 리액트 등 다양한 언어를 배울 수 있습니다.',
   max_members: 5,
   start_date: new Date('2024-12-07T12:00:00'),
   end_date: new Date('2024-12-07T14:00:00'),
