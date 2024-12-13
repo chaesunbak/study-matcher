@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-import { LuAlignJustify, LuX } from 'react-icons/lu';
+import { LuAlignJustify } from 'react-icons/lu';
 import { useState, useEffect, useRef } from 'react';
 import UserHeaderForm from '../user/UserHeaderForm';
 
