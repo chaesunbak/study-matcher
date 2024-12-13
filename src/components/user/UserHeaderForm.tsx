@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import { useUserStore } from '../../store/userStore';
+import Button from '../common/Button';
 
 const UserHeaderForm = () => {
   const isLogin = useUserStore((state) => state);
@@ -49,7 +50,7 @@ const UserHeaderForm = () => {
           )}
         </div>
       ) : (
-        <button onClick={() => navigate('/login')}>로그인</button>
+        <Button onClick={() => navigate('/register')}>로그인</Button>
       )}
     </div>
   );
