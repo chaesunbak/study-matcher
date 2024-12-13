@@ -8,6 +8,7 @@ import Search from './pages/Search.tsx';
 import Signup from './pages/Signup.tsx';
 import Login from './pages/Login.tsx';
 import Profile from './pages/Profile.tsx';
+import GroupLayout from './components/groupdetail/GroupLayout.tsx';
 import GroupMain from './pages/GroupMain.tsx';
 import GroupMembers from './pages/GroupMembers.tsx';
 import GroupManage from './pages/GroupManage.tsx';
@@ -29,12 +30,15 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/profile" element={<Profile />} />
           <Route path="/users/:user_id" element={<Profile />} />
           {/* 그룹관련 */}
-          <Route path="/groups/:group_id" element={<GroupMain />} />
-          <Route path="/groups/:group_id/members" element={<GroupMembers />} />
-          <Route path="/groups/:group_id/posts" element={<PostList />} />
-          <Route path="/groups/:group_id/posts/write" element={<PostWrite />} />
-          <Route path="/groups/:group_id/posts/:post_id" element={<PostDetail />} />
-          <Route path="/groups/:group_id/manage" element={<GroupManage />} />
+          <Route path="/groups/:group_id" element={<GroupLayout />}>
+            <Route index element={<GroupMain />} />
+            <Route path="members" element={<GroupMembers />} />
+            <Route path="posts" element={<PostList />} />
+            <Route path="posts/write" element={<PostWrite />} />
+            <Route path="posts/:post_id" element={<PostDetail />} />
+            <Route path="manage" element={<GroupManage />} />
+          </Route>
+
           <Route path="/groups/create" element={<GroupCreate />} />
         </Route>
       </Routes>
