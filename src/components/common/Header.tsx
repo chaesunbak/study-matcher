@@ -32,9 +32,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 flex items-center justify-between bg-white p-4">
+    <header className="sticky top-0 flex items-center justify-between bg-white p-4 dark:bg-black">
       <Link to="/">
-        <h1 className="text-4xl font-bold">LOGO</h1>
+        <h1 className="text-primary">★LOGO</h1>
       </Link>
       <nav className="hidden md:flex">
         <ul className="flex space-x-5">
@@ -59,10 +59,7 @@ const Header = () => {
         <LuAlignJustify className="size-6 cursor-pointer md:hidden" onClick={toggleMenu} />
       </div>
       {isMenuOpen && (
-        <nav
-          ref={menuRef}
-          className="absolute left-0 top-16 w-full bg-white shadow-md transition md:hidden"
-        >
+        <nav ref={menuRef} className="absolute left-0 top-16 w-full shadow-md transition md:hidden">
           <ul className="flex flex-col space-y-2 p-4">
             {CATEGORY_LIST.map((category) => (
               <li key={category.link}>

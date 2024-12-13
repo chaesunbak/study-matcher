@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply bg-white text-black dark:bg-black dark:text-white;
+  }
+
+  h1 {
+    @apply text-2xl font-bold;
+  }
+
   h2 {
     @apply text-xl font-semibold;
   }

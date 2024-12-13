@@ -1,4 +1,5 @@
 import { MeetingDetail } from '../../models/meeting.model';
+import Button from '../common/Button';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   return (
@@ -19,7 +20,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           <div>{group.gender_condition}</div>
         </div>
       </div>
-      <button className="rounded-lg bg-orange-500 p-2 font-semibold text-white">참여하기</button>
+      <Button>참가하기</Button>
     </div>
   );
 };

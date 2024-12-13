@@ -52,7 +52,7 @@ const SearchInput = ({ className }: SearchInputProps) => {
       <input
         type="text"
         placeholder="키워드로 모임 검색"
-        className="flex-grow outline-none"
+        className="flex-grow bg-white outline-none dark:bg-black"
         ref={inputRef}
         onKeyPress={handleKeyPress}
         aria-label="검색어 입력"
