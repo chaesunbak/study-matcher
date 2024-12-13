@@ -11,7 +11,7 @@ const Button = ({ children, className, isLoading, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
-        'bg-primary hover:bg-primary-light rounded-lg p-2 font-semibold transition-all hover:opacity-90',
+        'bg-primary rounded-lg p-2 font-semibold text-white transition-all hover:opacity-90',
         className
       )}
       disabled={props.disabled || isLoading}

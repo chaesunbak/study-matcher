@@ -34,8 +34,8 @@ const GroupSearchFilter = () => {
 
   return (
     <div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-xl font-bold">카테고리</h2>
+      <div className="mb-2">
+        <h3 className="mb-2">카테고리</h3>
         <div className="flex flex-wrap gap-2">
           {CATEGORY_LIST.map((category) => (
             <CategoryButton
@@ -53,8 +53,8 @@ const GroupSearchFilter = () => {
       </div>
 
       <div>
-        <h2 className="mb-2 text-xl font-bold">정렬</h2>
-        <div className="flex gap-4">
+        <h3 className="mb-2">정렬</h3>
+        <div className="flex gap-2">
           {SortList.map((sort) => (
             <CategoryButton
               key={sort.value}

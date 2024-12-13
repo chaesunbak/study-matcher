@@ -50,7 +50,7 @@ const UserHeaderForm = () => {
           )}
         </div>
       ) : (
-        <Button onClick={() => navigate('/register')}>로그인</Button>
+        <Button onClick={() => navigate('/signup')}>로그인</Button>
       )}
     </div>
   );
