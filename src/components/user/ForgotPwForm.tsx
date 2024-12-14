@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { useState } from 'react';
 import { httpClient } from '../../api/http';
 import Button from '../common/Button';
+import useEmailError from '../hooks/useEmailError';
 
 export const loginSchema = z.object({
   email: z
@@ -25,7 +26,7 @@ const ForgotPwForm = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [showVerificationInput, setShowVerificationInput] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const { emailError, setEmailError, resetEmailError } = useEmailError();
 
   const handleEmailSubmit = async (data: { email: string }) => {
     try {
@@ -37,7 +38,7 @@ const ForgotPwForm = () => {
           //   await httpClient.post('/verification-request', { email: data.email });
           alert('인증 요청이 전송되었습니다.');
           setShowVerificationInput(true);
-          setEmailError(null); // 에러 메시지 초기화
+          resetEmailError(); // 에러 메시지 초기화
         } else {
           setEmailError('존재하지 않는 이메일입니다.');
         }
