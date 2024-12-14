@@ -71,7 +71,6 @@ const SignUpForm = () => {
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="email"
             type="text"
             control={control}
@@ -80,7 +79,6 @@ const SignUpForm = () => {
           />
 
           <Input
-            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="password"
             type="password"
             control={control}
@@ -88,7 +86,6 @@ const SignUpForm = () => {
             errors={errors}
           />
           <Input
-            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="passwordConfirm"
             type="password"
             control={control}

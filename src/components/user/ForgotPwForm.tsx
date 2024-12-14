@@ -48,7 +48,6 @@ const ForgotPwForm = () => {
             <span>{password}</span>
           ) : (
             <Input
-              className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
               name="email"
               type="text"
               control={control}

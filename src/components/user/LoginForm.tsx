@@ -84,7 +84,6 @@ const LoginForm = () => {
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="email"
             type="text"
             control={control}
@@ -93,7 +92,6 @@ const LoginForm = () => {
           />
 
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="password"
             type="password"
             control={control}
@@ -105,14 +103,14 @@ const LoginForm = () => {
             <span>비밀번호를 잊어버리셨나요?</span>
             <Link
               to="/forget-password"
-              className="ml-2 cursor-pointer text-indigo-500 hover:underline"
+              className="text-indigo-500 ml-2 cursor-pointer hover:underline"
             >
               비밀번호 찾기
             </Link>
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-600"
+            className="bg-indigo-500 hover:bg-indigo-600 w-full rounded-lg py-2 text-white transition"
           >
             로그인
           </button>
