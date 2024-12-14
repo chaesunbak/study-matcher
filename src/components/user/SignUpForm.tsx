@@ -4,6 +4,7 @@ import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
+import { useUserStore } from '../../\bstore/userStore';
 
 const SignUpSchema = z
   .object({
@@ -33,9 +34,10 @@ const SignUpForm = () => {
     defaultValues: { email: '', password: '', passwordConfirm: '' },
   });
   const navigate = useNavigate();
+  const { loginUser } = useUserStore((state) => state.actions);
 
   const onSubmit = (data: { email: string; password: string }) => {
-    localStorage.setItem('register', JSON.stringify(data));
+    loginUser(data.email);
     alert(`로그인 되었습니다`);
     navigate('/login');
   };
