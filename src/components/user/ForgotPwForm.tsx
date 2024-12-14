@@ -19,43 +19,57 @@ const ForgotPwForm = () => {
     formState: { errors },
     control,
     reset,
+    setError,
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
   const [isVerified, setIsVerified] = useState(false);
   const [showVerificationInput, setShowVerificationInput] = useState(false);
   const [password, setPassword] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
-  const handleEmailSubmit = (data: { email: string }) => {
-    const local = localStorage.getItem('register');
-    if (local) {
-      const registerData = JSON.parse(local);
-      if (data.email === registerData.email) {
-        setPassword(registerData.password); // 저장된 비밀번호 가져오기
-        httpClient.post('/verification-request', { email: data.email });
-        alert('인증 요청이 전송되었습니다.');
-        setShowVerificationInput(true);
+  const handleEmailSubmit = async (data: { email: string }) => {
+    try {
+      const local = localStorage.getItem('register');
+      if (local) {
+        const registerData = JSON.parse(local);
+        if (data.email === registerData.email) {
+          // 서버로 인증 요청 전송
+          await httpClient.post('/verification-request', { email: data.email });
+          alert('인증 요청이 전송되었습니다.');
+          setShowVerificationInput(true);
+          setEmailError(null); // 에러 메시지 초기화
+        } else {
+          setEmailError('존재하지 않는 이메일입니다.');
+        }
       } else {
-        alert('일치하는 이메일이 없습니다.');
+        setEmailError('존재하지 않는 이메일입니다.');
       }
-    } else {
-      alert('등록된 사용자가 없습니다.');
+    } catch (error) {
+      setEmailError('서버와 통신 중 문제가 발생했습니다.');
     }
   };
 
-  const handleVerificationSubmit = (data: { verificationCode?: string }) => {
+  const handleVerificationSubmit = async (data: { verificationCode?: string }) => {
     if (data.verificationCode) {
-      // 인증 성공 시 처리
-      httpClient.post('/verify', { code: data.verificationCode }).then((response) => {
-        if (response) {
+      try {
+        // 서버에 인증번호 전송 및 응답 처리
+        const response = await httpClient.post<{ password: string }>('/verify', {
+          code: data.verificationCode,
+        });
+
+        if (response.data && response.data.password) {
+          alert('인증되었습니다.');
+          setPassword(response.data.password);
+          setIsVerified(true);
           setShowVerificationInput(false);
+          reset(); // 폼 초기화
         } else {
-          alert('인증 실패 : 인증 번호가 일치하지 않습니다.');
+          setError('verificationCode', { message: '유효하지 않은 인증번호입니다.' });
         }
-      });
-      alert('인증되었습니다.');
-      setIsVerified(true);
-      reset(); // 폼 초기화
+      } catch (error) {
+        setError('verificationCode', { message: '인증 처리 중 문제가 발생했습니다.' });
+      }
     } else {
-      alert('인증번호를 입력하세요.');
+      setError('verificationCode', { message: '인증번호를 입력하세요.' });
     }
   };
 
@@ -69,20 +83,23 @@ const ForgotPwForm = () => {
           <>
             {/* 이메일 제출 폼 */}
             <form onSubmit={handleSubmit(handleEmailSubmit)} className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Input
-                  name="email"
-                  type="text"
-                  control={control}
-                  placeholder="이메일을 입력하세요"
-                  errors={errors}
-                />
-                <button
-                  type="submit"
-                  className="bg-indigo-400 hover:bg-indigo-600 rounded-lg px-4 py-2 text-white transition"
-                >
-                  인증 요청
-                </button>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <Input
+                    name="email"
+                    type="text"
+                    control={control}
+                    placeholder="이메일을 입력하세요"
+                    errors={errors}
+                  />
+                  <button
+                    type="submit"
+                    className="bg-indigo-400 hover:bg-indigo-600 rounded-lg px-4 py-2 text-white transition"
+                  >
+                    인증 요청
+                  </button>
+                </div>
+                {emailError && <p className="text-red-500 mt-2 text-sm">{emailError}</p>}
               </div>
             </form>
 
@@ -94,20 +111,25 @@ const ForgotPwForm = () => {
                 )}
                 className="mt-4"
               >
-                <div className="flex items-center space-x-2">
-                  <Input
-                    name="verificationCode"
-                    type="text"
-                    control={control}
-                    placeholder="인증번호를 입력하세요"
-                    errors={errors}
-                  />
-                  <button
-                    type="submit"
-                    className="bg-green-400 hover:bg-green-600 rounded-lg px-4 py-2 text-white transition"
-                  >
-                    인증
-                  </button>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      name="verificationCode"
+                      type="text"
+                      control={control}
+                      placeholder="인증번호를 입력하세요"
+                      errors={errors}
+                    />
+                    <button
+                      type="submit"
+                      className="bg-green-400 hover:bg-green-600 rounded-lg px-4 py-2 text-white transition"
+                    >
+                      인증
+                    </button>
+                  </div>
+                  {errors.verificationCode && (
+                    <p className="text-red-500 mt-2 text-sm">{errors.verificationCode.message}</p>
+                  )}
                 </div>
               </form>
             )}
