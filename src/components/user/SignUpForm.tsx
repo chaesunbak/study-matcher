@@ -3,6 +3,7 @@ import { z } from 'zod';
 import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
+import Button from '../common/Button';
 
 const SignUpSchema = z
   .object({
@@ -92,12 +93,9 @@ const SignUpForm = () => {
             placeholder="비밀번호를 확인해주세요"
             errors={errors}
           />
-          <button
-            type="submit"
-            className="bg-indigo-500 hover:bg-indigo-600 w-full rounded-lg py-2 text-white transition"
-          >
+          <Button variant="form" type="submit">
             회원가입
-          </button>
+          </Button>
         </form>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { z } from 'zod';
 import Input from './InputForm';
 import { Link, useNavigate } from 'react-router';
 import { useUserStore } from '../../\bstore/userStore';
+import Button from '../common/Button';
 
 export const loginSchema = z.object({
   email: z.string().email({ message: '이메일 형식이 아닙니다.' }),
@@ -108,12 +109,9 @@ const LoginForm = () => {
               비밀번호 찾기
             </Link>
           </div>
-          <button
-            type="submit"
-            className="bg-indigo-500 hover:bg-indigo-600 w-full rounded-lg py-2 text-white transition"
-          >
+          <Button variant="form" type="submit">
             로그인
-          </button>
+          </Button>
         </form>
       </div>
     </>
