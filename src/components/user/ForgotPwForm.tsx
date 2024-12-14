@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
 import { httpClient } from '../../api/http';
+import Button from '../common/Button';
 
 export const loginSchema = z.object({
   email: z
@@ -33,7 +34,7 @@ const ForgotPwForm = () => {
         const registerData = JSON.parse(local);
         if (data.email === registerData.email) {
           // 서버로 인증 요청 전송
-          await httpClient.post('/verification-request', { email: data.email });
+          //   await httpClient.post('/verification-request', { email: data.email });
           alert('인증 요청이 전송되었습니다.');
           setShowVerificationInput(true);
           setEmailError(null); // 에러 메시지 초기화
@@ -52,9 +53,11 @@ const ForgotPwForm = () => {
     if (data.verificationCode) {
       try {
         // 서버에 인증번호 전송 및 응답 처리
-        const response = await httpClient.post<{ password: string }>('/verify', {
-          code: data.verificationCode,
-        });
+        // const response = await httpClient.post<{ password: string }>('/verify', {
+        //   code: data.verificationCode,
+        // });
+
+        const response = { data: { password: 'qwe123qwe' } };
 
         if (response.data && response.data.password) {
           alert('인증되었습니다.');
@@ -92,12 +95,9 @@ const ForgotPwForm = () => {
                     placeholder="이메일을 입력하세요"
                     errors={errors}
                   />
-                  <button
-                    type="submit"
-                    className="bg-indigo-400 hover:bg-indigo-600 rounded-lg px-4 py-2 text-white transition"
-                  >
+                  <Button variant="verification" type="submit">
                     인증 요청
-                  </button>
+                  </Button>
                 </div>
                 {emailError && <p className="text-red-500 mt-2 text-sm">{emailError}</p>}
               </div>
@@ -120,12 +120,9 @@ const ForgotPwForm = () => {
                       placeholder="인증번호를 입력하세요"
                       errors={errors}
                     />
-                    <button
-                      type="submit"
-                      className="bg-green-400 hover:bg-green-600 rounded-lg px-4 py-2 text-white transition"
-                    >
+                    <Button variant="verification" type="submit">
                       인증
-                    </button>
+                    </Button>
                   </div>
                   {errors.verificationCode && (
                     <p className="text-red-500 mt-2 text-sm">{errors.verificationCode.message}</p>
