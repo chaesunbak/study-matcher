@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router';
 
 const SignUpSchema = z
   .object({
@@ -30,9 +31,12 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpSchema),
     defaultValues: { email: '', password: '', passwordConfirm: '' },
   });
+  const navigate = useNavigate();
 
   const onSubmit = (data: { email: string; password: string }) => {
-    alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
+    localStorage.setItem('register', JSON.stringify(data));
+    alert(`로그인 되었습니다`);
+    navigate('/login');
   };
 
   // const buttonList = [
@@ -67,7 +71,7 @@ const SignUpForm = () => {
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="email"
             type="text"
             control={control}
@@ -76,7 +80,7 @@ const SignUpForm = () => {
           />
 
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="password"
             type="password"
             control={control}
@@ -84,7 +88,7 @@ const SignUpForm = () => {
             errors={errors}
           />
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             name="passwordConfirm"
             type="password"
             control={control}
@@ -93,7 +97,7 @@ const SignUpForm = () => {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-600"
+            className="bg-indigo-500 hover:bg-indigo-600 w-full rounded-lg py-2 text-white transition"
           >
             회원가입
           </button>
