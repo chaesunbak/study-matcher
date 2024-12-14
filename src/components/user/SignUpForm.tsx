@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router';
+import Button from '../common/Button';
+import { useUserStore } from '../../\bstore/userStore';
 
 const SignUpSchema = z
   .object({
@@ -30,9 +33,13 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpSchema),
     defaultValues: { email: '', password: '', passwordConfirm: '' },
   });
+  const navigate = useNavigate();
+  const { loginUser } = useUserStore((state) => state.actions);
 
   const onSubmit = (data: { email: string; password: string }) => {
-    alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
+    loginUser(data.email);
+    alert(`로그인 되었습니다`);
+    navigate('/login');
   };
 
   // const buttonList = [
@@ -67,7 +74,6 @@ const SignUpForm = () => {
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="email"
             type="text"
             control={control}
@@ -76,7 +82,6 @@ const SignUpForm = () => {
           />
 
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="password"
             type="password"
             control={control}
@@ -84,19 +89,15 @@ const SignUpForm = () => {
             errors={errors}
           />
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="passwordConfirm"
             type="password"
             control={control}
             placeholder="비밀번호를 확인해주세요"
             errors={errors}
           />
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-600"
-          >
+          <Button variant="form" type="submit">
             회원가입
-          </button>
+          </Button>
         </form>
       </div>
     </div>

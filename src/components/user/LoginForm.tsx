@@ -2,7 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Input from './InputForm';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useUserStore } from '../../\bstore/userStore';
+import Button from '../common/Button';
 
 export const loginSchema = z.object({
   email: z.string().email({ message: '이메일 형식이 아닙니다.' }),
@@ -13,6 +15,9 @@ export const loginSchema = z.object({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const { userId } = useUserStore((state) => state);
+  const { loginUser } = useUserStore((state) => state.actions);
   const {
     handleSubmit,
     formState: { errors },
@@ -21,6 +26,26 @@ const LoginForm = () => {
 
   const onSubmit = (data: { email: string; password: string }) => {
     alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
+
+    const registerData = localStorage.getItem('register');
+    if (registerData) {
+      const loginData = JSON.parse(registerData);
+
+      if (userId === data.email) {
+        alert('이미 로그인 되었습니다');
+        return;
+      }
+
+      if (loginData.email === data.email && loginData.password === data.password) {
+        alert('로그인 성공');
+        loginUser(data.email);
+        navigate('/');
+      } else {
+        alert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다');
+      }
+    } else {
+      alert('회원가입 정보가 없습니다. 먼저 회원가입을 진행해주세요.');
+    }
   };
 
   // const buttonList = [
@@ -43,6 +68,7 @@ const LoginForm = () => {
         <p className="mb-6 mt-2 text-center text-sm text-gray-500">
           이메일과 비밀번호를 입력하세요
         </p>
+
         {/* 소셜 로그인 버튼 */}
         {/* <div className="mb-6 flex justify-center gap-3">
           {buttonList.map((button, index) => (
@@ -59,7 +85,6 @@ const LoginForm = () => {
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="email"
             type="text"
             control={control}
@@ -68,7 +93,6 @@ const LoginForm = () => {
           />
 
           <Input
-            className="w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             name="password"
             type="password"
             control={control}
@@ -80,17 +104,14 @@ const LoginForm = () => {
             <span>비밀번호를 잊어버리셨나요?</span>
             <Link
               to="/forget-password"
-              className="ml-2 cursor-pointer text-indigo-500 hover:underline"
+              className="text-indigo-500 ml-2 cursor-pointer hover:underline"
             >
               비밀번호 찾기
             </Link>
           </div>
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-600"
-          >
+          <Button variant="form" type="submit">
             로그인
-          </button>
+          </Button>
         </form>
       </div>
     </>
