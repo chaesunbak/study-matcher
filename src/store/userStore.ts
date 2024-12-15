@@ -22,7 +22,6 @@ export const useUserStore = create(
     actions: {
       loginUser: (userId: string) => {
         set({ userId: userId });
-        localStorage.setItem('register', JSON.stringify({ email: userId }));
       },
       logOutUser: () => set(initialState),
     },
