@@ -1,11 +1,12 @@
 export enum Gender {
-  male = 'male',
-  female = 'female',
+  male = '남성',
+  female = '여성',
 }
 
 export interface User {
   id: number;
   email: string;
+  password: string;
   gender: Gender;
   birthdate: Date;
   profile_img: string;

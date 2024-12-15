@@ -1,27 +1,70 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
-type InputProps = {
-  control: Control<any>; // React Hook Form의 control 객체
-  name: string;
-  placeholder: string;
-  errors: any; // React Hook Form에서 필드의 유효성 검사 에러
-  type?: string;
+type Option = {
+  value: string;
+  label: string;
 };
 
-const Input = ({ control, name, placeholder, errors, type }: InputProps) => {
+type InputProps = {
+  control: Control<any>;
+  name: string;
+  placeholder: string;
+  errors: FieldErrors;
+  type?: 'text' | 'password' | 'textarea' | 'select' | 'date';
+  className?: string;
+  options?: Option[];
+};
+
+const Input = ({
+  control,
+  name,
+  placeholder,
+  errors,
+  type = 'text',
+  className = '',
+  options = [],
+}: InputProps) => {
+  const hasError = Boolean(errors?.[name]); // 에러 존재 여부
+
+  // 공통 스타일
+  const baseClass = `
+    w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2
+    ${hasError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-indigo-500'}
+    ${className}
+  `;
+
+  const renderInput = (field: any) => {
+    switch (type) {
+      case 'select':
+        return (
+          <select {...field} className={baseClass}>
+            <option value="" disabled>
+              {placeholder}
+            </option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        );
+
+      case 'textarea':
+        return <textarea {...field} placeholder={placeholder} className={baseClass} />;
+
+      default:
+        return <input {...field} type={type} placeholder={placeholder} className={baseClass} />;
+    }
+  };
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => (
-        <div>
-          <input
-            {...field}
-            type={type}
-            placeholder={placeholder}
-            className="focus:ring-indigo-500 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
-          />
-          {errors?.[name] && <p className="text-red-500">{errors[name]?.message}</p>}
+        <div className="mb-4">
+          {renderInput(field)}
+          {hasError && <p className="text-red-500 mt-1 text-sm">{String(errors[name]?.message)}</p>}
         </div>
       )}
     />
