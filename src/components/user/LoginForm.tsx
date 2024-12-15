@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Input from './InputForm';
 import { Link, useNavigate } from 'react-router';
-import { useUserStore } from '../../\bstore/userStore';
 import Button from '../common/Button';
+import { useUserStore } from '../../\bstore/userStore';
 
 export const loginSchema = z.object({
   email: z.string().email({ message: '이메일 형식이 아닙니다.' }),
@@ -16,8 +16,8 @@ export const loginSchema = z.object({
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { userId } = useUserStore((state) => state);
-  const { loginUser } = useUserStore((state) => state.actions);
+  const { userId } = useUserStore((state) => state); // 로그인 상태 확인
+  const { loginUser } = useUserStore((state) => state.actions); // 로그인 액션 가져오기
   const {
     handleSubmit,
     formState: { errors },
@@ -25,20 +25,22 @@ const LoginForm = () => {
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = (data: { email: string; password: string }) => {
-    alert(`이메일: ${data.email}, 비밀번호: ${data.password}`);
-
-    const registerData = localStorage.getItem('register');
+    const registerData = localStorage.getItem('register'); // 회원가입 정보 가져오기
     if (registerData) {
       const loginData = JSON.parse(registerData);
 
+      // 이미 로그인된 상태인지 확인
       if (userId === data.email) {
         alert('이미 로그인 되었습니다');
         return;
       }
 
-      if (loginData.email === data.email && loginData.password === data.password) {
+      // 이메일 및 비밀번호 확인
+      if (loginData.newUser.email === data.email && loginData.newUser.password === data.password) {
         alert('로그인 성공');
-        loginUser(data.email);
+
+        console.log('로그인 성공:', loginData.newUser.email);
+        loginUser(loginData.newUser.email);
         navigate('/');
       } else {
         alert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다');
@@ -47,17 +49,6 @@ const LoginForm = () => {
       alert('회원가입 정보가 없습니다. 먼저 회원가입을 진행해주세요.');
     }
   };
-
-  // const buttonList = [
-  //   { label: 'google', color: 'gray' },
-  //   { label: 'facebook', color: 'blue' },
-  //   { label: 'github', color: 'black' },
-  //   { label: 'kakao', color: 'yellow' },
-  // ];
-
-  // const handleSubmitButton = (button: { label: string; color: string }) => {
-  //   alert(`소셜 로그인 ${button.label}`);
-  // };
 
   return (
     <>
@@ -68,19 +59,6 @@ const LoginForm = () => {
         <p className="mb-6 mt-2 text-center text-sm text-gray-500">
           이메일과 비밀번호를 입력하세요
         </p>
-
-        {/* 소셜 로그인 버튼 */}
-        {/* <div className="mb-6 flex justify-center gap-3">
-          {buttonList.map((button, index) => (
-            <button
-              key={index}
-              className="rounded-full bg-gray-100 p-3 shadow transition hover:bg-gray-200"
-              onClick={() => handleSubmitButton(button)}
-            >
-              <i className={`fab fa-${button.label} text-${button.color}-600`}></i>
-            </button>
-          ))}
-        </div> */}
 
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
