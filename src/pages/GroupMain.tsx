@@ -1,5 +1,5 @@
-import GroupMemberPreview from '../components/groupdetail/GroupMemberPreview';
-import GroupPostPreview from '../components/groupdetail/GroupPostPreview';
+import GroupMemberPreview from '../components/groupdetail/GroupMemberSection';
+import GroupPostPreview from '../components/groupdetail/GroupPostSection';
 import { useOutletContext } from 'react-router';
 import { dummyMeetingDetail, dummyPostings } from '../data';
 
@@ -13,8 +13,8 @@ const GroupMain = () => {
 
   return (
     <>
-      <GroupMemberPreview group={group} />
-      <GroupPostPreview posts={posts} />
+      <GroupMemberPreview group={group} preview />
+      <GroupPostPreview posts={posts} preview />
     </>
   );
 };

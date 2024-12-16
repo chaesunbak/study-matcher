@@ -1,10 +1,18 @@
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
+import { useOutletContext } from 'react-router';
+import GroupPostSection from '../components/groupdetail/GroupPostSection';
+import { dummyPostings } from '../data';
+
+interface ContextType {
+  posts: typeof dummyPostings;
+}
 
 const PostList = () => {
-  const { group_id } = useParams();
+  // const { group_id } = useParams();
+  const { posts } = useOutletContext<ContextType>();
   return (
     <div>
-      <h1>{group_id} PostList</h1>
+      <GroupPostSection posts={posts} />
     </div>
   );
 };
