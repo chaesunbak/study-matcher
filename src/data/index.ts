@@ -164,6 +164,7 @@ export const dummyMeetingDetail: MeetingDetail = {
     {
       id: 1,
       email: 'asdasd@name.com',
+      password: '1234',
       gender: Gender.male,
       birthdate: new Date('1990-01-01'),
       profile_img: 'profile1.jpg',
@@ -173,6 +174,7 @@ export const dummyMeetingDetail: MeetingDetail = {
     {
       id: 2,
       email: 'asdasd@name.com',
+      password: '1234',
       gender: Gender.female,
       birthdate: new Date('1992-02-02'),
       profile_img: 'profile2.jpg',
@@ -185,6 +187,7 @@ export const dummyMeetingDetail: MeetingDetail = {
 export const dummyUser: User = {
   id: 1,
   email: 'example@domain.com',
+  password: '1234',
   gender: Gender.male,
   birthdate: new Date('1990-01-01'),
   profile_img: 'profile1.jpg',
@@ -254,6 +257,7 @@ export const dummyPostingDetails: PostingDetail[] = [
     user: {
       id: 1,
       email: 'user1@domain.com',
+      password: '1234',
       gender: Gender.male,
       birthdate: new Date('1990-01-01'),
       profile_img: 'profile1.jpg',
@@ -290,6 +294,7 @@ export const dummyPostingDetails: PostingDetail[] = [
     user: {
       id: 2,
       email: 'user2@domain.com',
+      password: '1234',
       gender: Gender.female,
       birthdate: new Date('1992-02-02'),
       profile_img: 'profile2.jpg',
@@ -308,3 +313,41 @@ export const dummyPostingDetails: PostingDetail[] = [
     ],
   },
 ];
+
+export const dummyPostingsDetail: PostingDetail = {
+  id: 1,
+  meeting_id: 1,
+  user_id: 1,
+  title: '첫 번째 포스팅',
+  img: 'image1.jpg',
+  content: '첫 번째 포스팅 내용입니다.',
+  created_at: new Date('2024-12-01T10:00:00'),
+  user: {
+    id: 1,
+    email: 'user1@domain.com',
+    password: '1234',
+    gender: Gender.male,
+    birthdate: new Date('1990-01-01'),
+    profile_img: 'profile1.jpg',
+    introduction: '안녕하세요, 저는 유저1입니다.',
+    created_at: new Date('2024-12-01T10:00:00'),
+  },
+  replies: [
+    {
+      id: 1,
+      posting_id: 1,
+      user_id: 2,
+      content: '첫 번째 댓글입니다.',
+      reply_id: 0,
+      created_at: new Date('2024-12-01T11:00:00'),
+    },
+    {
+      id: 2,
+      posting_id: 1,
+      user_id: 3,
+      content: '두 번째 댓글입니다.',
+      reply_id: 0,
+      created_at: new Date('2024-12-01T12:00:00'),
+    },
+  ],
+};
