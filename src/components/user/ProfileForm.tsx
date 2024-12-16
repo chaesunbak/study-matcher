@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { User } from '../../models/user.model';
+import MyMeeting from './\bProfileMenu/myMeeting';
+import MyMeetingEntered from './\bProfileMenu/myMeetingEntered';
+import { meetings, dummyUser, dummyPostingDetails } from '../../data';
 
 interface ProfileProps {
   user_id: string | undefined;
@@ -9,21 +12,12 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
   const [userData, setUserData] = useState<User | null>(null);
 
   // 왼쪽 메뉴 항목
-  const menuItems = ['내프로필', '보안설정', '이력관리'];
+  const menuItems = ['내프로필', '내가 참여한 모임', '내가 생성한 모임'];
 
-  // 보안 설정 항목
+  // 내 정보
   const securitySettings = [
-    { label: '비밀번호', buttonLabel: '수정', buttonClass: 'text-green-500' },
-    { label: '2단계 인증', buttonLabel: '설정', buttonClass: 'text-green-500' },
-    { label: '타지역 로그인 차단', buttonLabel: 'OFF', buttonClass: 'text-gray-500' },
-    { label: '해외 로그인 차단', buttonLabel: 'ON', buttonClass: 'text-green-500' },
-  ];
-
-  // 이력 관리 항목
-  const historyItems = [
-    { label: '로그인 목록', buttonLabel: '확인', buttonClass: 'text-green-500' },
-    { label: '내 활동 기록 보기', buttonLabel: '확인', buttonClass: 'text-green-500' },
-    { label: '연결된 서비스 관리', buttonLabel: '확인', buttonClass: 'text-green-500' },
+    { label: '비밀번호', buttonLabel: '재설정', buttonClass: 'text-green-500' },
+    { label: '개인정보', buttonLabel: '수정', buttonClass: 'text-green-500' },
   ];
 
   // localStorage에서 유저 데이터 가져오기
@@ -83,9 +77,9 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
           </div>
         </div>
 
-        {/* 보안설정 */}
+        {/* 내 정보 */}
         <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
-          <h3 className="mb-4 text-xl font-bold">보안설정</h3>
+          <h3 className="mb-4 text-xl font-bold">내 정보</h3>
           <ul className="space-y-4">
             {securitySettings.map((item, index) => (
               <li key={index} className="flex items-center justify-between">
@@ -96,18 +90,9 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
           </ul>
         </div>
 
-        {/* 이력관리 */}
-        <div className="rounded-lg bg-white p-6 shadow-md">
-          <h3 className="mb-4 text-xl font-bold">이력관리</h3>
-          <ul className="space-y-4">
-            {historyItems.map((item, index) => (
-              <li key={index} className="flex items-center justify-between">
-                <span>{item.label}</span>
-                <button className={item.buttonClass}>{item.buttonLabel}</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <MyMeeting user={dummyUser} />
+
+        <MyMeetingEntered user={dummyUser} />
       </div>
     </div>
   );
