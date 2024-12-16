@@ -1,10 +1,11 @@
 import { useParams } from 'react-router';
+import ProfileForm from '../components/user/ProfileForm';
 
 const Profile = () => {
-  const { user_id } = useParams();
+  const { user_id } = useParams<{ user_id: string }>();
   return (
     <div>
-      <h1>{user_id} :Profile</h1>
+      <ProfileForm user_id={user_id} />
     </div>
   );
 };
