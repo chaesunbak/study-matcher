@@ -3,7 +3,7 @@ import { User } from '../../../models/user.model';
 import { dummyUser } from '../../../data';
 import MyMeeting from './MyMeeting';
 import MyMeetingEntered from './MyMeetingEntered';
-import UserHeaderForm, { toggleMenu } from '../UserHeaderForm';
+import { Link } from 'react-router';
 
 interface ProfileProps {
   user_id: string | undefined;
@@ -11,12 +11,15 @@ interface ProfileProps {
 
 const ProfileForm = ({ user_id }: ProfileProps) => {
   const [userData, setUserData] = useState<User | null>(null);
-  const [selectedMenu, setSelectedMenu] = useState<string>('마이 페이지');
 
-  // 내 정보
   const securitySettings = [
-    { label: '비밀번호', buttonLabel: '재설정', buttonClass: 'text-green-500' },
-    { label: '개인정보', buttonLabel: '수정', buttonClass: 'text-green-500' },
+    {
+      label: '비밀번호',
+      buttonLabel: '재설정',
+      buttonClass: 'text-green-500',
+      link: 'reset-password',
+    },
+    { label: '개인정보', buttonLabel: '수정', buttonClass: 'text-green-500', link: 'modify' },
   ];
 
   // 현재 localStorage -> API로 변경
@@ -41,42 +44,39 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
   }
 
   return (
-    <div className="bg-gray-50 flex min-h-screen">
-      <UserHeaderForm mode="leftMenu" />
-
-      {/* 오른쪽 콘텐츠 */}
-      <div className="w-3/4 p-6">
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
-          <div className="flex items-center">
-            <img
-              src={userData.profile_img || 'https://via.placeholder.com/80'}
-              alt="프로필 이미지"
-              className="mr-4 h-20 w-20 rounded-full bg-gray-300"
-            />
-            <div>
-              <h3 className="text-2xl font-bold">{userData.email || '이름 없음'}</h3>
-              <p className="text-gray-600">{userData.introduction}</p>
-            </div>
+    <div>
+      <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+        <div className="flex items-center">
+          <img
+            src={userData.profile_img || 'https://via.placeholder.com/80'}
+            alt="프로필 이미지"
+            className="mr-4 h-20 w-20 rounded-full bg-gray-300"
+          />
+          <div>
+            <h3 className="text-2xl font-bold">{userData.email || '이름 없음'}</h3>
+            <p className="text-gray-600">{userData.introduction}</p>
           </div>
         </div>
-
-        {/* 내 정보 */}
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
-          <h3 className="mb-4 text-xl font-bold">내 정보</h3>
-          <ul className="space-y-4">
-            {securitySettings.map((item, index) => (
-              <li key={index} className="flex items-center justify-between">
-                <span>{item.label}</span>
-                <button className={item.buttonClass}>{item.buttonLabel}</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <MyMeeting user={dummyUser} />
-
-        <MyMeetingEntered user={dummyUser} />
       </div>
+
+      {/* 내 정보 */}
+      <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+        <h3 className="mb-4 text-xl font-bold">내 정보</h3>
+        <ul className="space-y-4">
+          {securitySettings.map((item, index) => (
+            <li key={index} className="flex items-center justify-between">
+              <span>{item.label}</span>
+              <Link to={`/users/${userData.email}/${item.link}`} className={item.buttonClass}>
+                {item.buttonLabel}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <MyMeeting user={dummyUser} />
+
+      <MyMeetingEntered user={dummyUser} />
     </div>
   );
 };
