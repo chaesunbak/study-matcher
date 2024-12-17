@@ -194,7 +194,7 @@ export const dummyMeetingDetail: MeetingDetail[] = [
     end_date: new Date('2024-12-09T12:00:00'),
     gender_condition: 'any',
     age_condition: '20-40',
-    owner_user_id: 2,
+    owner_user_id: 1,
     created_at: new Date('2024-12-01T15:00:00'),
     topic: Topic.아웃도어_여행,
     meeting_members: [
