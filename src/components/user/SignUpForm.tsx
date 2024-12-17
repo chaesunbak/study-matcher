@@ -55,7 +55,7 @@ const SignUpForm = () => {
 
   const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
     const newUser: User = {
-      id: Date.now(), // 예시로 ID 생성
+      id: Date.now(),
       email: data.email,
       password: data.password,
       gender: data.gender,
