@@ -7,9 +7,13 @@ import Button from '../common/Button';
 import { useUserStore } from '../../\bstore/userStore';
 
 export const loginSchema = z.object({
-  email: z.string().email({ message: '이메일 형식이 아닙니다.' }),
+  email: z
+    .string({ message: '이메일을 입력하세요.' })
+    .nonempty({ message: '이메일을 입력하세요.' })
+    .email({ message: '이메일 형식이 아닙니다.' }),
   password: z
-    .string()
+    .string({ message: '비밀번호를 입력하세요.' })
+    .nonempty({ message: '비밀번호를 입력하세요' })
     .min(8, { message: '비밀번호는 8자 이상으로 입력하세요' })
     .max(16, { message: '비밀번호는 16자 이하로 입력하세요' }),
 });

@@ -15,7 +15,7 @@ const UserHeaderForm = () => {
   };
 
   const toggleMenu = [
-    { name: '마이 페이지', link: 'profile' },
+    { name: '마이 페이지', link: 'users' },
     { name: '결제', link: 'pay' },
     { name: '문의', link: 'about' },
   ];
@@ -39,7 +39,10 @@ const UserHeaderForm = () => {
                 {toggleMenu.map((menu, index) => (
                   <li
                     key={index}
-                    onClick={() => navigate(`/${menu.link}`)}
+                    onClick={() => {
+                      navigate(`/${menu.link}/${isLogin.userId}`);
+                      setIsOpen(false);
+                    }}
                     className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     {menu.name}

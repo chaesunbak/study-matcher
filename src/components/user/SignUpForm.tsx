@@ -10,18 +10,20 @@ const SignUpSchema = z
   .object({
     id: z.number().optional(),
     email: z
-      .string()
+      .string({ message: '이메일을 입력하세요.' })
       .nonempty({ message: '이메일을 입력하세요' })
       .email({ message: '이메일 형식이 아닙니다.' }),
     password: z
-      .string()
+      .string({ message: '비밀번호를 입력하세요.' })
       .nonempty({ message: '비밀번호를 입력하세요' })
       .min(8, { message: '비밀번호는 8자 이상으로 입력하세요' })
       .max(16, { message: '비밀번호는 16자 이하로 입력하세요' }),
-    passwordConfirm: z.string().nonempty({ message: '확인 비밀번호를 입력하세요' }),
+    passwordConfirm: z
+      .string({ message: '확인 비밀번호를 입력하세요.' })
+      .nonempty({ message: '확인 비밀번호를 입력하세요' }),
     gender: z.nativeEnum(Gender),
     birthdate: z
-      .string()
+      .string({ message: '생년월일을 입력하세요.' })
       .nonempty({ message: '생년월일을 입력하세요' })
       .regex(/^\d{4}-\d{2}-\d{2}$/, { message: '올바른 날짜 형식이 아닙니다 (YYYY-MM-DD)' }),
     profile_img: z.any().optional(),
