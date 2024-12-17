@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import ProfileForm from '../components/user/ProfileForm';
+import ProfileForm from '../components/user/ProfileMenu/ProfileForm';
 
 const Profile = () => {
   const { user_id } = useParams<{ user_id: string }>();
