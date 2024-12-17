@@ -8,7 +8,6 @@ import { useUserStore } from '../../\bstore/userStore';
 export const toggleMenu = [
   { name: '마이 페이지', link: 'users' },
   { name: '로그아웃', link: 'logout' },
-  { name: '문의', link: 'about' },
 ];
 
 interface UserHeaderFormProps {
