@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { User } from '../../models/user.model';
-import MyMeeting from './\bProfileMenu/myMeeting';
-import MyMeetingEntered from './\bProfileMenu/myMeetingEntered';
-import { meetings, dummyUser, dummyPostingDetails } from '../../data';
+import { User } from '../../../models/user.model';
+import { dummyUser } from '../../../data';
+import MyMeeting from './MyMeeting';
+import MyMeetingEntered from './MyMeetingEntered';
+import UserHeaderForm, { toggleMenu } from '../UserHeaderForm';
 
 interface ProfileProps {
   user_id: string | undefined;
@@ -10,9 +11,7 @@ interface ProfileProps {
 
 const ProfileForm = ({ user_id }: ProfileProps) => {
   const [userData, setUserData] = useState<User | null>(null);
-
-  // 왼쪽 메뉴 항목
-  const menuItems = ['내프로필', '내가 참여한 모임', '내가 생성한 모임'];
+  const [selectedMenu, setSelectedMenu] = useState<string>('마이 페이지');
 
   // 내 정보
   const securitySettings = [
@@ -20,7 +19,8 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
     { label: '개인정보', buttonLabel: '수정', buttonClass: 'text-green-500' },
   ];
 
-  // localStorage에서 유저 데이터 가져오기
+  // 현재 localStorage -> API로 변경
+  //user_id를 통해 axios로 해당 user_id에 대한 데이터 요청
   useEffect(() => {
     if (!user_id) return;
 
@@ -42,27 +42,10 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
 
   return (
     <div className="bg-gray-50 flex min-h-screen">
-      {/* 왼쪽 메뉴 */}
-      <div className="w-1/4 bg-white shadow-md">
-        <div className="p-6">
-          <h2 className="mb-4 text-xl font-bold">내프로필</h2>
-          <ul className="space-y-3">
-            {menuItems.map((item, index) => (
-              <li key={index} className="hover:text-green-500 cursor-pointer text-gray-700">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-8 px-6">
-          <p className="text-gray-600">스마트봇 상담</p>
-          <p className="mt-2 text-gray-600">회원등록</p>
-        </div>
-      </div>
+      <UserHeaderForm mode="leftMenu" />
 
       {/* 오른쪽 콘텐츠 */}
       <div className="w-3/4 p-6">
-        {/* 프로필 섹션 */}
         <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
           <div className="flex items-center">
             <img
@@ -71,8 +54,8 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
               className="mr-4 h-20 w-20 rounded-full bg-gray-300"
             />
             <div>
-              <h3 className="text-2xl font-bold">{userData.introduction || '이름 없음'}</h3>
-              <p className="text-gray-600">{userData.email}</p>
+              <h3 className="text-2xl font-bold">{userData.email || '이름 없음'}</h3>
+              <p className="text-gray-600">{userData.introduction}</p>
             </div>
           </div>
         </div>
