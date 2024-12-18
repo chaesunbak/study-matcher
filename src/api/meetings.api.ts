@@ -21,5 +21,6 @@ export const getMeetings = async (params: getMeetingsParams): Promise<MeetingRes
 };
 
 export const getMeeting = async (id: number): Promise<MeetingDetail> => {
-  return await httpClient.get(`/meeting/${id}`);
+  const response = await httpClient.get(`/meeting/${id}`);
+  return response.data;
 };

@@ -1,19 +1,17 @@
-// import { useParams } from 'react-router';
 import { useOutletContext } from 'react-router';
 import GroupMemberSection from '../components/groupdetail/GroupMemberSection';
-import { dummyMeetingDetail } from '../data';
+import { MeetingDetail } from '../models/meeting.model';
 
-interface ContextType {
-  group: typeof dummyMeetingDetail;
+interface GroupOutletContextProps {
+  meeting: MeetingDetail;
 }
 
 const GroupMembers = () => {
-  // const { group_id } = useParams();
-  const { group } = useOutletContext<ContextType>();
+  const { meeting } = useOutletContext<GroupOutletContextProps>();
 
   return (
     <div>
-      <GroupMemberSection group={group} />
+      <GroupMemberSection group={meeting} />
     </div>
   );
 };

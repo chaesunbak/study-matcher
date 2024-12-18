@@ -1,20 +1,19 @@
 import GroupMemberSection from '../components/groupdetail/GroupMemberSection';
 import GroupPostSection from '../components/groupdetail/GroupPostSection';
 import { useOutletContext } from 'react-router';
-import { dummyMeetingDetail, dummyPosts } from '../data';
+import { MeetingDetail } from '../models/meeting.model';
 
-interface ContextType {
-  group: typeof dummyMeetingDetail;
-  posts: typeof dummyPosts;
+interface GroupOutletContextProps {
+  meeting: MeetingDetail;
 }
 
 const GroupMain = () => {
-  const { group, posts } = useOutletContext<ContextType>();
+  const { meeting } = useOutletContext<GroupOutletContextProps>();
 
   return (
     <>
-      <GroupMemberSection group={group} preview />
-      <GroupPostSection posts={posts} preview />
+      <GroupMemberSection group={meeting} preview />
+      <GroupPostSection preview />
     </>
   );
 };
