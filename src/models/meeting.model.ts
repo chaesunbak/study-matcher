@@ -1,5 +1,4 @@
-import { Category } from './category.model';
-import { User } from './user.model';
+import { Post } from './post.model';
 
 export interface Meeting {
   id: number;
@@ -13,9 +12,5 @@ export interface Meeting {
   age_condition: string;
   owner_user_id: number;
   created_at: Date;
-  topic: Category;
-}
-
-export interface MeetingDetail extends Meeting {
-  meeting_members: User[];
+  posts: Post[];
 }

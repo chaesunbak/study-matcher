@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Posting } from '../../models/posting.model';
+import { Posting } from '../../models/post.model';
 import { useParams } from 'react-router';
 import { formatDate } from '../../utils/format';
 
