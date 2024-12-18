@@ -1,48 +1,64 @@
 import { User } from '../../../models/user.model';
-import { Meeting } from '../../../models/meeting.model';
-import dummyPostings, { dummyMeetings } from '../../../data';
+import { MeetingDetail } from '../../../models/meeting.model';
+import dummyPostings, { dummyMeetingDetails } from '../../../data';
 import { formatDate } from '../../../utils/format';
+import { Link, useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 useNavigate
 
 interface MyMeetingProps {
   user: User;
 }
 
 const MyMeeting = ({ user }: MyMeetingProps) => {
-  // 내가 생성한 모임 필터링
-  const createdMeetings: Meeting[] = dummyMeetings.filter(
+  const navigate = useNavigate();
+
+  const createdMeetings: MeetingDetail[] = dummyMeetingDetails.filter(
     (meeting) => meeting.owner_user_id === user.id
   );
 
   return (
-    <div className="p-6">
-      <h2 className="mb-4 text-2xl font-semibold">내가 생성한 모임</h2>
+    <div className="relative p-6">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-2xl font-semibold">내가 생성한 모임</h2>
+
+        <Link
+          className="font-normal text-gray-500 underline-offset-1 hover:underline"
+          to={`/manage/${user.id}`}
+        >
+          더보기 &gt;{' '}
+        </Link>
+      </div>
+
       {createdMeetings.length > 0 ? (
         createdMeetings.map((meeting) => {
           // 작성한 게시글 개수
-          const userPosts = dummyPostings.filter(
-            (post) => post.meeting_id === meeting.id && post.user_id === user.id
+          const userPosts: number = dummyPostings.filter(
+            (post) => post.meeting_id === meeting.id
           ).length;
 
           return (
             <div
               key={meeting.id}
-              className="mb-4 flex items-center rounded-lg border bg-white p-4 shadow-md"
+              onClick={() => navigate(`/groups/${meeting.id}`)}
+              className="hover:border-blue-500 mb-4 flex cursor-pointer items-center rounded-lg border bg-white p-4 shadow-md transition-all duration-300 hover:bg-gray-100"
             >
-              {/* 이미지 */}
               <img
                 src={`https://via.placeholder.com/150`}
                 alt={meeting.title}
                 className="mr-4 h-16 w-24 rounded-lg object-cover"
               />
 
-              {/* 모임 정보 */}
               <div className="flex-1">
                 <h3 className="text-lg font-medium">{meeting.title}</h3>
                 <p className="mt-1 text-sm text-gray-600">
                   생성 날짜: {formatDate(meeting.created_at)}
                 </p>
-                <p className="mt-1 text-sm text-gray-600">그룹장: {user.email}</p>
-                <p className="mt-1 text-sm text-gray-600">작성한 게시글 개수: {userPosts}개</p>
+                <p className="mt-1 text-sm text-gray-600">
+                  종료 날짜: {formatDate(meeting.end_date)}
+                </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  전체 멤버 수: {meeting.meeting_members.length}
+                </p>
+                <p className="mt-1 text-sm text-gray-600">전체 게시글 수: {userPosts}개</p>
               </div>
             </div>
           );

@@ -145,8 +145,44 @@ export const dummyMeetings: Meeting[] = [
     topic: Topic.문화_예술,
   },
 ];
-
-export const dummyMeetingDetail: MeetingDetail[] = [
+export const dummyMeetingDetail: MeetingDetail = {
+  id: 1,
+  title: '코딩 공부할 사람?',
+  topic_id: 1,
+  description:
+    '코딩 공부를 함께 할 사람을 찾습니다.\n자바스크립트, 파이썬, 리액트 등 다양한 언어를 배울 수 있습니다.',
+  max_members: 5,
+  start_date: new Date('2024-12-07T12:00:00'),
+  end_date: new Date('2024-12-07T14:00:00'),
+  gender_condition: 'any',
+  age_condition: 'any',
+  owner_user_id: 1,
+  created_at: new Date('2024-12-07T12:00:00'),
+  topic: Topic.취미_오락,
+  meeting_members: [
+    {
+      id: 1,
+      email: 'asdasd@name.com',
+      password: '1234',
+      gender: Gender.male,
+      birthdate: new Date('1990-01-01'),
+      profile_img: 'profile1.jpg',
+      introduction: '안녕하세요, 저는 코딩을 좋아합니다.',
+      created_at: new Date('2024-12-07T12:00:00'),
+    },
+    {
+      id: 2,
+      email: 'qwerty@name.com',
+      password: '5678',
+      gender: Gender.female,
+      birthdate: new Date('1992-02-02'),
+      profile_img: 'profile2.jpg',
+      introduction: '안녕하세요, 저는 코딩을 배우고 싶습니다.',
+      created_at: new Date('2024-12-07T12:00:00'),
+    },
+  ],
+};
+export const dummyMeetingDetails: MeetingDetail[] = [
   {
     id: 1,
     title: '코딩 공부할 사람?',
@@ -194,7 +230,7 @@ export const dummyMeetingDetail: MeetingDetail[] = [
     end_date: new Date('2024-12-09T12:00:00'),
     gender_condition: 'any',
     age_condition: '20-40',
-    owner_user_id: 2,
+    owner_user_id: 1,
     created_at: new Date('2024-12-01T15:00:00'),
     topic: Topic.아웃도어_여행,
     meeting_members: [
@@ -209,7 +245,7 @@ export const dummyMeetingDetail: MeetingDetail[] = [
         created_at: new Date('2024-12-01T15:00:00'),
       },
       {
-        id: 4,
+        id: 1,
         email: 'hiker2@name.com',
         password: 'hike456',
         gender: Gender.female,
@@ -461,7 +497,7 @@ export const users: User[] = [
   {
     id: 1,
     email: 'hong@gmail.com',
-    password: '1234',
+    password: 'qwe123qwe',
     gender: Gender.male,
     birthdate: new Date('1995-01-01'),
     profile_img: 'https://via.placeholder.com/40',
