@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import UserHeaderForm from '../components/user/UserHeaderForm';
-import { useUserStore } from '../\bstore/userStore';
+import { useUserStore } from '../store/userStore';
 import { useState } from 'react';
 
 const Logout = () => {
@@ -45,7 +45,7 @@ const Logout = () => {
               {/* 로그아웃 버튼 */}
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 w-64 rounded-md px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300"
+                className="w-64 rounded-md bg-red-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 hover:bg-red-600"
               >
                 로그아웃
               </button>

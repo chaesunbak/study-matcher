@@ -1,5 +1,4 @@
 // import { useParams } from 'react-router';
-import { dummyPostingsDetail } from '../data';
 import Button from '../components/common/Button';
 
 const PostDetail = () => {
@@ -7,17 +6,17 @@ const PostDetail = () => {
   return (
     <div className="container mx-auto">
       <div className="mb-6 rounded">
-        <h2 className="mb-2 font-bold">{dummyPostingsDetail.title}</h2>
+        {/* <h2 className="mb-2 font-bold">{dummyPost.title}</h2> */}
         <div className="mb-4 flex items-center font-thin text-gray-500">
           <span className="mr-2">닉네임</span>
-          <span>{dummyPostingsDetail.created_at.toLocaleString()}</span>
+          {/* <span>{dummyPost.created_at.toLocaleString()}</span> */}
         </div>
-        <p className="text-lg leading-relaxed">{dummyPostingsDetail.content}</p>
+        {/* <p className="text-lg leading-relaxed">{dummyPost.content}</p> */}
         <div></div>
       </div>
       <div className="mb-6 rounded">
         <div>
-          {dummyPostingsDetail.replies.map((reply) => (
+          {/* {dummyPost.replies.map((reply) => (
             <div key={reply.id} className="mb-4 pb-4">
               <div className="mb-2 flex items-center text-gray-600">
                 <span className="mr-2">닉네임</span>
@@ -25,7 +24,7 @@ const PostDetail = () => {
               </div>
               <p className="leading-relaxed text-gray-500">{reply.content}</p>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
       <div className="rounded">

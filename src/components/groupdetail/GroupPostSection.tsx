@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
-import { Posting } from '../../models/posting.model';
+import { Post } from '../../models/post.model';
 import { useParams } from 'react-router';
 import { formatDate } from '../../utils/format';
 
 interface GroupPostSectionProps {
-  posts: Posting[];
+  posts: Post[];
   preview?: boolean;
 }
 
@@ -33,7 +33,7 @@ const GroupPostSection = ({ posts, preview = false }: GroupPostSectionProps) => 
                 <p>{post.content}</p>
                 <div className="flex gap-2 text-sm font-light text-gray-500">
                   <span>닉네임</span>
-                  <span>{formatDate(post.created_at)}</span>
+                  <span>{formatDate(new Date(post.created_at))}</span>
                 </div>
               </div>
             </div>

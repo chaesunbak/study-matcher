@@ -1,15 +1,12 @@
-export enum Gender {
-  male = '남성',
-  female = '여성',
-}
+type Gender = 'male' | 'female';
 
 export interface User {
   id: number;
   email: string;
-  password: string;
+  username: string;
   gender: Gender;
-  birthdate: Date;
+  birth_date: string;
   profile_img: string;
   introduction: string;
-  created_at: Date;
+  created_at: string;
 }
