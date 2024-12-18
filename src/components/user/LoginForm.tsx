@@ -4,7 +4,7 @@ import { z } from 'zod';
 import Input from './InputForm';
 import { Link, useNavigate } from 'react-router';
 import Button from '../common/Button';
-import { useUserStore } from '../../\bstore/userStore';
+import { useUserStore } from '../../store/userStore';
 
 export const loginSchema = z.object({
   email: z

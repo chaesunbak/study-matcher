@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
-import { useUserStore } from '../../\bstore/userStore';
+import { useUserStore } from '../../store/userStore';
 
 // 메뉴 항목
 export const toggleMenu = [
