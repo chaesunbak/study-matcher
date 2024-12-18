@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface State {
-  userId: string;
+  userJwt: string;
 }
 
 interface Actions {
@@ -13,15 +13,15 @@ interface Actions {
 }
 
 const initialState: State = {
-  userId: '',
+  userJwt: '',
 };
 
 export const useUserStore = create(
   devtools<State & Actions>((set) => ({
     ...initialState,
     actions: {
-      loginUser: (userId: string) => {
-        set({ userId: userId });
+      loginUser: (userJwt: string) => {
+        set({ userJwt: userJwt });
       },
       logOutUser: () => set(initialState),
     },
