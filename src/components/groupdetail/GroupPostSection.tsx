@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
-import { Posting } from '../../models/post.model';
+import { Post } from '../../models/post.model';
 import { useParams } from 'react-router';
 import { formatDate } from '../../utils/format';
 
 interface GroupPostSectionProps {
-  posts: Posting[];
+  posts: Post[];
   preview?: boolean;
 }
 

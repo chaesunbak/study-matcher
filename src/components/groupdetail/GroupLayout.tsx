@@ -1,11 +1,11 @@
 // import { useParams } from 'react-router';
 import GroupDetailHeader from './GroupDetailHeader';
-import { dummyMeetingDetail, dummyPostings } from '../../data';
 import { Outlet } from 'react-router';
+import { dummyMeetingDetail, dummyPosts } from '../../data';
 
 const GroupLayout = () => {
   const group = dummyMeetingDetail;
-  const posts = dummyPostings;
+  const posts = dummyPosts;
   // const { group_id } = useParams();
   return (
     <div className="flex flex-col gap-4 md:grid md:grid-cols-3">

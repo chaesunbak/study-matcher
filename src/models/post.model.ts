@@ -4,8 +4,19 @@ export interface Post {
   user_id: number;
   title: string;
   img: string;
-  created_at: Date;
   content: string;
+  created_at: string;
+}
+
+export interface PostWithUser extends Post {
+  user: {
+    id: number;
+    profile_img: string;
+    username: string;
+  };
+}
+
+export interface PostDetail extends Post {
   user: {
     id: number;
     profile_img: string;

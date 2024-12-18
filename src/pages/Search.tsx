@@ -1,7 +1,6 @@
 import SearchInput from '../components/SearchInput';
 import { useSearchParams } from 'react-router';
-import { dummyMeetings } from '../data';
-import GroupSummary from '../components/GroupSummary';
+// import GroupSummary from '../components/GroupSummary';
 import GroupSearchFilter from '../components/search/GroupSearchFilter';
 
 const Search = () => {
@@ -12,9 +11,9 @@ const Search = () => {
       <SearchInput />
       <GroupSearchFilter />
       <div className="flex flex-col gap-3 md:gap-5">
-        {dummyMeetings.map((meeting) => (
+        {/* {dummyMeetings.map((meeting) => (
           <GroupSummary key={meeting.id} meeting={meeting} />
-        ))}
+        ))} */}
       </div>
     </div>
   );

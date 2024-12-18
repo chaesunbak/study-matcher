@@ -23,7 +23,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
       {/* TODO : 그룹에 이미 참여 한 경우 그룹의 설명은 보여주지 않습니다 */}
       <div className="flex items-center gap-2">
         <span className="rounded-lg bg-slate-300 px-2 py-1 text-sm dark:bg-slate-800">
-          {group.topic}
+          {/* {group.topic} */}
         </span>
         {/* TODO 여기에 연령제한 성별제한 등을 추가합니다 */}
       </div>
