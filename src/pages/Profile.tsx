@@ -1,4 +1,4 @@
-import { useOutletContext, useParams } from 'react-router';
+import { useOutletContext } from 'react-router';
 import ProfileForm from '../components/user/ProfileMenu/ProfileForm';
 
 interface ContextType {

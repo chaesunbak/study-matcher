@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { requestHandler } from '../api/http';
 import { Topic } from '../models/topic.model';
+import { getTopics } from '../api/topcis.api';
 
 // TODO : 후에 리액트 쿼리를 활용하여 캐시
 const useTopics = () => {
@@ -11,8 +11,8 @@ const useTopics = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const data = await requestHandler<Topic[]>('get', '/topics');
-        setTopics(data);
+        const topics = await getTopics();
+        setTopics(topics);
       } catch (error) {
         console.error(error);
         setError('Failed to fetch topics');

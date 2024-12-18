@@ -1,20 +1,20 @@
 import { Link } from 'react-router';
-import { Post } from '../../models/post.model';
 import { useParams } from 'react-router';
 import { formatDate } from '../../utils/format';
+import useMeetingPosts from '../../hooks/userPosts';
 
 interface GroupPostSectionProps {
-  posts: Post[];
   preview?: boolean;
 }
 
-const GroupPostSection = ({ posts, preview = false }: GroupPostSectionProps) => {
+const GroupPostSection = ({ preview = false }: GroupPostSectionProps) => {
   const { group_id } = useParams();
+  const { posts, total } = useMeetingPosts(Number(group_id));
   const postsToShow = preview ? posts.slice(0, 4) : posts;
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
-        <h3>게시글 {posts.length}</h3>
+        <h3>게시글 {total}</h3>
         {preview && (
           <Link
             className="font-normal text-gray-500 underline-offset-1 hover:underline"

@@ -9,12 +9,12 @@ interface GroupMemberSectionProps {
 
 const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps) => {
   const { group_id } = useParams();
-  console.log(group);
-  // const membersToShow = preview ? group.  .slice(0, 4) : group.meeting_members;
+
+  const membersToShow = preview ? group.meeting_users.slice(0, 4) : group.meeting_users;
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
-        {/* <h3>멤버 {group.meeting_members.length}</h3> */}
+        <h3>멤버 {group.meeting_users.length}</h3>
 
         {preview && (
           <Link
@@ -27,15 +27,20 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
       </div>
 
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
-        {/* {membersToShow.map((member) => (
+        {membersToShow.map((member) => (
           <div key={member.id} className="flex items-center gap-2">
             <div className="size-12 rounded-full bg-gray-200 transition-all" />
+            {/* <img
+              className="size-12 rounded-full"
+              src={member.user.profile_img}
+              alt={`${member.user.username}의 프로필 이미지`}
+            /> */}
             <div className="flex flex-col">
-              <p>{member.email}</p> TODO : 이메일 대신 닉네임을 표시합니다.
-              <p>{member.introduction}</p>
+              <span>{member.user.username}</span>
+              <span>{member.user.introduction}</span>
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );

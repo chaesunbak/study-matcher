@@ -1,17 +1,27 @@
-// import { useParams } from 'react-router';
 import GroupDetailHeader from './GroupDetailHeader';
 import { Outlet } from 'react-router';
-import { dummyMeetingDetail, dummyPosts } from '../../data';
+import useMeeting from '../../hooks/useMeeting';
+import { useParams } from 'react-router';
 
 const GroupLayout = () => {
-  const group = dummyMeetingDetail;
-  const posts = dummyPosts;
-  // const { group_id } = useParams();
+  const { group_id } = useParams();
+
+  const { meeting } = useMeeting(Number(group_id));
+
+  // TODO : 후에 404 작업
+  if (!meeting) {
+    return (
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+        404
+        <div className="flex flex-col gap-4 md:col-span-2">404</div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-      <GroupDetailHeader group={group} />
+      <GroupDetailHeader group={meeting} />
       <div className="flex flex-col gap-4 md:col-span-2">
-        <Outlet context={{ group, posts }} />
+        <Outlet context={{ meeting }} />
       </div>
     </div>
   );

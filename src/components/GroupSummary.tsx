@@ -8,26 +8,24 @@ interface MeetingSummaryProps {
 
 const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
   return (
-    <Link to={`/groups/${meeting.id}`} className="flex items-center gap-4">
+    <Link to={`/groups/${meeting.id}`} className="flex items-center gap-4 transition-all">
       <div>
         <div className="size-20 rounded-xl bg-gray-200 transition-all md:size-24 md:rounded-2xl" />
+        {/* TDOO: 현재는 스켈레톤을 띄우고 있으나 나중에 실제 이미지로 변경 */}
         {/* <img src={meeting.imgUrl} alt={meeting.title} /> */}
       </div>
       <div className="flex h-full flex-col gap-2">
-        <h3>{meeting.title}</h3>
+        <h3 className="hover:underline">{meeting.title}</h3>
         <p>{meeting.description}</p>
-        <div className="flex items-center justify-center text-sm font-thin">
-          <span className="flex items-center text-gray-500">
+        <div className="flex items-center gap-2 text-sm font-thin text-gray-500">
+          <span className="flex items-center gap-1">
             <LuCalendar />
-            {/* {meeting.created_at.toLocaleDateString()} */}
+            {new Date(meeting.created_at).toLocaleDateString()}
           </span>
-          <span> • </span>
-          <span className="flex items-center">
+          <span className="flex items-center gap-1">
             <LuUser />
             {15}
           </span>
-          <span> • </span>
-          {/* <span>{meeting.topic}</span> */}
         </div>
       </div>
     </Link>

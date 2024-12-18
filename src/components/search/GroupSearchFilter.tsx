@@ -1,43 +1,33 @@
 import CategoryButton from '../CategoryButton';
 import { useSearchParams } from 'react-router';
-import { useEffect } from 'react';
 import useTopics from '../../hooks/useTopics';
 
 const GroupSearchFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { topics = [], loading, error } = useTopics();
+  const { topics = [] } = useTopics();
 
-  useEffect(() => {
-    if (!searchParams.get('category')) {
-      setSearchParams({ category: '전체', sort: 'recommend' });
-    }
-  }, [searchParams, setSearchParams]);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const topicsWithAll = [{ id: 0, name: '전체' }, ...topics];
 
   return (
     <div>
       <div className="mb-2">
         <h3 className="mb-2">카테고리</h3>
         <div className="flex flex-wrap gap-2">
-          {!loading &&
-            topics.map((topic) => (
-              <CategoryButton
-                key={topic.id}
-                category={topic.name}
-                onClick={() => {
-                  const newSearchParams = new URLSearchParams(searchParams);
-                  newSearchParams.set('category', topic.name);
-                  setSearchParams(newSearchParams);
-                }}
-                isActive={topic.name === searchParams.get('category')}
-              />
-            ))}
+          {topicsWithAll.map((topic) => (
+            <CategoryButton
+              key={topic.id}
+              category={topic.name}
+              onClick={() => {
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.set('topic', topic.id.toString());
+                setSearchParams(newSearchParams);
+              }}
+              isActive={topic.id === parseInt(searchParams.get('topic') || '0', 10)}
+            />
+          ))}
         </div>
       </div>
-
+      {/* TODO : 정렬과 관련한 기능은 나중에 구현할 예정입니다 */}
       {/* <div>
         <h3 className="mb-2">정렬</h3>
         <div className="flex gap-2">

@@ -162,7 +162,7 @@ export const dummyMeetingDetail: MeetingDetail = {
   max_members: 10,
   start_date: '2024-12-14T19:00:00.000Z',
   end_date: '2024-12-14T21:00:00.000Z',
-  gneder_condition: 'any',
+  gender_condition: 'any',
   age_condition: '18-35',
   owner_user_id: 1,
   created_at: '2024-12-14T10:36:27.961Z',
