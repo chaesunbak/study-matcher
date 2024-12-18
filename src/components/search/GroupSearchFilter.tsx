@@ -27,7 +27,7 @@ const GroupSearchFilter = () => {
           ))}
         </div>
       </div>
-      // TODO : 정렬과 관련한 기능은 나중에 구현할 예정입니다
+      {/* TODO : 정렬과 관련한 기능은 나중에 구현할 예정입니다 */}
       {/* <div>
         <h3 className="mb-2">정렬</h3>
         <div className="flex gap-2">

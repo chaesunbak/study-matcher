@@ -11,7 +11,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
     <Link to={`/groups/${meeting.id}`} className="flex items-center gap-4 transition-all">
       <div>
         <div className="size-20 rounded-xl bg-gray-200 transition-all md:size-24 md:rounded-2xl" />
-        // TDOO: 현재는 스켈레톤을 띄우고 있으나 나중에 실제 이미지로 변경
+        {/* TDOO: 현재는 스켈레톤을 띄우고 있으나 나중에 실제 이미지로 변경 */}
         {/* <img src={meeting.imgUrl} alt={meeting.title} /> */}
       </div>
       <div className="flex h-full flex-col gap-2">
