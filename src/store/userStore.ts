@@ -1,29 +1,46 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+export interface UserInfo {
+  email: string;
+  sub: number;
+  username: string;
+  exp: number;
+  iat: number;
+}
+
 interface State {
-  userJwt: string;
+  user_info: UserInfo;
 }
 
 interface Actions {
   actions: {
-    loginUser: (email: string) => void;
+    loginUser: (user_info: UserInfo) => void;
     logOutUser: () => void;
   };
 }
 
 const initialState: State = {
-  userJwt: '',
+  user_info: {
+    email: '',
+    sub: 0,
+    username: '',
+    exp: 0,
+    iat: 0,
+  },
 };
 
 export const useUserStore = create(
-  devtools<State & Actions>((set) => ({
-    ...initialState,
-    actions: {
-      loginUser: (userJwt: string) => {
-        set({ userJwt: userJwt });
+  devtools<State & Actions>(
+    (set) => ({
+      ...initialState,
+      actions: {
+        loginUser: (user_info: UserInfo) => {
+          set({ user_info: user_info });
+        },
+        logOutUser: () => set(initialState),
       },
-      logOutUser: () => set(initialState),
-    },
-  }))
+    }),
+    { name: 'userStore' }
+  )
 );
