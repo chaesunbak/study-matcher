@@ -33,7 +33,7 @@ const GroupPostSection = ({ posts, preview = false }: GroupPostSectionProps) => 
                 <p>{post.content}</p>
                 <div className="flex gap-2 text-sm font-light text-gray-500">
                   <span>닉네임</span>
-                  <span>{formatDate(post.created_at)}</span>
+                  <span>{formatDate(new Date(post.created_at))}</span>
                 </div>
               </div>
             </div>

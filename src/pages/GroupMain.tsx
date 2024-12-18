@@ -1,11 +1,11 @@
-import GroupMemberPreview from '../components/groupdetail/GroupMemberSection';
-import GroupPostPreview from '../components/groupdetail/GroupPostSection';
+import GroupMemberSection from '../components/groupdetail/GroupMemberSection';
+import GroupPostSection from '../components/groupdetail/GroupPostSection';
 import { useOutletContext } from 'react-router';
-import { dummyMeetingDetail, dummyPostings } from '../data';
+import { dummyMeetingDetail, dummyPosts } from '../data';
 
 interface ContextType {
   group: typeof dummyMeetingDetail;
-  posts: typeof dummyPostings;
+  posts: typeof dummyPosts;
 }
 
 const GroupMain = () => {
@@ -13,8 +13,8 @@ const GroupMain = () => {
 
   return (
     <>
-      <GroupMemberPreview group={group} preview />
-      <GroupPostPreview posts={posts} preview />
+      <GroupMemberSection group={group} preview />
+      <GroupPostSection posts={posts} preview />
     </>
   );
 };

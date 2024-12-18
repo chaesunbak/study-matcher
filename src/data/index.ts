@@ -1,5 +1,5 @@
 import { Meeting, MeetingDetail } from '../models/meeting.model';
-import { Post, PostDetail, PostWithUser } from '../models/post.model';
+import { PostDetail, PostWithUser } from '../models/post.model';
 
 export const dummyMeetings: Meeting[] = [
   {

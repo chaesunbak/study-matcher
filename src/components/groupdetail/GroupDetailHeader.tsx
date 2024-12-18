@@ -11,9 +11,9 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           <h2>{group.title}</h2>
           <div className="flex items-center gap-2">
             <span className="text-sm font-thin text-gray-500">
-              멤버 {group.meeting_members.length}명
+              멤버 {group.meeting_users.length}명
             </span>
-            <span className="text-sm font-light text-gray-500">{`${formatDate(group.created_at)} 생성`}</span>
+            <span className="text-sm font-light text-gray-500">{`${formatDate(new Date(group.created_at))} 생성`}</span>
           </div>
         </div>
       </div>

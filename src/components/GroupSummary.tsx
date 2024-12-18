@@ -19,7 +19,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
         <div className="flex items-center justify-center text-sm font-thin">
           <span className="flex items-center text-gray-500">
             <LuCalendar />
-            {meeting.created_at.toLocaleDateString()}
+            {/* {meeting.created_at.toLocaleDateString()} */}
           </span>
           <span> • </span>
           <span className="flex items-center">
@@ -27,7 +27,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
             {15}
           </span>
           <span> • </span>
-          <span>{meeting.topic}</span>
+          {/* <span>{meeting.topic}</span> */}
         </div>
       </div>
     </Link>

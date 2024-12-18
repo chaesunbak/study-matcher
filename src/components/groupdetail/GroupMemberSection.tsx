@@ -1,14 +1,15 @@
 import { Link } from 'react-router';
 import { useParams } from 'react-router';
-import { Meeting } from '../../models/meeting.model';
+import { MeetingDetail } from '../../models/meeting.model';
 
 interface GroupMemberSectionProps {
-  group: Meeting;
+  group: MeetingDetail;
   preview?: boolean;
 }
 
 const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps) => {
   const { group_id } = useParams();
+  console.log(group);
   // const membersToShow = preview ? group.  .slice(0, 4) : group.meeting_members;
   return (
     <div className="flex flex-col gap-4">
