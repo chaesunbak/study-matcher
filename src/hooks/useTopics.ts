@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { requestHandler } from '../api/http';
 import { Topic } from '../models/topic.model';
 
+// TODO : 후에 리액트 쿼리를 활용하여 캐시
 const useTopics = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
