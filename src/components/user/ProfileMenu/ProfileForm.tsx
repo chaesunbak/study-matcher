@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { User } from '../../../models/user.model';
-import { dummyUser } from '../../../data';
 import MyMeeting from './MyMeeting';
 import MyMeetingEntered from './MyMeetingEntered';
 import { Link } from 'react-router';
+import useUsers from '../../../hooks/useUsers';
 
-interface ProfileProps {
-  user_id: string | undefined;
-}
-
-const ProfileForm = ({ user_id }: ProfileProps) => {
-  const [userData, setUserData] = useState<User | null>(null);
-
+const ProfileForm = () => {
+  const { userData } = useUsers();
   const securitySettings = [
     {
       label: '비밀번호',
@@ -21,19 +14,6 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
     },
     { label: '개인정보', buttonLabel: '수정', buttonClass: 'text-green-500', link: 'modify' },
   ];
-
-  // 현재 localStorage -> API로 변경
-  //user_id를 통해 axios로 해당 user_id에 대한 데이터 요청
-  useEffect(() => {
-    if (!user_id) return;
-
-    const storedData = localStorage.getItem('register');
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-
-      setUserData(parsedData.newUser);
-    }
-  }, [user_id]);
 
   if (!userData) {
     return (
@@ -53,7 +33,7 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
             className="mr-4 h-20 w-20 rounded-full bg-gray-300"
           />
           <div>
-            <h3 className="text-2xl font-bold">{userData.email || '이름 없음'}</h3>
+            <h3 className="text-2xl font-bold">{userData.username || '이름 없음'}</h3>
             <p className="text-gray-600">{userData.introduction}</p>
           </div>
         </div>
@@ -66,7 +46,11 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
           {securitySettings.map((item, index) => (
             <li key={index} className="flex items-center justify-between">
               <span>{item.label}</span>
-              <Link to={`/users/${userData.email}/${item.link}`} className={item.buttonClass}>
+              <Link
+                to={`/users/0/${item.link}`}
+                state={{ state: userData }}
+                className={item.buttonClass}
+              >
                 {item.buttonLabel}
               </Link>
             </li>
@@ -74,9 +58,9 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
         </ul>
       </div>
 
-      <MyMeeting user={dummyUser} />
+      <MyMeeting user={userData} />
 
-      <MyMeetingEntered user={dummyUser} />
+      <MyMeetingEntered user={userData} />
     </div>
   );
 };
