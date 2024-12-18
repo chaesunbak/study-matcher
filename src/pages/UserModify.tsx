@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Gender, User } from '../models/user.model';
+import { User } from '../models/user.model';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,7 +17,7 @@ const ModifySchema = z.object({
     .string({ message: '이메일을 입력하세요.' })
     .nonempty({ message: '이메일을 입력하세요' })
     .email({ message: '이메일 형식이 아닙니다.' }),
-  gender: z.nativeEnum(Gender),
+  gender: z.enum(['male', 'female'], { message: '성별을 선택하세요.' }),
   birthdate: z
     .string({ message: '생년월일을 입력하세요.' })
     .nonempty({ message: '생년월일을 입력하세요' })
@@ -37,7 +37,7 @@ const UserModify = () => {
     resolver: zodResolver(ModifySchema),
     defaultValues: {
       email: '',
-      gender: Gender.male,
+      gender: 'male',
       birthdate: '',
       introduction: '',
     },

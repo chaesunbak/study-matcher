@@ -4,7 +4,7 @@ import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
-import { Gender, User } from '../../models/user.model';
+import { User } from '../../models/user.model';
 
 const SignUpSchema = z
   .object({
@@ -21,7 +21,7 @@ const SignUpSchema = z
     passwordConfirm: z
       .string({ message: '확인 비밀번호를 입력하세요.' })
       .nonempty({ message: '확인 비밀번호를 입력하세요' }),
-    gender: z.nativeEnum(Gender),
+    gender: z.enum(['male', 'femail'], { message: '성별을 선택하세요.' }),
     birthdate: z
       .string({ message: '생년월일을 입력하세요.' })
       .nonempty({ message: '생년월일을 입력하세요' })
@@ -46,7 +46,7 @@ const SignUpForm = () => {
       email: '',
       password: '',
       passwordConfirm: '',
-      gender: Gender.male,
+      gender: 'male',
       birthdate: '',
       introduction: '',
     },
@@ -127,7 +127,7 @@ const SignUpForm = () => {
               className="focus:ring-indigo-500 mt-1 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
             />
             {errors.profile_img && (
-              <p className="text-red-500 mt-1 text-sm">{String(errors.profile_img.message)}</p>
+              <p className="mt-1 text-sm text-red-500">{String(errors.profile_img.message)}</p>
             )}
           </div>
           <Input

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '../../../models/user.model';
-import { dummyUser } from '../../../data';
-import MyMeeting from './MyMeeting';
-import MyMeetingEntered from './MyMeetingEntered';
+// import MyMeeting from './MyMeeting';
+// import MyMeetingEntered from './MyMeetingEntered';
 import { Link } from 'react-router';
 
 interface ProfileProps {
@@ -74,9 +73,9 @@ const ProfileForm = ({ user_id }: ProfileProps) => {
         </ul>
       </div>
 
-      <MyMeeting user={dummyUser} />
+      {/* <MyMeeting user={dummyUser} />
 
-      <MyMeetingEntered user={dummyUser} />
+      <MyMeetingEntered user={dummyUser} /> */}
     </div>
   );
 };
