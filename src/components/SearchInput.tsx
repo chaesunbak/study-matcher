@@ -17,13 +17,13 @@ const SearchInput = ({ className }: SearchInputProps) => {
     if (event.key === 'Enter' && inputRef.current) {
       const keyword = inputRef.current.value;
 
+      // 검색어가 없으면 검색하지 않음 검색을 막아서 실수로 검색되는 것을 방지
+      // 하지만 이미 검색을 한다음에 검색어를 초기화하고 싶으면 검색어를 지우고 엔터를 누르면 검색이 되지 않음
       if (keyword) {
         const newSearchParams = new URLSearchParams(searchParams);
         newSearchParams.set('keyword', keyword);
 
         if (location.pathname === '/') {
-          newSearchParams.set('category', '전체');
-          newSearchParams.set('sort', 'recommend');
           navigate(`/search?${newSearchParams.toString()}`);
         } else {
           setSearchParams(newSearchParams);
