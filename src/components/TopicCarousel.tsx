@@ -4,7 +4,12 @@ import Autoplay from 'embla-carousel-autoplay';
 import useTopics from '../hooks/useTopics';
 import TopicCarouselItem from './TopicCarouselItem';
 const TopicCarousel = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [Autoplay()]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({
+      delay: 6000,
+      stopOnMouseEnter: true,
+    }),
+  ]);
   const { topics } = useTopics();
 
   useEffect(() => {
