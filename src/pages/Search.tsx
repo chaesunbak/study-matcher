@@ -1,11 +1,38 @@
+import { useEffect, useRef } from 'react';
 import SearchInput from '../components/SearchInput';
-
 import GroupSearchFilter from '../components/search/GroupSearchFilter';
-import useMeetings from '../hooks/useMeetings';
+import useMeetingsInfinite from '../hooks/useMeetingsInfinite';
 import GroupSummary from '../components/GroupSummary';
 
 const Search = () => {
-  const { meetings } = useMeetings();
+  const { data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useMeetingsInfinite();
+
+  const observerRef = useRef<IntersectionObserver>();
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observerRef.current.observe(loadMoreRef.current);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  const meetings = data?.pages.flatMap((page) => page.meeting) ?? [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -15,9 +42,12 @@ const Search = () => {
         {meetings.map((meeting) => (
           <GroupSummary key={meeting.id} meeting={meeting} />
         ))}
-        {/* TODO :현재는 1페이지만 보여주고 있습니다 후에 페이지네이션을 구현하거나 무한스크롤을
-        추가할 예정입니다 */}
-        {/* <button>더보기</button> */}
+
+        {isFetching && !isFetchingNextPage && <div>로딩중...</div>}
+        {!isFetching && meetings.length === 0 && <div>검색 결과가 없습니다.</div>}
+        {isFetchingNextPage && <div>추가 데이터 로딩중...</div>}
+
+        <div ref={loadMoreRef} className="h-10" />
       </div>
     </div>
   );
