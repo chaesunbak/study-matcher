@@ -5,6 +5,7 @@ import Input from './InputForm';
 import { Link, useNavigate } from 'react-router';
 import Button from '../common/Button';
 import { useUserStore } from '../../store/userStore';
+import { requestHandlerUser } from '../../api/usersApi/userHttp';
 
 export const loginSchema = z.object({
   email: z
@@ -20,7 +21,6 @@ export const loginSchema = z.object({
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { userId } = useUserStore((state) => state); // 로그인 상태 확인
   const { loginUser } = useUserStore((state) => state.actions); // 로그인 액션 가져오기
   const {
     handleSubmit,
@@ -28,29 +28,24 @@ const LoginForm = () => {
     control,
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    const registerData = localStorage.getItem('register'); // 회원가입 정보 가져오기
-    if (registerData) {
-      const loginData = JSON.parse(registerData);
+  const onSubmit = async (data: { email: string; password: string }) => {
+    try {
+      const response = await requestHandlerUser('post', '/users/login', data);
 
-      // 이미 로그인된 상태인지 확인
-      if (userId === data.email) {
-        alert('이미 로그인 되었습니다');
-        return;
-      }
+      if (response.status === 201) {
+        const { access_token } = response.data;
+        const { user_info } = response.data;
+        loginUser(user_info);
+        sessionStorage.setItem('access_token', access_token);
 
-      // 이메일 및 비밀번호 확인
-      if (loginData.newUser.email === data.email && loginData.newUser.password === data.password) {
-        alert('로그인 성공');
-
-        console.log('로그인 성공:', loginData.newUser.email);
-        loginUser(loginData.newUser.email);
+        alert('로그인 성공!');
         navigate('/');
       } else {
-        alert('로그인 실패: 이메일 또는 비밀번호가 일치하지 않습니다');
+        alert('로그인에 실패했습니다. 다시 시도하세요.');
       }
-    } else {
-      alert('회원가입 정보가 없습니다. 먼저 회원가입을 진행해주세요.');
+    } catch (error) {
+      console.error('로그인 요청 중 에러 발생:', error);
+      alert('서버와의 통신에 문제가 발생했습니다.');
     }
   };
 
