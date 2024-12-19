@@ -13,6 +13,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@mui/material": "^6.1.10",
+    "@tanstack/react-query": "^5.62.8",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "firebase": "^11.0.2",
