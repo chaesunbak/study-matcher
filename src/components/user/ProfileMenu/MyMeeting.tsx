@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import { UserResponse } from '../../../models/user.model';
-import { formatDate } from '../../../utils/format';
-import { Link, useNavigate } from 'react-router-dom';
-import { requestHandler } from '../../../api/http';
+import { Link } from 'react-router-dom';
 
 interface MyMeetingProps {
   user: UserResponse;
