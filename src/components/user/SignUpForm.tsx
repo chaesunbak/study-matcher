@@ -4,7 +4,7 @@ import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
-import { User } from '../../models/user.model';
+// import { User } from '../../models/user.model';
 
 const SignUpSchema = z
   .object({
@@ -21,7 +21,7 @@ const SignUpSchema = z
     passwordConfirm: z
       .string({ message: '확인 비밀번호를 입력하세요.' })
       .nonempty({ message: '확인 비밀번호를 입력하세요' }),
-    gender: z.enum(['male', 'femail'], { message: '성별을 선택하세요.' }),
+    gender: z.enum(['male', 'female'], { message: '성별을 선택하세요.' }),
     birthdate: z
       .string({ message: '생년월일을 입력하세요.' })
       .nonempty({ message: '생년월일을 입력하세요' })
@@ -54,18 +54,19 @@ const SignUpForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
-    const newUser: User = {
-      id: Date.now(),
-      email: data.email,
-      password: data.password,
-      gender: data.gender,
-      birthdate: new Date(data.birthdate),
-      profile_img: data.profile_img || '',
-      introduction: data.introduction || '',
-      created_at: new Date(),
-    };
+    console.log(data);
+    // const newUser: User = {
+    //   id: Date.now(),
+    //   email: data.email,
+    //   password: data.password,
+    //   gender: data.gender,
+    //   birth_date: new Date(data.birthdate).toISOString(),
+    //   profile_img: data.profile_img || '',
+    //   introduction: data.introduction || '',
+    //   created_at: new Date().toISOString(),
+    // };
 
-    localStorage.setItem('register', JSON.stringify({ newUser }));
+    // localStorage.setItem('register', JSON.stringify({ newUser }));
     alert('회원가입 성공!');
     navigate('/login');
   };
