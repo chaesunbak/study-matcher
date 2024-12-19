@@ -1,6 +1,5 @@
 import { UserResponse } from '../../../models/user.model';
-import { formatDate } from '../../../utils/format';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 interface MyMeetingEnteredProps {
   user: UserResponse;
