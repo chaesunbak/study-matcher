@@ -31,14 +31,14 @@ const GroupCreate = () => {
     resolver: zodResolver(groupCreateSchema),
   });
 
-  // if (!accessToken) {
-  //   return (
-  //     <div>
-  //       <h1>GroupCreate</h1>
-  //       <p>You need to be logged in to create a group</p>
-  //     </div>
-  //   );
-  // }
+  if (!accessToken) {
+    return (
+      <div>
+        <h1>GroupCreate</h1>
+        <p>You need to be logged in to create a group</p>
+      </div>
+    );
+  }
 
   const onSubmit = (data: GroupFormData) => {
     const params: CreateMeetingParams = {
