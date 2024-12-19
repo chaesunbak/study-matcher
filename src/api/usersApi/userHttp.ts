@@ -62,7 +62,7 @@ export const requestHandlerUser = async <T, U = any>(
       return await axiosInstance.post(url, payload ?? { default: 'default_value' });
 
     case 'put':
-      return await axiosInstance.put(url, payload);
+      return await axiosInstance.put(url, payload ?? { default: 'default_value' });
 
     case 'delete':
       return await axiosInstance.delete(url);
