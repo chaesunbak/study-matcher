@@ -1,5 +1,6 @@
 import { Post } from './post.model';
 import { User } from './user.model';
+import { Topic } from './topic.model';
 
 export interface Meeting {
   id: number;
@@ -14,6 +15,7 @@ export interface Meeting {
   owner_user_id: number;
   created_at: string;
   posts: Post[];
+  topic: Topic;
 }
 
 export interface MeetingDetail {
@@ -29,6 +31,7 @@ export interface MeetingDetail {
   owner_user_id: number;
   created_at: string;
   meeting_users: MeetingUser[];
+  topic: Topic;
 }
 
 export interface MeetingUser {

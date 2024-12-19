@@ -25,7 +25,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
       <div className="flex flex-wrap items-center gap-2">
         {/* TODO : topic_id를 topic_name으로 변경합니다. */}
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
-          {`주제 : ${group.topic_id}`}
+          {`주제 : ${group.topic.name}`}
         </span>
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
           {`정원 : ${group.max_members}명`}
