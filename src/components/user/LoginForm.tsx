@@ -21,7 +21,7 @@ export const loginSchema = z.object({
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { loginUser } = useUserStore((state) => state.actions); // 로그인 액션 가져오기
+  const { loginUser } = useUserStore((state) => state.actions);
   const {
     handleSubmit,
     formState: { errors },
@@ -29,10 +29,14 @@ const LoginForm = () => {
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = async (data: { email: string; password: string }) => {
-    try {
-      const response = await requestHandlerUser('post', '/users/login', data);
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('password', data.password);
 
-      if (response.status === 200) {
+    try {
+      const response = await requestHandlerUser('post', '/users/login', formData);
+      const responseCode = response.status;
+      if (responseCode === 200) {
         const { access_token } = response.data;
         const { user_info } = response.data;
         loginUser(user_info);
@@ -40,8 +44,12 @@ const LoginForm = () => {
 
         alert('로그인 성공!');
         navigate('/');
+      } else if (responseCode === 401) {
+        alert('비밀번호가 일치하지 않습니다.');
+      } else if (responseCode == 404) {
+        alert('존재하지 않는 이메일(아이디)입니다.');
       } else {
-        alert('로그인에 실패했습니다. 다시 시도하세요.');
+        alert('로그인 실패');
       }
     } catch (error) {
       console.error('로그인 요청 중 에러 발생:', error);
