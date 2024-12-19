@@ -17,13 +17,13 @@ const ResetPwForm = () => {
     handleSubmit,
     formState: { errors },
     control,
-    reset,
-    setError,
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
-  const handleEmailSubmit = async (data: { email: string }) => {};
+  // const handleEmailSubmit = async (data: { email: string }) => {};
 
-  const onSubmit = async (data: { verificationCode?: string }) => {};
+  const onSubmit = async (data: { verificationCode?: string }) => {
+    console.log(data);
+  };
 
   return (
     <div className="relative rounded-xl bg-white p-6 shadow-lg">
