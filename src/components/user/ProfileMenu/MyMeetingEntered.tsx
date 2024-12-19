@@ -29,6 +29,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
       </div>
       {/* 
       {enteredMeetings.length > 0 ? (
+
         enteredMeetings.map((meeting) => (
           <div
             key={meeting.id}
