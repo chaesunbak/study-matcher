@@ -1,6 +1,5 @@
 import { UserResponse } from '../../../models/user.model';
-
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface MyMeetingProps {
   user: UserResponse;
