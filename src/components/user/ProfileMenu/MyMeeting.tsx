@@ -1,19 +1,19 @@
-import { User } from '../../../models/user.model';
-import { MeetingDetail } from '../../../models/meeting.model';
-import dummyPostings, { dummyMeetingDetails } from '../../../data';
+import { useEffect } from 'react';
+import { UserResponse } from '../../../models/user.model';
 import { formatDate } from '../../../utils/format';
-import { Link, useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 useNavigate
+import { Link, useNavigate } from 'react-router-dom';
+import { requestHandler } from '../../../api/http';
 
 interface MyMeetingProps {
-  user: User;
+  user: UserResponse;
 }
 
 const MyMeeting = ({ user }: MyMeetingProps) => {
   const navigate = useNavigate();
 
-  const createdMeetings: MeetingDetail[] = dummyMeetingDetails.filter(
-    (meeting) => meeting.owner_user_id === user.id
-  );
+  // const createdMeetings: MeetingDetail[] = dummyMeetingDetails.filter(
+  //   (meeting) => meeting.owner_user_id === user.id
+  // );
 
   return (
     <div className="relative p-6">
@@ -28,7 +28,7 @@ const MyMeeting = ({ user }: MyMeetingProps) => {
         </Link>
       </div>
 
-      {createdMeetings.length > 0 ? (
+      {/* {createdMeetings.length > 0 ? (
         createdMeetings.map((meeting) => {
           // 작성한 게시글 개수
           const userPosts: number = dummyPostings.filter(
@@ -65,7 +65,7 @@ const MyMeeting = ({ user }: MyMeetingProps) => {
         })
       ) : (
         <p className="text-gray-600">생성한 모임이 없습니다.</p>
-      )}
+      )} */}
     </div>
   );
 };

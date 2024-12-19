@@ -1,19 +1,17 @@
-import { User } from '../../../models/user.model';
-import { MeetingDetail } from '../../../models/meeting.model';
-import { dummyMeetingDetails } from '../../../data';
+import { UserResponse } from '../../../models/user.model';
 import { formatDate } from '../../../utils/format';
 import { Link, useNavigate } from 'react-router';
 
 interface MyMeetingEnteredProps {
-  user: User;
+  user: UserResponse;
 }
 
 const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const enteredMeetings: MeetingDetail[] = dummyMeetingDetails.filter((meeting) =>
-    meeting.meeting_members.some((member) => member.id === user.id)
-  );
+  // const enteredMeetings: MeetingDetail[] = dummyMeetingDetails.filter((meeting) =>
+  //   meeting.meeting_members.some((member) => member.id === user.id)
+  // );
 
   return (
     <div className="p-6">
@@ -28,7 +26,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
         </Link>
       </div>
 
-      {enteredMeetings.length > 0 ? (
+      {/* {enteredMeetings.length > 0 ? (
         enteredMeetings.map((meeting) => (
           <div
             key={meeting.id}
@@ -56,7 +54,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
         <div className="bg-gray-50 flex h-32 items-center justify-center rounded-lg">
           <p className="text-gray-600">참여한 모임이 없습니다.</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
