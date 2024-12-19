@@ -1,8 +1,18 @@
 import { MeetingDetail } from '../../models/meeting.model';
 import Button from '../common/Button';
 import { formatDate } from '../../utils/format';
+import { joinMeeting } from '../../api/meetings.api';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
+  const handleParticipation = async () => {
+    try {
+      await joinMeeting(group.id);
+      alert('참여 신청이 완료되었습니다.');
+    } catch (error) {
+      alert('참여 신청에 실패했습니다.');
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
@@ -25,7 +35,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
       <div className="flex flex-wrap items-center gap-2">
         {/* TODO : topic_id를 topic_name으로 변경합니다. */}
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
-          {`주제 : ${group.topic_id}`}
+          {`주제 : ${group.topic.name}`}
         </span>
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
           {`정원 : ${group.max_members}명`}
@@ -46,7 +56,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           {`방장 ID : ${group.owner_user_id}`}
         </span>
       </div>
-      <Button onClick={() => alert(`${group.id} 그룹에 참여합니다.`)}>참가하기</Button>
+      <Button onClick={handleParticipation}>참가하기</Button>
       {/* TODO : 그룹에 참여하는 기능을 구현합니다. */}
       {/* TODO : 그룹에 이미 참여했다면 다른 버튼을 보여주거나 보여주지 않습니다. */}
     </div>

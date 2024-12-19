@@ -32,7 +32,7 @@ const LoginForm = () => {
     try {
       const response = await requestHandlerUser('post', '/users/login', data);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         const { access_token } = response.data;
         const { user_info } = response.data;
         loginUser(user_info);

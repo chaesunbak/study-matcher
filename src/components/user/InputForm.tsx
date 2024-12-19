@@ -10,9 +10,10 @@ type InputProps = {
   name: string;
   placeholder?: string;
   errors: FieldErrors;
-  type?: 'text' | 'password' | 'textarea' | 'select' | 'date' | 'file';
+  type?: 'text' | 'password' | 'textarea' | 'select' | 'date' | 'file' | 'number';
   className?: string;
   options?: Option[];
+  defaultValue?: string | number;
 };
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
   type = 'text',
   className = '',
   options = [],
+  defaultValue = '',
 }: InputProps) => {
   const hasError = Boolean(errors?.[name]);
 
@@ -56,6 +58,9 @@ const Input = ({
       case 'file':
         return <input {...field} type="file" className={baseClass} />;
 
+      case 'number':
+        return <input {...field} type="number" placeholder={placeholder} className={baseClass} />;
+
       default:
         return <input {...field} type={type} placeholder={placeholder} className={baseClass} />;
     }
@@ -65,6 +70,7 @@ const Input = ({
     <Controller
       control={control}
       name={name}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <div className="mb-4">
           {renderInput(field)}
