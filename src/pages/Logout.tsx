@@ -9,6 +9,7 @@ const Logout = () => {
 
   const handleLogout = () => {
     logOutUser();
+    sessionStorage.removeItem('access_token');
     setIsLogOut(true);
   };
 
