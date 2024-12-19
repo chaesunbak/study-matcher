@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { useState } from 'react';
 // import { httpClient } from '../../api/http';
 import Button from '../common/Button';
-import useEmailError from '../hooks/useEmailError';
+import useEmailError from '../../hooks/useEmailError';
 
 export const loginSchema = z.object({
   email: z
@@ -100,7 +100,7 @@ const ForgotPwForm = () => {
                     인증 요청
                   </Button>
                 </div>
-                {emailError && <p className="text-red-500 mt-2 text-sm">{emailError}</p>}
+                {emailError && <p className="mt-2 text-sm text-red-500">{emailError}</p>}
               </div>
             </form>
 
@@ -126,7 +126,7 @@ const ForgotPwForm = () => {
                     </Button>
                   </div>
                   {errors.verificationCode && (
-                    <p className="text-red-500 mt-2 text-sm">{errors.verificationCode.message}</p>
+                    <p className="mt-2 text-sm text-red-500">{errors.verificationCode.message}</p>
                   )}
                 </div>
               </form>
