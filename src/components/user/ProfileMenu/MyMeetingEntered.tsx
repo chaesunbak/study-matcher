@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
-import { UserResponse } from '../../../models/user.model';
 import { Link, useNavigate } from 'react-router';
 import { MeetingDetail, MeetingUser } from '../../../models/meeting.model';
 import { requestHandlerUser } from '../../../api/usersApi/userHttp';
 import { formatDate } from '../../../utils/format';
 
-interface MyMeetingEnteredProps {
-  user: UserResponse;
-}
-
-const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
+const MyMeetingEntered = () => {
   const navigate = useNavigate();
 
   const [userMeeting, setUserMeeting] = useState<MeetingDetail[]>([]);
@@ -46,7 +41,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
 
         <Link
           className="font-normal text-gray-500 underline-offset-1 hover:underline"
-          to={`/enter?user_id=${user.id}`}
+          to={`/meeting`}
         >
           더보기 &gt;{' '}
         </Link>
