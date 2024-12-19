@@ -58,9 +58,9 @@ const ProfileForm = () => {
         </ul>
       </div>
 
-      <MyMeeting user={userData} />
+      <MyMeeting />
 
-      <MyMeetingEntered user={userData} />
+      <MyMeetingEntered />
     </div>
   );
 };
