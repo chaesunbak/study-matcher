@@ -16,9 +16,6 @@ const Logout = () => {
   return (
     <>
       <div className="bg-gray-50 flex min-h-screen">
-        {/* 왼쪽 메뉴 */}
-        <UserHeaderForm mode="leftMenu" />
-
         <div className="flex w-3/4 flex-col items-center justify-center space-y-6 p-6">
           {isLogOut ? (
             <div>

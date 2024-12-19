@@ -3,38 +3,38 @@ import { FaRegUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
 
+interface toggleMenu {
+  name: string;
+  link: string;
+}
+
 // 메뉴 항목
 export const toggleMenu = [
-  { name: '마이 페이지', link: 'users' },
+  { name: '마이 페이지', link: '' },
   { name: '로그아웃', link: 'logout' },
+  { name: '회원탈퇴', link: 'withdraw' },
 ];
 
 interface UserHeaderFormProps {
   mode?: 'dropdown' | 'leftMenu';
-  onMenuClick?: (menuName: string) => void;
 }
 
-const UserHeaderForm = ({ mode = 'dropdown', onMenuClick }: UserHeaderFormProps) => {
+const UserHeaderForm = ({ mode = 'dropdown' }: UserHeaderFormProps) => {
   const user = sessionStorage.getItem('access_token');
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>('마이 페이지');
+  const [selectedMenu, setSelectedMenu] = useState<string>('');
 
   const toggleUserMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleMenuClick = (menu: (typeof toggleMenu)[0]) => {
-    if (menu.name === '마이 페이지') {
-      navigate(`/${menu.link}/0`);
-    } else {
-      navigate(`/${menu.link}`);
-    }
+  const handleMenuClick = (menu: toggleMenu) => {
+    navigate(`/users/0/${menu.link}`);
 
     setIsOpen(false);
     setSelectedMenu(menu.name);
-    if (onMenuClick) onMenuClick(menu.name);
   };
 
   return mode === 'dropdown' ? (
