@@ -6,17 +6,12 @@ import Input from '../components/user/InputForm';
 import { useLocation, useNavigate } from 'react-router';
 import { Gender } from '../components/user/SignUpForm';
 import { requestHandlerUser } from '../api/usersApi/userHttp';
+import { formatDateYyyyMmDd } from '../utils/format';
 
 const ModifySchema = z.object({
-  id: z.number().optional(),
-  email: z
-    .string({ message: '이메일을 입력하세요.' })
-    .nonempty({ message: '이메일을 입력하세요' })
-    .email({ message: '이메일 형식이 아닙니다.' }),
   username: z
     .string({ message: '닉네임을 입력하세요.' })
     .nonempty({ message: '닉네임을 입력하세요' }),
-  gender: z.nativeEnum(Gender),
   birthdate: z
     .string({ message: '생년월일을 입력하세요.' })
     .nonempty({ message: '생년월일을 입력하세요' })
@@ -35,52 +30,45 @@ const UserModify = () => {
   } = useForm<z.infer<typeof ModifySchema>>({
     resolver: zodResolver(ModifySchema),
     defaultValues: {
-      email: '',
-      gender: Gender.male,
+      username: '',
       birthdate: '',
+      profile_img: '',
       introduction: '',
     },
   });
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userData } = location.state();
+  const userData = useLocation()?.state?.state || {};
 
   useEffect(() => {
-    setValue('email', userData.email);
     setValue('username', userData.username);
-    setValue('gender', userData.gender);
-    setValue('birthdate', userData.birthdate);
+    setValue('birthdate', formatDateYyyyMmDd(userData.birth_date));
+    setValue('profile_img', userData.profile_img);
     setValue('introduction', userData.introduction);
   }, [setValue]);
 
   const postUserData = async (formData: FormData) => {
     try {
-      const response = await requestHandlerUser('post', '/users/modify', formData);
-      if (response.status === 201) {
-        alert('회원가입 성공!');
+      const response = await requestHandlerUser('put', '/users/me', formData);
+      if (response.status === 202) {
+        alert('회원 수정 성공!');
         navigate('/');
       }
     } catch (e) {
       console.error('Error creating user:', e);
-      alert('회원가입이 동작하지 않습니다.!');
+      alert('수정되지 않았습니다.');
       return;
     }
   };
 
   const onSubmit = (data: z.infer<typeof ModifySchema>) => {
     const formData = new FormData();
-
-    formData.append('email', data.email);
+    console.log(data);
     formData.append('username', data.username);
-    formData.append('gender', data.gender);
-    formData.append('birthdate', data.birthdate);
+    formData.append('birth_date', String(data.birthdate));
     formData.append('profile_img', data.profile_img || '');
     formData.append('introduction', data.introduction || '');
 
     postUserData(formData);
-
-    alert('회원 정보가 수정되었습니다!');
-    navigate(`/`);
   };
 
   return (
@@ -92,27 +80,8 @@ const UserModify = () => {
         <h2 className="mb-6 text-center text-3xl font-semibold text-gray-800">회원 정보 수정</h2>
 
         <div className="mb-6">
-          <label className="mb-2 block text-gray-700">이메일</label>
-          <Input type="text" name="email" control={control} errors={errors} />
-        </div>
-
-        <div className="mb-6">
           <label className="mb-2 block text-gray-700">닉네임</label>
           <Input type="text" name="username" control={control} errors={errors} />
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 block text-gray-700">성별</label>
-          <Input
-            type="select"
-            name="gender"
-            control={control}
-            options={[
-              { value: '남성', label: '남성' },
-              { value: '여성', label: '여성' },
-            ]}
-            errors={errors}
-          />
         </div>
 
         <div className="mb-6">
@@ -134,7 +103,6 @@ const UserModify = () => {
           />
         </div>
 
-        {/* 제출 버튼 */}
         <div className="text-center">
           <button
             type="submit"
