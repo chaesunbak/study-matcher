@@ -1,11 +1,11 @@
-import { User } from '../../../models/user.model';
-// import { MeetingDetail } from '../../../models/meeting.model';
-// import dummyPostings, { dummyMeetingDetails } from '../../../data';
-// import { formatDate } from '../../../utils/format';
-import { Link } from 'react-router-dom'; // 페이지 이동을 위한 useNavigate
+import { useEffect } from 'react';
+import { UserResponse } from '../../../models/user.model';
+import { formatDate } from '../../../utils/format';
+import { Link, useNavigate } from 'react-router-dom';
+import { requestHandler } from '../../../api/http';
 
 interface MyMeetingProps {
-  user: User;
+  user: UserResponse;
 }
 
 const MyMeeting = ({ user }: MyMeetingProps) => {

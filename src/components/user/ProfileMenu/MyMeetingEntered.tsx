@@ -1,11 +1,9 @@
-import { User } from '../../../models/user.model';
-// import { MeetingDetail } from '../../../models/meeting.model';
-// import { dummyMeetingDetails } from '../../../data';
-// import { formatDate } from '../../../utils/format';
-import { Link } from 'react-router';
+import { UserResponse } from '../../../models/user.model';
+import { formatDate } from '../../../utils/format';
+import { Link, useNavigate } from 'react-router';
 
 interface MyMeetingEnteredProps {
-  user: User;
+  user: UserResponse;
 }
 
 const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
@@ -27,8 +25,10 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
           더보기 &gt;{' '}
         </Link>
       </div>
+
       {/* 
       {enteredMeetings.length > 0 ? (
+
 
         enteredMeetings.map((meeting) => (
           <div
