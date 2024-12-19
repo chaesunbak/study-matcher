@@ -1,13 +1,13 @@
 import { Link } from 'react-router';
-import ForgotPwForm from '../components/user/ForgotPwForm';
+import ResetPwForm from '../components/user/ResetPwForm';
 
-const ForgotPw = () => {
+const ResetPw = () => {
   return (
     <>
       {/* 로그인 카드 */}
       <div className="relative mx-auto mt-20 w-11/12 max-w-sm rounded-xl bg-white p-6 shadow-lg">
         {/* LoginForm 컴포넌트 */}
-        <ForgotPwForm />
+        <ResetPwForm />
         <div className="mt-6 flex items-center justify-center text-sm text-gray-500">
           <Link to="/login" className="text-indigo-500 ml-2 cursor-pointer hover:underline">
             로그인
@@ -21,4 +21,4 @@ const ForgotPw = () => {
   );
 };
 
-export default ForgotPw;
+export default ResetPw;
