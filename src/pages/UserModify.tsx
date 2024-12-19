@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '../components/user/InputForm';
 import { useLocation, useNavigate } from 'react-router';
-import { Gender } from '../components/user/SignUpForm';
 import { requestHandlerUser } from '../api/usersApi/userHttp';
 import { formatDateYyyyMmDd } from '../utils/format';
 
