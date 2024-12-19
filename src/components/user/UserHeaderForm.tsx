@@ -16,7 +16,7 @@ interface UserHeaderFormProps {
 }
 
 const UserHeaderForm = ({ mode = 'dropdown', onMenuClick }: UserHeaderFormProps) => {
-  const isLogin = useUserStore((state) => state);
+  const user = sessionStorage.getItem('access_token');
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const UserHeaderForm = ({ mode = 'dropdown', onMenuClick }: UserHeaderFormProps)
 
   const handleMenuClick = (menu: (typeof toggleMenu)[0]) => {
     if (menu.name === '마이 페이지') {
-      navigate(`/${menu.link}/${isLogin.userId}`);
+      navigate(`/${menu.link}/0`);
     } else {
       navigate(`/${menu.link}`);
     }
@@ -41,7 +41,7 @@ const UserHeaderForm = ({ mode = 'dropdown', onMenuClick }: UserHeaderFormProps)
   return mode === 'dropdown' ? (
     // 드롭다운 메뉴 모드
     <div>
-      {isLogin.userId ? (
+      {user ? (
         <div className="relative">
           <div
             className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gray-200 shadow-md"

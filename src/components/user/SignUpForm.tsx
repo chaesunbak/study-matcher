@@ -4,7 +4,12 @@ import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
-// import { User } from '../../models/user.model';
+import { requestHandlerUser } from '../../api/usersApi/userHttp';
+
+export enum Gender {
+  male = '남성',
+  female = '여성',
+}
 
 const SignUpSchema = z
   .object({
@@ -21,7 +26,10 @@ const SignUpSchema = z
     passwordConfirm: z
       .string({ message: '확인 비밀번호를 입력하세요.' })
       .nonempty({ message: '확인 비밀번호를 입력하세요' }),
-    gender: z.enum(['male', 'female'], { message: '성별을 선택하세요.' }),
+    username: z
+      .string({ message: '닉네임을 입력하세요.' })
+      .nonempty({ message: '닉네임을 입력하세요.' }),
+    gender: z.nativeEnum(Gender),
     birthdate: z
       .string({ message: '생년월일을 입력하세요.' })
       .nonempty({ message: '생년월일을 입력하세요' })
@@ -46,29 +54,39 @@ const SignUpForm = () => {
       email: '',
       password: '',
       passwordConfirm: '',
-      gender: 'male',
+      gender: Gender.male,
       birthdate: '',
       introduction: '',
     },
   });
   const navigate = useNavigate();
 
-  const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
-    console.log(data);
-    // const newUser: User = {
-    //   id: Date.now(),
-    //   email: data.email,
-    //   password: data.password,
-    //   gender: data.gender,
-    //   birth_date: new Date(data.birthdate).toISOString(),
-    //   profile_img: data.profile_img || '',
-    //   introduction: data.introduction || '',
-    //   created_at: new Date().toISOString(),
-    // };
+  const postUserData = async (formData: FormData) => {
+    try {
+      const response = await requestHandlerUser('post', '/users/signup', formData);
+      if (response.status === 201) {
+        alert('회원가입 성공!');
+        navigate('/login');
+      }
+    } catch (e) {
+      console.error('Error creating user:', e);
+      alert('회원가입이 동작하지 않습니다.!');
+      return;
+    }
+  };
 
-    // localStorage.setItem('register', JSON.stringify({ newUser }));
-    alert('회원가입 성공!');
-    navigate('/login');
+  const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
+    const formData = new FormData();
+
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('username', data.username);
+    formData.append('gender', data.gender);
+    formData.append('birth_date', data.birthdate);
+    formData.append('profile_img', data.profile_img || '');
+    formData.append('introduction', data.introduction || '');
+
+    postUserData(formData);
   };
 
   return (
@@ -99,6 +117,13 @@ const SignUpForm = () => {
             type="password"
             control={control}
             placeholder="비밀번호를 확인해주세요"
+            errors={errors}
+          />
+          <Input
+            name="username"
+            type="text"
+            control={control}
+            placeholder="닉네임을 설정해주세요"
             errors={errors}
           />
           <Input

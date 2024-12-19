@@ -10,7 +10,7 @@ type InputProps = {
   name: string;
   placeholder?: string;
   errors: FieldErrors;
-  type?: 'text' | 'password' | 'textarea' | 'select' | 'date';
+  type?: 'text' | 'password' | 'textarea' | 'select' | 'date' | 'file';
   className?: string;
   options?: Option[];
 };
@@ -53,6 +53,9 @@ const Input = ({
       case 'textarea':
         return <textarea {...field} placeholder={placeholder} className={baseClass} />;
 
+      case 'file':
+        return <input {...field} type="file" className={baseClass} />;
+
       default:
         return <input {...field} type={type} placeholder={placeholder} className={baseClass} />;
     }
@@ -65,7 +68,7 @@ const Input = ({
       render={({ field }) => (
         <div className="mb-4">
           {renderInput(field)}
-          {hasError && <p className="text-red-500 mt-1 text-sm">{String(errors[name]?.message)}</p>}
+          {hasError && <p className="mt-1 text-sm text-red-500">{String(errors[name]?.message)}</p>}
         </div>
       )}
     />
