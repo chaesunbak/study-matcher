@@ -13,6 +13,7 @@ const TopicCarousel = () => {
     }
   }, [emblaApi]);
 
+  // TODO: 보이는 캐러샐의 데이터만 불러오는 등의 최적화가 필요합니다.
   return (
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="flex">
