@@ -73,7 +73,7 @@ const TopicCarouselItem = ({ topic }: { topic: Topic }) => {
       >
         <h2>{topic.name}</h2>
         <div className="flex min-w-0 flex-col gap-4">
-          <div className="text-gray-500">데이터가 없습니다.</div>;
+          <div className="text-gray-500">데이터가 없습니다.</div>
         </div>
       </div>
     );
