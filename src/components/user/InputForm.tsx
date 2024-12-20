@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { Control, Controller, FieldErrors, UseFormSetValue } from 'react-hook-form';
-import { Gender } from './SignUpForm';
+// import { useState } from 'react';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 type Option = {
   value: string;
@@ -34,10 +33,9 @@ const Input = ({
   hasButton = false,
   buttonLabel = '확인',
   onButtonClick,
-  onFileChange,
 }: InputProps) => {
   const hasError = Boolean(errors?.[name]);
-  const [previewUrl, setPreviewUrl] = useState<string | null>('');
+  // const [previewUrl, setPreviewUrl] = useState<string | null>('');
 
   const baseClass = `w-full rounded-lg border px-4 py-2 text-sm 
                      placeholder-gray-400 focus:outline-none focus:ring-2 

@@ -78,7 +78,7 @@ const SignUpForm = () => {
     }
   };
 
-  const onSubmit = (data: z.infer<typeof SignUpSchema>, e) => {
+  const onSubmit = (data: z.infer<typeof SignUpSchema>, e: any) => {
     if (!isChecked) {
       e.preventDefault();
       console.log('data', data);

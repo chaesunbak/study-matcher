@@ -53,7 +53,7 @@ const ResetPwForm = () => {
           alert('입력하신 이메일은 존재하지 않습니다.');
           break;
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error:', e);
       switch (e.status) {
         case 406:

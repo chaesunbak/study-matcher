@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { setPostData } from '../api/posts.api';
 
 const usePostWrite = () => {
