@@ -12,23 +12,26 @@ const useMeeting = (id: number) => {
       setLoading(true);
       setError(null);
 
-      try {
-        const data = await getMeeting(id);
-        setMeeting(data);
-      } catch (error) {
-        console.error(error);
-        setError('Failed to fetch meeting');
-      } finally {
-        setLoading(false);
-      }
+      await getMeeting(id)
+        .then((response) => {
+          if (response.status === 200) {
+            setMeeting(response.data);
+          } else if (response.status === 404) {
+            setMeeting(null);
+            setError('존재하지 않는 그룹입니다');
+          } else {
+            setError('그룹을 불러오는 중에 오류가 발생했습니다.');
+          }
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
 
-    if (id) {
-      fetchMeeting();
-    } else {
-      setMeeting(null);
-      setLoading(false);
-    }
+    fetchMeeting();
   }, [id]);
 
   return { meeting, loading, error };
