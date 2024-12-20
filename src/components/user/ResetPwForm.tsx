@@ -11,8 +11,9 @@ export const loginSchema = z
   .object({
     email: z
       .string({ message: '이메일을 입력하세요' })
-      .nonempty({ message: '이메일을 입력하세요' })
-      .email({ message: '이메일 형식이 아닙니다.' }),
+      .email({ message: '이메일 형식이 아닙니다.' })
+      .optional(),
+
     password: z
       .string({ message: '비밀번호를 입력하세요.' })
       .nonempty({ message: '비밀번호를 입력하세요' })
@@ -41,7 +42,6 @@ const ResetPwForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userData = location.state?.state;
-  console.log(userData);
   const [emailCheck, setEmailCheck] = useState(false);
 
   const getEmailCheck = async (email: string | undefined) => {
@@ -69,7 +69,7 @@ const ResetPwForm = () => {
     targetPassword: string;
     targetPasswordConfirm: string;
   }) => {
-    if (!emailCheck) {
+    if (!emailCheck && !userData) {
       alert('이메일을 확인해주세요');
       return;
     }
@@ -80,6 +80,7 @@ const ResetPwForm = () => {
 
     try {
       const response = await requestHandlerUser('put', '/users/change-password', formData);
+      console.log(response);
       const responseCode = response.status;
       if (responseCode === 200) {
         alert('비밀번호가 성공적으로 변경되었습니다. 다시 로그인 해주세요.');
@@ -172,9 +173,7 @@ const ResetPwForm = () => {
             errors={errors}
           />
 
-          <Button variant="form" type="submit">
-            비밀번호 변경
-          </Button>
+          <Button type="submit">비밀번호 변경</Button>
         </form>
       )}
     </div>
