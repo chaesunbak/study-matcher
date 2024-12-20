@@ -46,7 +46,7 @@ const LoginForm = () => {
         navigate('/');
       } else if (responseCode === 401) {
         alert('비밀번호가 일치하지 않습니다.');
-      } else if (responseCode == 404) {
+      } else if (responseCode === 404) {
         alert('존재하지 않는 이메일(아이디)입니다.');
       } else {
         alert('로그인 실패');
@@ -60,12 +60,10 @@ const LoginForm = () => {
   return (
     <>
       {/* 로그인 폼 */}
-      <div className="relative rounded-xl bg-white p-6 shadow-lg">
+      <div className="relative rounded-xl bg-white md:p-2 lg:p-4">
         {/* 타이틀 */}
-        <h2 className="text-center text-2xl font-bold text-gray-800">로그인</h2>
-        <p className="mb-6 mt-2 text-center text-sm text-gray-500">
-          이메일과 비밀번호를 입력하세요
-        </p>
+        <h2 className="text-center text-gray-800">로그인</h2>
+        <p className="mb-6 mt-2 text-center text-gray-700">이메일과 비밀번호를 입력해주세요.</p>
 
         {/* 이메일 및 비밀번호 입력 */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -85,13 +83,16 @@ const LoginForm = () => {
             errors={errors}
           />
 
-          <div className="flex items-center justify-center text-right text-sm text-gray-500">
-            <span>비밀번호를 잊어버리셨나요?</span>
+          <div className="flex items-center justify-center text-right text-sm">
+            <span className="whitespace-nowrap text-sm text-gray-700 sm:text-sm">
+              비밀번호를 잊어버리셨나요?
+            </span>
+            {/* TODO /users/reset-password 는 로그인하지 않으면 접속 불가 */}
             <Link
-              to="/forget-password"
-              className="text-indigo-500 ml-2 cursor-pointer hover:underline"
+              to="/users/reset-password"
+              className="text-blue-400 ml-2 cursor-pointer hover:underline"
             >
-              비밀번호 찾기
+              재설정
             </Link>
           </div>
           <Button variant="form" type="submit">

@@ -1,3 +1,5 @@
+import { green } from '@mui/material/colors';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -31,6 +33,13 @@ export default {
         700: '#868e96',
         800: '#495057',
         900: '#343a40',
+      },
+      blue: {
+        300: '#93c5fd',
+        400: '#60a5fa',
+      },
+      green: {
+        500: '#22c55e',
       },
     },
     extend: {},

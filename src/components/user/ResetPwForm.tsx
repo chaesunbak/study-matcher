@@ -26,10 +26,10 @@ const ResetPwForm = () => {
   };
 
   return (
-    <div className="relative rounded-xl bg-white p-6 shadow-lg">
+    <div className="relative rounded-xl bg-white">
       {/* 타이틀 */}
-      <h2 className="text-center text-2xl font-bold text-gray-800">비밀번호 재설정</h2>
-      <p className="mb-6 mt-2 text-center text-sm text-gray-500">원하시는 비밀번호로 변경하세요.</p>
+      <h2 className="text-center text-gray-700">비밀번호 재설정</h2>
+      <p className="mb-6 mt-2 text-center text-gray-700">원하시는 비밀번호로 변경하세요.</p>
 
       {/* 이메일 및 비밀번호 입력 */}
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

@@ -32,7 +32,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="container sticky top-0 mx-auto flex items-center justify-between bg-white p-4 dark:bg-black">
+    <header className="container sticky top-0 z-50 mx-auto flex items-center justify-between bg-white p-4 dark:bg-black">
       <Link to="/">
         <h1 className="text-primary">★LOGO</h1>
       </Link>
