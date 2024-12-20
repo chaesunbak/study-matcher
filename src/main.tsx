@@ -37,12 +37,12 @@ createRoot(document.getElementById('root')!).render(
             {/* 유저관련 */}
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPw />} />
             <Route path="/users/:user_id" element={<ProfileLayout />}>
               <Route index element={<Profile />} />
               <Route path="modify" element={<UserModify />} />
               <Route path="manage" element={<GroupManageList />} />
               <Route path="logout" element={<Logout />} />
-              <Route path="reset-password" element={<ResetPw />} />
               <Route path="withdraw" element={<WithdrawUser />} />
             </Route>
             {/* 그룹관련 */}

@@ -1,16 +1,27 @@
-import { UserResponse } from '../../../models/user.model';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { requestHandlerUser } from '../../../api/usersApi/userHttp';
+import { useUserStore } from '../../../store/userStore';
+import { Meeting } from '../../../models/meeting.model';
+import { formatDate } from '../../../utils/format';
 
-interface MyMeetingProps {
-  user: UserResponse;
-}
+const MyMeeting = () => {
+  const navigate = useNavigate();
+  const { sub } = useUserStore((state) => state.user_info);
+  const [userMeeting, setUserMeeting] = useState<Meeting[]>([]);
 
-const MyMeeting = ({ user }: MyMeetingProps) => {
-  // const navigate = useNavigate();
+  const getUserMeetings = async () => {
+    try {
+      const response = await requestHandlerUser('get', `/users/${sub}/meeting`);
+      setUserMeeting(response.data.meetings);
+    } catch (e) {
+      console.error('Error getting meeting:', e);
+    }
+  };
 
-  // const createdMeetings: MeetingDetail[] = dummyMeetingDetails.filter(
-  //   (meeting) => meeting.owner_user_id === user.id
-  // );
+  useEffect(() => {
+    getUserMeetings();
+  });
 
   return (
     <div className="relative mb-6 rounded-lg border border-gray-700 p-6">
@@ -19,19 +30,14 @@ const MyMeeting = ({ user }: MyMeetingProps) => {
 
         <Link
           className="font-normal text-gray-500 underline-offset-1 hover:underline"
-          to={`/manage/${user.id}`}
+          to={`/manage/0`}
         >
           더보기 &gt;{' '}
         </Link>
       </div>
 
-      {/* {createdMeetings.length > 0 ? (
-        createdMeetings.map((meeting) => {
-          // 작성한 게시글 개수
-          const userPosts: number = dummyPostings.filter(
-            (post) => post.meeting_id === meeting.id
-          ).length;
-
+      {userMeeting.length > 0 ? (
+        userMeeting.map((meeting) => {
           return (
             <div
               key={meeting.id}
@@ -47,22 +53,20 @@ const MyMeeting = ({ user }: MyMeetingProps) => {
               <div className="flex-1">
                 <h3 className="text-lg font-medium">{meeting.title}</h3>
                 <p className="mt-1 text-sm text-gray-600">
-                  생성 날짜: {formatDate(meeting.created_at)}
+                  생성 날짜: {formatDate(new Date(meeting.created_at))}
                 </p>
                 <p className="mt-1 text-sm text-gray-600">
-                  종료 날짜: {formatDate(meeting.end_date)}
+                  종료 날짜: {formatDate(new Date(meeting.end_date))}
                 </p>
-                <p className="mt-1 text-sm text-gray-600">
-                  전체 멤버 수: {meeting.meeting_members.length}
-                </p>
-                <p className="mt-1 text-sm text-gray-600">전체 게시글 수: {userPosts}개</p>
+                <p className="mt-1 text-sm text-gray-600">전체 멤버 수: {meeting.max_members}</p>
+                <p className="mt-1 text-sm text-gray-600">전체 게시글 수: {meeting.topic_id}개</p>
               </div>
             </div>
           );
         })
       ) : (
         <p className="text-gray-600">생성한 모임이 없습니다.</p>
-      )} */}
+      )}
     </div>
   );
 };

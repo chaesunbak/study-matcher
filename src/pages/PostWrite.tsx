@@ -4,10 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams } from 'react-router';
 import Button from '../components/common/Button';
 import Input from '../components/user/InputForm';
+import usePostWrite from '../hooks/usePostWrite';
 
 const postSchema = z.object({
+  meeting_id: z.number(),
   title: z.string().nonempty('제목을 입력해주세요.'),
-  img: z.string().optional(),
   content: z.string().nonempty('내용을 입력해주세요.'),
 });
 
@@ -21,11 +22,31 @@ const PostWrite = () => {
     control,
   } = useForm<PostFormData>({
     resolver: zodResolver(postSchema),
+    defaultValues: {
+      meeting_id: Number(group_id),
+    },
   });
 
+  const { status, fetchPost } = usePostWrite();
+
   const onSubmit = (data: PostFormData) => {
-    console.log(data);
-    // 여기서 폼 데이터를 제출하는 로직을 추가하세요.
+    const formData = new FormData();
+    formData.append('meeting_id', `${data.meeting_id}`);
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+
+    fetchPost(formData);
+    switch (status) {
+      case 201:
+        alert('�� 작성 성공!');
+        break;
+      case 400:
+        alert('�� 작성 실��!');
+        break;
+      default:
+        alert('서버 에러');
+        break;
+    }
   };
 
   return (
@@ -52,7 +73,7 @@ const PostWrite = () => {
           control={control}
           errors={errors}
         />
-        <Button className="w-full" type="submit">
+        <Button className="w-full" type="submit" variant="form">
           작성하기
         </Button>
       </form>

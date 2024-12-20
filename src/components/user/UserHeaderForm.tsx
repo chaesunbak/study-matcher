@@ -26,7 +26,7 @@ const UserHeaderForm = ({ mode = 'dropdown', className }: UserHeaderFormProps) =
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>('');
+  const [selectedMenu, setSelectedMenu] = useState<string>('마이 페이지');
 
   const toggleUserMenu = () => {
     setIsOpen(!isOpen);

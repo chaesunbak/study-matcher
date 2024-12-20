@@ -2,6 +2,7 @@ import MyMeeting from './MyMeeting';
 import MyMeetingEntered from './MyMeetingEntered';
 import { Link } from 'react-router';
 import useUsers from '../../../hooks/useUsers';
+import { FaRegUser } from 'react-icons/fa';
 
 const ProfileForm = () => {
   const { userData } = useUsers();
@@ -27,11 +28,7 @@ const ProfileForm = () => {
     <div>
       <div className="mb-6 flex rounded-lg border border-gray-700 p-6">
         <div className="flex items-center">
-          <img
-            src={userData.profile_img || 'https://via.placeholder.com/80'}
-            alt="프로필 이미지"
-            className="mr-4 h-20 w-20 rounded-full bg-gray-300"
-          />
+          <FaRegUser className="mr-4 h-20 w-20 rounded-full bg-gray-300" />
           <div>
             <h3>{userData.username || '이름 없음'}</h3>
             <p>{userData.introduction}</p>
@@ -47,7 +44,7 @@ const ProfileForm = () => {
             <li key={index} className="flex items-center justify-between">
               <span>{item.label}</span>
               <Link
-                to={`/users/0/${item.link}`}
+                to={item.buttonLabel === '재설정' ? `/${item.link}` : `/users/0/${item.link}`}
                 state={{ state: userData }}
                 className={item.buttonClass}
               >
@@ -57,8 +54,10 @@ const ProfileForm = () => {
           ))}
         </ul>
       </div>
-      <MyMeeting user={userData} />
-      <MyMeetingEntered user={userData} />
+
+      <MyMeeting />
+
+      <MyMeetingEntered />
     </div>
   );
 };
