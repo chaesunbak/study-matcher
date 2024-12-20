@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
+import { cn } from '../../utils/utils';
 
 interface toggleMenu {
   name: string;
@@ -17,9 +18,10 @@ export const toggleMenu = [
 
 interface UserHeaderFormProps {
   mode?: 'dropdown' | 'leftMenu';
+  className?: string;
 }
 
-const UserHeaderForm = ({ mode = 'dropdown' }: UserHeaderFormProps) => {
+const UserHeaderForm = ({ mode = 'dropdown', className }: UserHeaderFormProps) => {
   const user = sessionStorage.getItem('access_token');
   const navigate = useNavigate();
 
@@ -39,7 +41,7 @@ const UserHeaderForm = ({ mode = 'dropdown' }: UserHeaderFormProps) => {
 
   return mode === 'dropdown' ? (
     // 드롭다운 메뉴 모드
-    <div>
+    <div className={className}>
       {user ? (
         <div className="relative">
           <div
@@ -73,7 +75,7 @@ const UserHeaderForm = ({ mode = 'dropdown' }: UserHeaderFormProps) => {
     </div>
   ) : (
     // 왼쪽 메뉴 모드
-    <div className="w-1/4 bg-white shadow-md">
+    <div className={cn('w-1/4 rounded-lg border border-gray-700', className)}>
       <div className="p-6">
         <h2 className="mb-4 text-xl font-bold">{selectedMenu}</h2>
         <ul className="space-y-3">

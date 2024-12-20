@@ -18,7 +18,7 @@ const ProfileForm = () => {
 
   if (!userData) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-gray-500">
+      <div className="flex min-h-screen items-center justify-center text-gray-700">
         사용자 데이터를 불러오는 중입니다...
       </div>
     );
@@ -26,19 +26,19 @@ const ProfileForm = () => {
 
   return (
     <div>
-      <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
+      <div className="mb-6 flex rounded-lg border border-gray-700 p-6">
         <div className="flex items-center">
           <FaRegUser className="mr-4 h-20 w-20 rounded-full bg-gray-300" />
           <div>
-            <h3 className="text-2xl font-bold">{userData.username || '이름 없음'}</h3>
-            <p className="text-gray-600">{userData.introduction}</p>
+            <h3>{userData.username || '이름 없음'}</h3>
+            <p>{userData.introduction}</p>
           </div>
         </div>
       </div>
 
       {/* 내 정보 */}
-      <div className="mb-6 rounded-lg bg-white p-6 shadow-md">
-        <h3 className="mb-4 text-xl font-bold">내 정보</h3>
+      <div className="rouned-lg mb-6 rounded-lg border border-gray-700 p-6">
+        <h3 className="mb-4">내 정보</h3>
         <ul className="space-y-4">
           {securitySettings.map((item, index) => (
             <li key={index} className="flex items-center justify-between">
