@@ -126,28 +126,6 @@ const GroupCreate = () => {
           control={control}
           errors={errors}
         />
-        {/* <label htmlFor="gender_condition">성별 조건(선택)</label>
-        <Input
-          name="gender_condition"
-          type="select"
-          defaultValue="any"
-          placeholder="성별 조건을 선택해주세요."
-          control={control}
-          errors={errors}
-          options={[
-            { value: 'any', label: '무관' },
-            { value: 'male', label: '남성' },
-            { value: 'female', label: '여성' },
-          ]}
-        />
-        <label htmlFor="age_condition">나이 조건(선택)</label>
-        <Input
-          name="age_condition"
-          type="text"
-          placeholder="나이 조건을 입력해주세요."
-          control={control}
-          errors={errors}
-        /> */}
 
         <Button className="w-full" type="submit">
           그룹 만들기

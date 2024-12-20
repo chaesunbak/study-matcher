@@ -3,9 +3,12 @@ import Button from '../common/Button';
 import { formatDate } from '../../utils/format';
 import { joinMeeting } from '../../api/meetings.api';
 import { useNavigate } from 'react-router';
+import { LuSettings } from 'react-icons/lu';
+import { useUserStore } from '../../store/userStore';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   const navigate = useNavigate();
+  const { user_info } = useUserStore();
 
   // TODO : 에러처리를 추가합니다
   const handleParticipation = async () => {
@@ -32,24 +35,24 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
             <span>{`${formatDate(new Date(group.created_at))} 생성`}</span>
           </div>
         </div>
+        {user_info.sub === group.owner_user_id && (
+          <div className="flex items-center gap-2">
+            <LuSettings />
+            <span>관리</span>
+          </div>
+        )}
       </div>
       <div>
         <p>{group.description}</p>
       </div>
       {/* TODO : 그룹에 이미 참여 한 경우 그룹의 설명은 보여주지 않습니다 */}
       <div className="flex flex-wrap items-center gap-2">
-        {/* TODO : topic_id를 topic_name으로 변경합니다. */}
+        {/* 용이한 테스트를 위해서 아래정보를 보여주고 있습니다 */}
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
           {`주제 : ${group.topic.name}`}
         </span>
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
           {`정원 : ${group.max_members}명`}
-        </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
-          {`연령제한 : ${group.age_condition}`}
-        </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
-          {`성별제한 : ${group.gender_condition}`}
         </span>
         <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
           {`시작일 : ${new Date(group.start_date).toLocaleDateString()}`}
