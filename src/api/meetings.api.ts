@@ -14,6 +14,9 @@ export interface getMeetingsParams {
   keyword?: string;
   page: number;
   topic_id?: Topic['id'];
+  per_page: number;
+  onGoing_only?: boolean;
+  available_only?: boolean;
 }
 
 export const getMeetings = async (params: getMeetingsParams): Promise<MeetingResponse> => {
@@ -36,8 +39,8 @@ export interface CreateMeetingParams {
 }
 
 export const createMeeting = async (params: CreateMeetingParams) => {
-  const response = await requestHandler('post', '/meeting', params);
-  return response.data;
+  const response = await httpClient.post('/meeting', params);
+  return response;
 };
 
 export const joinMeeting = async (meetingId: number) => {
