@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   const navigate = useNavigate();
 
+  // TODO : 에러처리를 추가합니다
   const handleParticipation = async () => {
     await joinMeeting(group.id).then((response) => {
       if (response.status === 201) {
@@ -16,8 +17,6 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
       }
     });
   };
-
-  console.log(group.participation);
 
   return (
     <div className="flex flex-col gap-4">
