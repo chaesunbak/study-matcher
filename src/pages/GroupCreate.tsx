@@ -5,8 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useTopics from '../hooks/useTopics';
 import Input from '../components/user/InputForm';
 import { createMeeting } from '../api/meetings.api';
-import { CreateMeetingParams } from '../api/meetings.api';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 const groupCreateSchema = z.object({
   title: z.string().nonempty('모임 이름 입력해주세요.'),
@@ -23,6 +23,15 @@ const groupCreateSchema = z.object({
     .optional(),
 });
 
+interface GroupCreateForm {
+  title: string;
+  topic_id: number;
+  description: string;
+  start_date?: string;
+  end_date?: string;
+  max_members?: number;
+}
+
 type GroupFormData = z.infer<typeof groupCreateSchema>;
 
 const GroupCreate = () => {
@@ -36,6 +45,7 @@ const GroupCreate = () => {
   } = useForm<GroupFormData>({
     resolver: zodResolver(groupCreateSchema),
   });
+  const [loading, setLoading] = useState(false);
 
   if (!accessToken) {
     navigate('/login');
@@ -43,7 +53,7 @@ const GroupCreate = () => {
 
   //TODO: 에러처리를 추가합니다
   const onSubmit = async (data: GroupFormData) => {
-    const params: CreateMeetingParams = {
+    const params: GroupCreateForm = {
       title: data.title,
       topic_id: parseInt(data.topic_id),
       description: data.description,
@@ -52,22 +62,25 @@ const GroupCreate = () => {
     if (data.max_members) {
       params.max_members = parseInt(data.max_members);
     }
-
     if (data.start_date) {
       params.start_date = data.start_date;
     }
-
     if (data.end_date) {
       params.end_date = data.end_date;
     }
 
-    await createMeeting(params).then((response) => {
-      if (response.status === 201) {
-        alert('모임이 생성되었습니다.');
-      } else {
-        alert('모임을 생성할 수 없습니다.');
-      }
-    });
+    setLoading(true);
+    createMeeting(params)
+      .then((response) => {
+        if (response.status === 201) {
+          navigate(`/groups/${response.data.id}`);
+        } else {
+          alert('모임 만들기에 실패했습니다.');
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -127,7 +140,7 @@ const GroupCreate = () => {
           errors={errors}
         />
 
-        <Button className="w-full" type="submit">
+        <Button className="w-full" type="submit" disabled={loading}>
           그룹 만들기
         </Button>
       </form>

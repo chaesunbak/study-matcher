@@ -2,7 +2,7 @@ import { MeetingDetail } from '../../models/meeting.model';
 import Button from '../common/Button';
 import { formatDate } from '../../utils/format';
 import { joinMeeting } from '../../api/meetings.api';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { LuSettings } from 'react-icons/lu';
 import { useUserStore } from '../../store/userStore';
 
@@ -36,9 +36,14 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           </div>
         </div>
         {user_info.sub === group.owner_user_id && (
-          <div className="flex items-center gap-2">
-            <LuSettings />
-            <span>관리</span>
+          <div className="m flex items-center gap-2">
+            <Link
+              to={`/groups/${group.id}/manage`}
+              className="flex items-center gap-2 hover:underline"
+            >
+              <LuSettings />
+              <span>관리</span>
+            </Link>
           </div>
         )}
       </div>

@@ -19,15 +19,19 @@ const GroupManage = () => {
 
   // TODO : 에러처리를 추가합니다
   const handleDeleteMeeting = async () => {
-    await deleteMeeting(Number(group_id)).then((response) => {
-      if (response.status === 204) {
-        if (confirm('정말 그룹을 삭제하시겠습니까?')) {
-          alert('그룹이 삭제되었습니다.');
-        } else {
-          alert('그룹을 삭제할 수 없습니다.');
+    await deleteMeeting(Number(group_id))
+      .then((response) => {
+        if (response.status === 204) {
+          if (confirm('정말 그룹을 삭제하시겠습니까?')) {
+            alert('그룹이 삭제되었습니다.');
+          } else {
+            alert('그룹을 삭제할 수 없습니다.');
+          }
         }
-      }
-    });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

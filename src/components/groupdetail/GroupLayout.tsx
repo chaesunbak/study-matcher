@@ -33,7 +33,7 @@ const GroupLayout = () => {
   if (!meeting) {
     return (
       <div className="flex h-full flex-col items-center justify-center">
-        그룹을 찾을 수 없습니다.
+        존재하지 않는 그룹입니다.
       </div>
     );
   }
