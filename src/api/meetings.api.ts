@@ -3,7 +3,7 @@ import { Topic } from '../models/topic.model';
 import { Meeting, MeetingDetail } from '../models/meeting.model';
 import { requestHandler } from './http';
 
-interface MeetingResponse {
+export interface MeetingResponse {
   meeting: Meeting[];
   total: number;
   currentPage: number;
