@@ -88,7 +88,7 @@ const LoginForm = () => {
           <div className="flex items-center justify-center text-right text-sm text-gray-500">
             <span>비밀번호를 잊어버리셨나요?</span>
             <Link
-              to="/forget-password"
+              to="/reset-password"
               className="text-indigo-500 ml-2 cursor-pointer hover:underline"
             >
               비밀번호 찾기
