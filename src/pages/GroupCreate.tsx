@@ -6,21 +6,27 @@ import useTopics from '../hooks/useTopics';
 import Input from '../components/user/InputForm';
 import { createMeeting } from '../api/meetings.api';
 import { CreateMeetingParams } from '../api/meetings.api';
+import { useNavigate } from 'react-router';
 
 const groupCreateSchema = z.object({
   title: z.string().nonempty('모임 이름 입력해주세요.'),
   topic_id: z.string().nonempty('카테고리를 선택해주세요.'),
   description: z.string().nonempty('모임 설명을 입력해주세요.'),
   max_members: z.string().optional(),
-  start_date: z.string().optional(),
-  end_date: z.string().optional(),
-  gender_condition: z.enum(['any', 'feamle', 'male']).optional(),
-  age_condition: z.string().optional(),
+  start_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD이어야 합니다.')
+    .optional(),
+  end_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD이어야 합니다.')
+    .optional(),
 });
 
 type GroupFormData = z.infer<typeof groupCreateSchema>;
 
 const GroupCreate = () => {
+  const navigate = useNavigate();
   const accessToken = sessionStorage.getItem('access_token');
   const { topics } = useTopics();
   const {
@@ -32,15 +38,11 @@ const GroupCreate = () => {
   });
 
   if (!accessToken) {
-    return (
-      <div>
-        <h1>GroupCreate</h1>
-        <p>You need to be logged in to create a group</p>
-      </div>
-    );
+    navigate('/login');
   }
 
-  const onSubmit = (data: GroupFormData) => {
+  //TODO: 에러처리를 추가합니다
+  const onSubmit = async (data: GroupFormData) => {
     const params: CreateMeetingParams = {
       title: data.title,
       topic_id: parseInt(data.topic_id),
@@ -59,17 +61,12 @@ const GroupCreate = () => {
       params.end_date = data.end_date;
     }
 
-    if (data.gender_condition) {
-      params.gender_condition = data.gender_condition;
-    }
-
-    if (data.age_condition) {
-      params.age_condition = data.age_condition;
-    }
-
-    console.log(params);
-    createMeeting(params).then((response) => {
-      console.log(response);
+    await createMeeting(params).then((response) => {
+      if (response.status === 201) {
+        alert('모임이 생성되었습니다.');
+      } else {
+        alert('모임을 생성할 수 없습니다.');
+      }
     });
   };
 
@@ -116,20 +113,20 @@ const GroupCreate = () => {
         <label htmlFor="start_date">시작일(선택)</label>
         <Input
           name="start_date"
-          type="date"
-          placeholder="시작일을 입력해주세요.(선택)"
+          type="text"
+          placeholder="YYYY-MM-DD 형식으로 시작일을 입력해주세요.(선택)"
           control={control}
           errors={errors}
         />
         <label htmlFor="end_date">종료일(선택)</label>
         <Input
           name="end_date"
-          type="date"
-          placeholder="종료일을 입력해주세요.(선택)"
+          type="text"
+          placeholder="YYYY-MM-DD 형식으로 종료일을 입력해주세요.(선택)"
           control={control}
           errors={errors}
         />
-        <label htmlFor="gender_condition">성별 조건(선택)</label>
+        {/* <label htmlFor="gender_condition">성별 조건(선택)</label>
         <Input
           name="gender_condition"
           type="select"
@@ -150,7 +147,7 @@ const GroupCreate = () => {
           placeholder="나이 조건을 입력해주세요."
           control={control}
           errors={errors}
-        />
+        /> */}
 
         <Button className="w-full" type="submit">
           그룹 만들기

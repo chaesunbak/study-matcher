@@ -37,7 +37,7 @@ export interface CreateMeetingParams {
   gender_condition?: string;
 }
 
-export const createMeeting = async (params: CreateMeetingParams): Promise<void> => {
+export const createMeeting = async (params: CreateMeetingParams) => {
   const response = await requestHandler('post', '/meeting', params);
   return response.data;
 };
