@@ -1,7 +1,6 @@
 import { httpClient } from './http';
 import { Topic } from '../models/topic.model';
 import { Meeting } from '../models/meeting.model';
-import { requestHandler } from './http';
 
 export interface MeetingResponse {
   meeting: Meeting[];
@@ -26,7 +25,7 @@ export const getMeetings = async (params: getMeetingsParams): Promise<MeetingRes
 
 export const getMeeting = async (id: number) => {
   const response = await httpClient.get(`/meeting/${id}`);
-  return response.data;
+  return response;
 };
 
 export interface CreateMeetingParams {
@@ -45,22 +44,22 @@ export const createMeeting = async (params: CreateMeetingParams) => {
 
 export const joinMeeting = async (meetingId: number) => {
   const response = await httpClient.post(`/meeting/${meetingId}/participation`);
-  return response.data;
+  return response;
 };
 
 export const deleteMeeting = async (meetingId: number) => {
   const response = await httpClient.delete(`/meeting/${meetingId}`);
-  return response.data;
+  return response;
 };
 
 export const updateMeeting = async (meetingId: number, params: CreateMeetingParams) => {
   const response = await httpClient.put(`/meeting/${meetingId}`, params);
-  return response.data;
+  return response;
 };
 
 export const deleteMeetingUser = async (meetingId: number, userId: number) => {
   const response = await httpClient.delete(`/meeting/${meetingId}/user`, {
     data: { user_id: userId },
   });
-  return response.data;
+  return response;
 };
