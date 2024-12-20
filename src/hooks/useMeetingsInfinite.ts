@@ -31,8 +31,10 @@ const useMeetingsInfinite = () => {
       queryKey: ['meetings', searchParams.toString()],
       queryFn: fetchMeetings,
       getNextPageParam: (lastPage) => {
-        const isLastPage = Math.ceil(lastPage.total / 10) === lastPage.currentPage;
-        return isLastPage ? null : lastPage.currentPage + 1;
+        if (lastPage.currentPage < lastPage.totalPage) {
+          return lastPage.currentPage + 1;
+        }
+        return undefined;
       },
       initialPageParam: 1,
     });
