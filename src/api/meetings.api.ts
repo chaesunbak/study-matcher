@@ -53,13 +53,21 @@ export const deleteMeeting = async (meetingId: number) => {
 };
 
 export const updateMeeting = async (meetingId: number, params: CreateMeetingParams) => {
-  const response = await httpClient.put(`/meeting/${meetingId}`, params);
-  return response;
+  try {
+    const response = await httpClient.put(`/meeting/${meetingId}`, params);
+    return response;
+  } catch (error: any) {
+    console.error(error);
+  }
 };
 
 export const deleteMeetingUser = async (meetingId: number, userId: number) => {
-  const response = await httpClient.delete(`/meeting/${meetingId}/user`, {
-    data: { user_id: userId },
-  });
-  return response;
+  try {
+    const response = await httpClient.delete(`/meeting/${meetingId}/user`, {
+      data: { user_id: userId },
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
 };
