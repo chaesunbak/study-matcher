@@ -44,7 +44,7 @@ const ProfileForm = () => {
             <li key={index} className="flex items-center justify-between">
               <span>{item.label}</span>
               <Link
-                to={item.buttonLabel === '재설정' ? `${item.link}` : `/users/0/${item.link}`}
+                to={item.buttonLabel === '재설정' ? `/${item.link}` : `/users/0/${item.link}`}
                 state={{ state: userData }}
                 className={item.buttonClass}
               >
