@@ -91,11 +91,9 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <div className="relative rounded-xl bg-white p-6 shadow-lg">
-        <h2 className="text-center text-2xl font-bold text-gray-800">회원가입</h2>
-        <p className="mb-6 mt-2 text-center text-sm text-gray-500">
-          이메일과 비밀번호를 입력해주세요
-        </p>
+      <div className="relative rounded-xl bg-white md:p-2 lg:p-4">
+        <h2 className="text-center text-gray-700">회원가입</h2>
+        <p className="mb-6 mt-2 text-center text-gray-700">이메일과 비밀번호를 입력해주세요</p>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <Input
@@ -146,7 +144,7 @@ const SignUpForm = () => {
           />
           {/* 파일 업로드 필드 */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">프로필 이미지</label>
+            <label className="block font-medium text-gray-700">프로필 이미지</label>
             <input
               type="file"
               {...register('profile_img')}

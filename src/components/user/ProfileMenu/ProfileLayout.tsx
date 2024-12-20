@@ -3,11 +3,11 @@ import UserHeaderForm from '../UserHeaderForm';
 
 const ProfileLayout = () => {
   return (
-    <div className="bg-gray-50 flex min-h-screen">
-      <UserHeaderForm mode="leftMenu" />
+    <div className="flex min-h-screen gap-6">
+      <UserHeaderForm mode="leftMenu" className="hidden md:flex" />
 
       {/* 오른쪽 콘텐츠 */}
-      <div className="w-3/4 p-6">
+      <div className="mx-auto w-3/4">
         <Outlet />
       </div>
     </div>

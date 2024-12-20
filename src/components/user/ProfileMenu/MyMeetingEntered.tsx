@@ -13,7 +13,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
   // );
 
   return (
-    <div className="p-6">
+    <div className="rounded-lg border border-gray-700 p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold">내가 참여한 모임</h2>
 

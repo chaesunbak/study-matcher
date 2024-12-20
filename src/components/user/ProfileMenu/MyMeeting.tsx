@@ -13,7 +13,7 @@ const MyMeeting = ({ user }: MyMeetingProps) => {
   // );
 
   return (
-    <div className="relative p-6">
+    <div className="relative mb-6 rounded-lg border border-gray-700 p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold">내가 생성한 모임</h2>
 
