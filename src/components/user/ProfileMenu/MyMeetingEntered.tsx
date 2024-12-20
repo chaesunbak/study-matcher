@@ -1,16 +1,38 @@
-import { UserResponse } from '../../../models/user.model';
-import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { MeetingDetail, MeetingUser } from '../../../models/meeting.model';
+import { requestHandlerUser } from '../../../api/usersApi/userHttp';
+import { formatDate } from '../../../utils/format';
 
-interface MyMeetingEnteredProps {
-  user: UserResponse;
-}
+const MyMeetingEntered = () => {
+  const navigate = useNavigate();
 
-const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
-  // const navigate = useNavigate();
+  const [userMeeting, setUserMeeting] = useState<MeetingDetail[]>([]);
 
-  // const enteredMeetings: MeetingDetail[] = dummyMeetingDetails.filter((meeting) =>
-  //   meeting.meeting_members.some((member) => member.id === user.id)
-  // );
+  const getUserMeetings = async () => {
+    try {
+      const responseMeetingId = await requestHandlerUser('get', `/users/meetings`);
+      const meetings = await Promise.all(
+        responseMeetingId.data.meeting_users.map((meetingUser: MeetingUser) => getUser(meetingUser))
+      );
+      setUserMeeting(meetings);
+    } catch (e) {
+      console.error('Error getting meeting:', e);
+    }
+  };
+
+  const getUser = async (meetingUser: MeetingUser) => {
+    try {
+      const response = await requestHandlerUser('get', `/meeting/${meetingUser.meeting_id}`);
+      return response.data;
+    } catch (e) {
+      console.error('Error getting user:', e);
+    }
+  };
+
+  useEffect(() => {
+    getUserMeetings();
+  }, []);
 
   return (
     <div className="rounded-lg border border-gray-700 p-6">
@@ -19,17 +41,14 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
 
         <Link
           className="font-normal text-gray-500 underline-offset-1 hover:underline"
-          to={`/enter?user_id=${user.id}`}
+          to={`/meeting`}
         >
           더보기 &gt;{' '}
         </Link>
       </div>
 
-      {/* 
-      {enteredMeetings.length > 0 ? (
-
-
-        enteredMeetings.map((meeting) => (
+      {userMeeting.length > 0 ? (
+        userMeeting.map((meeting) => (
           <div
             key={meeting.id}
             onClick={() => navigate(`/groups/${meeting.id}`)}
@@ -44,10 +63,10 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
             <div className="flex-1">
               <h3 className="text-lg font-medium text-gray-900">{meeting.title}</h3>
               <p className="mt-1 text-sm text-gray-600">
-                생성 날짜: {formatDate(meeting.created_at)}
+                생성 날짜: {formatDate(new Date(meeting.created_at))}
               </p>
               <p className="mt-1 text-sm text-gray-600">
-                참여자 수: {meeting.meeting_members.length}명
+                참여자 수: {`${meeting.meeting_users.length}`}명
               </p>
             </div>
           </div>
@@ -56,7 +75,7 @@ const MyMeetingEntered = ({ user }: MyMeetingEnteredProps) => {
         <div className="bg-gray-50 flex h-32 items-center justify-center rounded-lg">
           <p className="text-gray-600">참여한 모임이 없습니다.</p>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

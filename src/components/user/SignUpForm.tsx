@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
 import { requestHandlerUser } from '../../api/usersApi/userHttp';
+import { useState } from 'react';
+import { AxiosError } from 'axios';
 
 export enum Gender {
   male = '남성',
@@ -34,7 +36,7 @@ const SignUpSchema = z
       .string({ message: '생년월일을 입력하세요.' })
       .nonempty({ message: '생년월일을 입력하세요' })
       .regex(/^\d{4}-\d{2}-\d{2}$/, { message: '올바른 날짜 형식이 아닙니다 (YYYY-MM-DD)' }),
-    profile_img: z.any().optional(),
+    // profile_img: z.any(),
     introduction: z.string().optional(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
@@ -47,7 +49,7 @@ const SignUpForm = () => {
     handleSubmit,
     formState: { errors },
     control,
-    register,
+    getValues,
   } = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -60,6 +62,7 @@ const SignUpForm = () => {
     },
   });
   const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(false);
 
   const postUserData = async (formData: FormData) => {
     try {
@@ -75,7 +78,13 @@ const SignUpForm = () => {
     }
   };
 
-  const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
+  const onSubmit = (data: z.infer<typeof SignUpSchema>, e) => {
+    if (!isChecked) {
+      e.preventDefault();
+      console.log('data', data);
+      alert('메일을 확인해주세요.');
+      return;
+    }
     const formData = new FormData();
 
     formData.append('email', data.email);
@@ -83,11 +92,43 @@ const SignUpForm = () => {
     formData.append('username', data.username);
     formData.append('gender', data.gender);
     formData.append('birth_date', data.birthdate);
-    formData.append('profile_img', data.profile_img || '');
+    // formData.append('profile_img', data.profile_img[0]);
     formData.append('introduction', data.introduction || '');
 
     postUserData(formData);
   };
+
+  const getEmailCheck = async (emailCheck: string) => {
+    try {
+      const response = await requestHandlerUser('post', `/users/email-check`, {
+        email: emailCheck,
+      });
+      const responseCode = response.status;
+      switch (responseCode) {
+        case 200:
+          alert('사용할 수 있는 이메일 입니다.');
+          setIsChecked(true);
+          break;
+      }
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 406) {
+          alert('중복된 이메일입니다.');
+        }
+      } else {
+        console.error('Unknown error:', e);
+      }
+    }
+  };
+
+  const handleButton = () => {
+    const emailCheck = getValues('email');
+    getEmailCheck(emailCheck);
+  };
+
+  // const handleFileChange = (file: File) => {
+  //   setValue('profile_img', file);
+  // };
 
   return (
     <div>
@@ -96,13 +137,19 @@ const SignUpForm = () => {
         <p className="mb-6 mt-2 text-center text-gray-700">이메일과 비밀번호를 입력해주세요</p>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <label className="block text-sm font-medium text-gray-700">이메일</label>
           <Input
             name="email"
             type="text"
             control={control}
             placeholder="이메일을 입력하세요"
             errors={errors}
+            hasButton={true}
+            buttonLabel="확인"
+            onButtonClick={handleButton}
+            className="w-2/3"
           />
+          <label className="block text-sm font-medium text-gray-700">비밀번호</label>
           <Input
             name="password"
             type="password"
@@ -110,6 +157,7 @@ const SignUpForm = () => {
             placeholder="비밀번호를 입력하세요"
             errors={errors}
           />
+          <label className="block text-sm font-medium text-gray-700">비밀번호 확인</label>
           <Input
             name="passwordConfirm"
             type="password"
@@ -117,6 +165,7 @@ const SignUpForm = () => {
             placeholder="비밀번호를 확인해주세요"
             errors={errors}
           />
+          <label className="block text-sm font-medium text-gray-700">닉네임</label>
           <Input
             name="username"
             type="text"
@@ -124,6 +173,8 @@ const SignUpForm = () => {
             placeholder="닉네임을 설정해주세요"
             errors={errors}
           />
+
+          <label className="block text-sm font-medium text-gray-700">성별</label>
           <Input
             name="gender"
             type="select"
@@ -135,6 +186,8 @@ const SignUpForm = () => {
             placeholder="성별을 선택하세요"
             errors={errors}
           />
+
+          <label className="block text-sm font-medium text-gray-700">생년 월일</label>
           <Input
             name="birthdate"
             type="date"
@@ -142,18 +195,20 @@ const SignUpForm = () => {
             placeholder="생년월일을 입력하세요"
             errors={errors}
           />
-          {/* 파일 업로드 필드 */}
-          <div className="mb-4">
-            <label className="block font-medium text-gray-700">프로필 이미지</label>
-            <input
-              type="file"
-              {...register('profile_img')}
-              className="focus:ring-indigo-500 mt-1 w-full rounded-lg border px-4 py-2 text-gray-700 focus:outline-none focus:ring-2"
-            />
-            {errors.profile_img && (
-              <p className="mt-1 text-sm text-red-500">{String(errors.profile_img.message)}</p>
-            )}
-          </div>
+
+          {/* <label className="block text-sm font-medium text-gray-700">프로필 이미지</label>
+          <Input
+            name="profile_img"
+            type="image"
+            control={control}
+            errors={errors}
+            onChange={(file) => {
+              handleFileChange(file);
+            }}
+            setValue={setValue}
+          /> */}
+
+          <label className="block text-sm font-medium text-gray-700">자기 소개</label>
           <Input
             name="introduction"
             type="textarea"
