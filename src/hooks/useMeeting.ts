@@ -18,7 +18,6 @@ const useMeeting = (id: number) => {
             setMeeting(response.data);
           } else if (response.status === 404) {
             setMeeting(null);
-            setError('존재하지 않는 그룹입니다');
           } else {
             setError('그룹을 불러오는 중에 오류가 발생했습니다.');
           }
