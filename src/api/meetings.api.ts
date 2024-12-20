@@ -14,8 +14,8 @@ export interface getMeetingsParams {
   page: number;
   topic_id?: Topic['id'];
   per_page: number;
-  onGoing_only?: boolean;
-  available_only?: boolean;
+  ongoingOnly?: boolean;
+  availableOnly?: boolean;
 }
 
 export const getMeetings = async (params: getMeetingsParams): Promise<MeetingResponse> => {

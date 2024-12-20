@@ -13,6 +13,8 @@ const useMeetingsInfinite = () => {
   }): Promise<MeetingResponse> => {
     const keyword = searchParams.get('keyword') || undefined;
     const topicId = searchParams.get('topic');
+    const onGoingOnly = searchParams.has('ongoingOnly');
+    const availableOnly = searchParams.has('availableOnly');
     const params: getMeetingsParams = { page: pageParam, per_page: 10 };
 
     if (keyword) {
@@ -21,6 +23,14 @@ const useMeetingsInfinite = () => {
 
     if (topicId) {
       params.topic_id = parseInt(topicId, 10);
+    }
+
+    if (onGoingOnly) {
+      params.ongoingOnly = true;
+    }
+
+    if (availableOnly) {
+      params.availableOnly = true;
     }
 
     return await getMeetings(params);
