@@ -3,23 +3,32 @@ import Input from './InputForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Button from '../common/Button';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { requestHandlerUser } from '../../api/usersApi/userHttp';
+import { useState } from 'react';
 
-export const loginSchema = z.object({
-  email: z
-    .string({ message: '이메일을 입력하세요' })
-    .nonempty({ message: '이메일을 입력하세요' })
-    .email({ message: '이메일 형식이 아닙니다.' }),
-  password: z
-    .string({ message: '비밀번호를 입력하세요.' })
-    .nonempty({ message: '비밀번호를 입력하세요' })
-    .min(8, { message: '비밀번호는 8자 이상으로 입력하세요' })
-    .max(16, { message: '비밀번호는 16자 이하로 입력하세요' }),
-  passwordConfirm: z
-    .string({ message: '확인 비밀번호를 입력하세요.' })
-    .nonempty({ message: '확인 비밀번호를 입력하세요' }),
-});
+export const loginSchema = z
+  .object({
+    email: z
+      .string({ message: '이메일을 입력하세요' })
+      .nonempty({ message: '이메일을 입력하세요' })
+      .email({ message: '이메일 형식이 아닙니다.' }),
+    password: z
+      .string({ message: '비밀번호를 입력하세요.' })
+      .nonempty({ message: '비밀번호를 입력하세요' })
+      .min(8, { message: '비밀번호는 8자 이상으로 입력하세요' })
+      .max(16, { message: '비밀번호는 16자 이하로 입력하세요' }),
+    targetPassword: z
+      .string({ message: '확인 비밀번호를 입력하세요.' })
+      .nonempty({ message: '확인 비밀번호를 입력하세요' }),
+    targetPasswordConfirm: z
+      .string({ message: '확인 비밀번호를 입력하세요.' })
+      .nonempty({ message: '확인 비밀번호를 입력하세요' }),
+  })
+  .refine((data) => data.targetPassword === data.targetPasswordConfirm, {
+    message: '변경할 비밀번호가 일치하지 않습니다.',
+    path: ['targetPasswordConfirm'],
+  });
 
 const ResetPwForm = () => {
   const {
@@ -27,11 +36,13 @@ const ResetPwForm = () => {
     formState: { errors },
     control,
     getValues,
-    setValue,
   } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
 
   const location = useLocation();
-  const userData = location.state?.userData || null;
+  const navigate = useNavigate();
+  const userData = location.state?.state;
+  console.log(userData);
+  const [emailCheck, setEmailCheck] = useState(false);
 
   const getEmailCheck = async (email: string | undefined) => {
     try {
@@ -41,34 +52,41 @@ const ResetPwForm = () => {
         case 200:
           alert('입력하신 이메일은 존재하지 않습니다.');
           break;
-        case 406:
-          alert('확인되었습니다. 변경하실 비밀번호를 입력해주세요.');
-          break;
       }
     } catch (e) {
       console.error('Error:', e);
-      alert('서버와의 통신에 문제가 발생했습니다.');
+      switch (e.status) {
+        case 406:
+          setEmailCheck(true);
+          alert('사용 가능한 이메일입니다.');
+      }
     }
   };
 
-  const onSubmit = async (data: { email: string; password: string; passwordConfirm: string }) => {
-    const formData = new FormData();
-    {
-      userData ? setValue('email', userData.email) : formData.append('email', data.email);
+  const onSubmit = async (data: {
+    email: string;
+    password: string;
+    targetPassword: string;
+    targetPasswordConfirm: string;
+  }) => {
+    if (!emailCheck) {
+      alert('이메일을 확인해주세요');
+      return;
     }
+
+    const formData = new FormData();
     formData.append('password', data.password);
-    formData.append('passwordConfirm', data.passwordConfirm);
+    formData.append('target_password', data.targetPassword);
 
     try {
       const response = await requestHandlerUser('put', '/users/change-password', formData);
       const responseCode = response.status;
       if (responseCode === 200) {
-        alert('비��번호가 성공적으로 변경되었습니다.');
-        setValue('email', '');
-        setValue('password', '');
-        setValue('passwordConfirm', '');
+        alert('비밀번호가 성공적으로 변경되었습니다. 다시 로그인 해주세요.');
+        sessionStorage.removeItem('access_token');
+        navigate('/login');
       } else {
-        alert('비��번호 변경에 실��하��습니다.');
+        alert('비밀번호 변경에 실패하였습니다.');
       }
     } catch (e) {
       console.error('Error:', e);
@@ -92,15 +110,23 @@ const ResetPwForm = () => {
             name="password"
             type="password"
             control={control}
-            placeholder="비밀번호를 입력하세요"
+            placeholder="원래 비밀번호를 입력하세요."
             errors={errors}
           />
 
           <Input
-            name="passwordConfirm"
+            name="targetPassword"
             type="password"
             control={control}
-            placeholder="비밀번호를 확인해주세요"
+            placeholder="새로운 비밀번호를 입력하세요"
+            errors={errors}
+          />
+
+          <Input
+            name="targetPasswordConfirm"
+            type="password"
+            control={control}
+            placeholder="새로운 비밀번호를 확인해주세요"
             errors={errors}
           />
 
@@ -126,15 +152,23 @@ const ResetPwForm = () => {
             name="password"
             type="password"
             control={control}
-            placeholder="비밀번호를 입력하세요"
+            placeholder="원래 비밀번호를 입력하세요."
             errors={errors}
           />
 
           <Input
-            name="passwordConfirm"
+            name="targetPassword"
             type="password"
             control={control}
-            placeholder="비밀번호를 확인해주세요"
+            placeholder="새로운 비밀번호를 입력하세요"
+            errors={errors}
+          />
+
+          <Input
+            name="targetPasswordConfirm"
+            type="password"
+            control={control}
+            placeholder="새로운 비밀번호를 확인해주세요"
             errors={errors}
           />
 
