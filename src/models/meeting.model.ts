@@ -26,12 +26,11 @@ export interface MeetingDetail {
   max_members: number;
   start_date: string;
   end_date: string;
-  gender_condition: string;
-  age_condition: string;
   owner_user_id: number;
   created_at: string;
   meeting_users: MeetingUser[];
   topic: Topic;
+  participation: boolean;
 }
 
 export interface MeetingUser {

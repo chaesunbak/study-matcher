@@ -1,6 +1,6 @@
 import { httpClient } from './http';
 import { Topic } from '../models/topic.model';
-import { Meeting, MeetingDetail } from '../models/meeting.model';
+import { Meeting } from '../models/meeting.model';
 import { requestHandler } from './http';
 
 export interface MeetingResponse {
@@ -21,7 +21,7 @@ export const getMeetings = async (params: getMeetingsParams): Promise<MeetingRes
   return response.data;
 };
 
-export const getMeeting = async (id: number): Promise<MeetingDetail> => {
+export const getMeeting = async (id: number) => {
   const response = await httpClient.get(`/meeting/${id}`);
   return response.data;
 };
@@ -33,15 +33,31 @@ export interface CreateMeetingParams {
   max_members?: number;
   start_date?: string;
   end_date?: string;
-  age_condition?: string;
-  gender_condition?: string;
 }
 
-export const createMeeting = async (params: CreateMeetingParams): Promise<void> => {
+export const createMeeting = async (params: CreateMeetingParams) => {
   const response = await requestHandler('post', '/meeting', params);
   return response.data;
 };
 
-export const joinMeeting = async (meetingId: number): Promise<void> => {
-  await httpClient.post(`/meeting/${meetingId}/participation`);
+export const joinMeeting = async (meetingId: number) => {
+  const response = await httpClient.post(`/meeting/${meetingId}/participation`);
+  return response.data;
+};
+
+export const deleteMeeting = async (meetingId: number) => {
+  const response = await httpClient.delete(`/meeting/${meetingId}`);
+  return response.data;
+};
+
+export const updateMeeting = async (meetingId: number, params: CreateMeetingParams) => {
+  const response = await httpClient.put(`/meeting/${meetingId}`, params);
+  return response.data;
+};
+
+export const deleteMeetingUser = async (meetingId: number, userId: number) => {
+  const response = await httpClient.delete(`/meeting/${meetingId}/user`, {
+    data: { user_id: userId },
+  });
+  return response.data;
 };
