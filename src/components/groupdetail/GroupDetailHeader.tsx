@@ -2,16 +2,22 @@ import { MeetingDetail } from '../../models/meeting.model';
 import Button from '../common/Button';
 import { formatDate } from '../../utils/format';
 import { joinMeeting } from '../../api/meetings.api';
+import { useNavigate } from 'react-router';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
+  const navigate = useNavigate();
+
   const handleParticipation = async () => {
-    try {
-      await joinMeeting(group.id);
-      alert('참여 신청이 완료되었습니다.');
-    } catch (error) {
-      alert('참여 신청에 실패했습니다.');
-    }
+    await joinMeeting(group.id).then((response) => {
+      if (response.status === 201) {
+        alert(`${group.title} 그룹에 참여했습니다`);
+      } else {
+        alert('그룹에 참여할 수 없습니다.');
+      }
+    });
   };
+
+  console.log(group.participation);
 
   return (
     <div className="flex flex-col gap-4">
@@ -56,9 +62,17 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           {`방장 ID : ${group.owner_user_id}`}
         </span>
       </div>
-      <Button onClick={handleParticipation}>참가하기</Button>
-      {/* TODO : 그룹에 참여하는 기능을 구현합니다. */}
-      {/* TODO : 그룹에 이미 참여했다면 다른 버튼을 보여주거나 보여주지 않습니다. */}
+      {group.participation ? (
+        <Button
+          onClick={() => {
+            navigate(`/groups/${group.id}/posts/write`);
+          }}
+        >
+          글 쓰기
+        </Button>
+      ) : (
+        <Button onClick={handleParticipation}>참가하기</Button>
+      )}
     </div>
   );
 };

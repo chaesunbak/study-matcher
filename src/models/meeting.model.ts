@@ -32,6 +32,7 @@ export interface MeetingDetail {
   created_at: string;
   meeting_users: MeetingUser[];
   topic: Topic;
+  participation: boolean;
 }
 
 export interface MeetingUser {

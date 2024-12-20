@@ -42,6 +42,7 @@ export const createMeeting = async (params: CreateMeetingParams): Promise<void> 
   return response.data;
 };
 
-export const joinMeeting = async (meetingId: number): Promise<void> => {
-  await httpClient.post(`/meeting/${meetingId}/participation`);
+export const joinMeeting = async (meetingId: number) => {
+  const response = await httpClient.post(`/meeting/${meetingId}/participation`);
+  return response.data;
 };
