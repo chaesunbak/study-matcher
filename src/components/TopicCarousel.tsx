@@ -1,10 +1,11 @@
 import useEmblaCarousel from 'embla-carousel-react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import useTopics from '../hooks/useTopics';
 import TopicCarouselItem from './TopicCarouselItem';
+
 const TopicCarousel = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({
       delay: 6000,
       stopOnMouseEnter: true,
@@ -12,11 +13,11 @@ const TopicCarousel = () => {
   ]);
   const { topics } = useTopics();
 
-  useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes());
-    }
-  }, [emblaApi]);
+  // useEffect(() => {
+  //   if (emblaApi) {
+  //     console.log(emblaApi.slideNodes());
+  //   }
+  // }, [emblaApi]);
 
   // TODO: 보이는 캐러샐의 데이터만 불러오는 등의 최적화가 필요합니다.
   return (
