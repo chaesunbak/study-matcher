@@ -12,6 +12,7 @@ const useReplies = (postReply: postReplyFormDataType | null) => {
     queryKey: ['replies-POST-status', postReply],
     queryFn: async () => await postReplyRequest(postReply),
     enabled: !!postReply,
+    structuralSharing: true,
   });
 
   return { status, loading, replyError };
