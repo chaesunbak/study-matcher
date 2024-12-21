@@ -58,7 +58,7 @@ export const updateMeeting = async (meetingId: number, params: CreateMeetingPara
 };
 
 export const deleteMeetingUser = async (meetingId: number, userId: number) => {
-  const response = await httpClient.delete(`/meeting/${meetingId}/user`, {
+  const response = await httpClient.delete(`/meeting/${meetingId}/users`, {
     data: { user_id: userId },
   });
 
