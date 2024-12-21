@@ -5,20 +5,35 @@ import { joinMeeting } from '../../api/meetings.api';
 import { useNavigate, Link } from 'react-router';
 import { LuSettings } from 'react-icons/lu';
 import { useUserStore } from '../../store/userStore';
+import { useState } from 'react';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   const navigate = useNavigate();
   const { user_info } = useUserStore();
+  const [loading, setLoading] = useState(false);
 
   // TODO : 에러처리를 추가합니다
   const handleParticipation = async () => {
-    await joinMeeting(group.id).then((response) => {
-      if (response.status === 201) {
-        alert(`${group.title} 그룹에 참여했습니다`);
-      } else {
-        alert('그룹에 참여할 수 없습니다.');
-      }
-    });
+    setLoading(true);
+    if (confirm(`${group.title} 그룹에 참여하시겠습니까?`) === false) {
+      setLoading(false);
+      return;
+    }
+    await joinMeeting(group.id)
+      .then((response) => {
+        if (response.status === 201) {
+          alert(`${group.title} 그룹에 참여했습니다.`);
+          //TODO : 후에 리액트 쿼리의 invalidateQueries를 사용으로 리팩토링하여 더 부드러운 UX를 제공합니다.
+          window.location.reload();
+        } else if (response.status === 401 || response.status === 403) {
+          alert('그룹에 참여할 수 없습니다.');
+        } else {
+          alert('그룹에 참여할 수 없습니다.');
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -78,7 +93,9 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
           글 쓰기
         </Button>
       ) : (
-        <Button onClick={handleParticipation}>참가하기</Button>
+        <Button onClick={handleParticipation} disabled={loading}>
+          참가하기
+        </Button>
       )}
     </div>
   );
