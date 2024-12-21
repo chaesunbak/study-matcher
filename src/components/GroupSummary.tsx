@@ -8,7 +8,10 @@ interface MeetingSummaryProps {
 
 const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
   return (
-    <Link to={`/groups/${meeting.id}`} className="flex items-center gap-4 transition-all">
+    <Link
+      to={`/groups/${meeting.id}`}
+      className="flex items-center gap-4 transition-all hover:opacity-90"
+    >
       <div>
         <div className="size-20 rounded-xl bg-gray-200 transition-all md:size-24 md:rounded-2xl" />
         {/* TDOO: 현재는 스켈레톤을 띄우고 있으나 나중에 실제 이미지로 변경 */}

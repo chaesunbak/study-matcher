@@ -20,13 +20,13 @@ const TopicCarousel = () => {
 
   // TODO: 보이는 캐러샐의 데이터만 불러오는 등의 최적화가 필요합니다.
   return (
-    <div className="overflow-hidden" ref={emblaRef}>
-      <div className="flex">
+    <section className="overflow-hidden rounded-lg border" ref={emblaRef}>
+      <div className="mb-4 ml-4 mt-4 flex">
         {topics.map((topic) => (
           <TopicCarouselItem key={topic.id} topic={topic} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
