@@ -64,12 +64,13 @@ const ResetPwForm = () => {
   };
 
   const onSubmit = async (data: {
-    email: string;
+    email?: string;
     password: string;
     targetPassword: string;
     targetPasswordConfirm: string;
   }) => {
     if (!emailCheck && !userData) {
+      setEmailCheck(false);
       alert('이메일을 확인해주세요');
       return;
     }
@@ -173,7 +174,9 @@ const ResetPwForm = () => {
             errors={errors}
           />
 
-          <Button type="submit">비밀번호 변경</Button>
+          <Button variant="form" type="submit">
+            비밀번호 변경
+          </Button>
         </form>
       )}
     </div>
