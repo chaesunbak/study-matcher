@@ -11,26 +11,35 @@ import {
   DialogTitle,
   DialogDescription,
 } from '../components/common/Dialog';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 const GroupManage = () => {
   const { group_id } = useParams();
   const { meeting } = useOutletContext<{ meeting: MeetingDetail }>();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   console.log(meeting);
 
   // TODO : 에러처리를 추가합니다
   const handleDeleteMeeting = async () => {
+    setLoading(true);
+    if (confirm('정말 그룹을 삭제하시겠습니까?') === false) {
+      return;
+    }
     await deleteMeeting(Number(group_id))
       .then((response) => {
         if (response.status === 204) {
-          if (confirm('정말 그룹을 삭제하시겠습니까?')) {
-            alert('그룹이 삭제되었습니다.');
-          } else {
-            alert('그룹을 삭제할 수 없습니다.');
-          }
+          alert('그룹을 삭제했습니다.');
+          navigate('/');
+        } else {
+          console.error(response);
+          alert('그룹을 삭제에 실패했습니다.');
         }
       })
-      .catch((error) => {
-        console.error(error);
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -50,7 +59,9 @@ const GroupManage = () => {
         </DialogContent>
       </Dialog>
 
-      <Button onClick={handleDeleteMeeting}>그룹 삭제</Button>
+      <Button onClick={handleDeleteMeeting} disabled={loading}>
+        그룹 삭제
+      </Button>
     </div>
   );
 };
