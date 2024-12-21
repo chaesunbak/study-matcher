@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { postReplyFormDataType } from '../models/post.model';
 import { postReplyRequest } from '../api/reply.api';
 import { useQuery } from '@tanstack/react-query';

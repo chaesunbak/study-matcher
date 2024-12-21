@@ -34,7 +34,6 @@ const Input = ({
   hasButton = false,
   buttonLabel = '확인',
   onButtonClick,
-  onFileChange,
   isReply = false,
 }: InputProps) => {
   const hasError = Boolean(errors?.[name]);

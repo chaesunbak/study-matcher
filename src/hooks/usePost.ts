@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { PostDetail } from '../models/post.model';
 import { getPost } from '../api/posts.api';
 import { useQuery } from '@tanstack/react-query';
 
