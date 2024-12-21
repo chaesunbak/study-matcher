@@ -19,7 +19,7 @@ import PostWrite from './pages/PostWrite.tsx';
 import GroupManageList from './pages/GroupManageList.tsx';
 import Logout from './pages/Logout.tsx';
 import UserModify from './pages/UserModify.tsx';
-import ProfileLayout from './components/user/\bProfileMenu/ProfileLayout.tsx';
+import ProfileLayout from './components/user/ProfileMenu/ProfileLayout.tsx';
 import ResetPw from './pages/ResetPw.tsx';
 import WithdrawUser from './pages/WithdrawUser.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

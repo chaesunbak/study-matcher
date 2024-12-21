@@ -13,7 +13,7 @@ const useMeetingsInfinite = () => {
   }): Promise<MeetingResponse> => {
     const keyword = searchParams.get('keyword') || undefined;
     const topicId = searchParams.get('topic');
-    const params: getMeetingsParams = { page: pageParam };
+    const params: getMeetingsParams = { page: pageParam, per_page: 10 };
 
     if (keyword) {
       params.keyword = keyword;

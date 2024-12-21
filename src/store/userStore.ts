@@ -30,15 +30,28 @@ const initialState: State = {
   },
 };
 
+const saveUserInfoToSessionStorage = (user_info: UserInfo) => {
+  sessionStorage.setItem('user_info', JSON.stringify(user_info));
+};
+
+const getUserInfoFromSessionStorage = (): UserInfo => {
+  const userInfo = sessionStorage.getItem('user_info');
+  return userInfo ? JSON.parse(userInfo) : initialState.user_info;
+};
+
 export const useUserStore = create(
   devtools<State & Actions>(
     (set) => ({
-      ...initialState,
+      user_info: getUserInfoFromSessionStorage(),
       actions: {
         loginUser: (user_info: UserInfo) => {
+          saveUserInfoToSessionStorage(user_info);
           set({ user_info: user_info });
         },
-        logOutUser: () => set(initialState),
+        logOutUser: () => {
+          sessionStorage.removeItem('user_info');
+          set(initialState);
+        },
       },
     }),
     { name: 'userStore' }
