@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode, FC } from 'react';
+import Button from './Button';
 
 interface DialogContextProps {
   isOpen: boolean;
@@ -52,10 +53,10 @@ const DialogContent: FC<DialogContentProps> = ({ children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="rounded-md bg-white p-4">
         {children}
-        <button onClick={closeDialog}>닫기</button>
+        <Button onClick={closeDialog}>닫기</Button>
       </div>
     </div>
   );
@@ -66,7 +67,7 @@ interface DialogHeaderProps {
 }
 
 const DialogHeader: FC<DialogHeaderProps> = ({ children }) => {
-  return <div className="mb-4">{children}</div>;
+  return <div className="mb-4 text-black">{children}</div>;
 };
 
 interface DialogTitleProps {
