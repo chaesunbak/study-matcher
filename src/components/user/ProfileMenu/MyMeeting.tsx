@@ -21,7 +21,7 @@ const MyMeeting = () => {
 
   useEffect(() => {
     getUserMeetings();
-  });
+  }, []);
 
   return (
     <div className="relative mb-6 rounded-lg border border-slate-500 p-6">
