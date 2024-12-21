@@ -20,6 +20,7 @@ type InputProps = {
   buttonLabel?: string;
   onButtonClick?: () => void;
   onFileChange?: (file: File) => void;
+  isReply?: boolean;
 };
 
 const Input = ({
@@ -35,6 +36,7 @@ const Input = ({
   buttonLabel = '확인',
   onButtonClick,
   onFileChange,
+  isReply = false,
 }: InputProps) => {
   const hasError = Boolean(errors?.[name]);
   const [previewUrl, setPreviewUrl] = useState<string | null>('');
@@ -63,9 +65,16 @@ const Input = ({
             ))}
           </select>
         );
-
       case 'textarea':
-        return <textarea {...field} placeholder={placeholder} className={baseClass} />;
+        return isReply ? (
+          <textarea
+            {...field}
+            placeholder={placeholder}
+            className={'mb-4 h-24 w-full rounded border border-gray-500 p-2'}
+          />
+        ) : (
+          <textarea {...field} placeholder={placeholder} className={baseClass} />
+        );
 
       // case 'image':
       //   return (
