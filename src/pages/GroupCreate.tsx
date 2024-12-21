@@ -8,7 +8,7 @@ import { createMeeting } from '../api/meetings.api';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 
-const groupCreateSchema = z.object({
+export const groupCreateSchema = z.object({
   title: z.string().nonempty('모임 이름 입력해주세요.'),
   topic_id: z.string().nonempty('카테고리를 선택해주세요.'),
   description: z.string().nonempty('모임 설명을 입력해주세요.'),
@@ -23,7 +23,7 @@ const groupCreateSchema = z.object({
     .optional(),
 });
 
-interface GroupCreateForm {
+export interface GroupCreateForm {
   title: string;
   topic_id: number;
   description: string;
@@ -75,6 +75,7 @@ const GroupCreate = () => {
         if (response.status === 201) {
           navigate(`/groups/${response.data.id}`);
         } else {
+          console.error(response);
           alert('모임 만들기에 실패했습니다.');
         }
       })

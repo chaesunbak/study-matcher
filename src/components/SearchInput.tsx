@@ -47,7 +47,12 @@ const SearchInput = ({ className }: SearchInputProps) => {
   }, []);
 
   return (
-    <div className={cn('flex items-center rounded-3xl border px-4 py-2', className)}>
+    <div
+      className={cn(
+        'flex items-center rounded-3xl border px-4 py-2 transition-all focus-within:border-primary',
+        className
+      )}
+    >
       <LuSearch className="mr-2" aria-hidden="true" />
       <input
         type="text"

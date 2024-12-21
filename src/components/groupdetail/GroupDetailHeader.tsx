@@ -53,19 +53,19 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
       {/* TODO : 그룹에 이미 참여 한 경우 그룹의 설명은 보여주지 않습니다 */}
       <div className="flex flex-wrap items-center gap-2">
         {/* 용이한 테스트를 위해서 아래정보를 보여주고 있습니다 */}
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
+        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`주제 : ${group.topic.name}`}
         </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
+        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`정원 : ${group.max_members}명`}
         </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
+        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`시작일 : ${new Date(group.start_date).toLocaleDateString()}`}
         </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
+        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`종료일 : ${new Date(group.end_date).toLocaleDateString()}`}
         </span>
-        <span className="rounded-lg bg-slate-500 px-2 py-1 text-sm text-white">
+        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`방장 ID : ${group.owner_user_id}`}
         </span>
       </div>
