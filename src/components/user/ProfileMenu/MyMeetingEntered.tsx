@@ -12,6 +12,7 @@ const MyMeetingEntered = () => {
   const getUserMeetings = async () => {
     try {
       const responseMeetingId = await requestHandlerUser('get', `/users/meetings`);
+      console.log(responseMeetingId);
       const meetings = await Promise.all(
         responseMeetingId.data.meeting_users.map((meetingUser: MeetingUser) => getUser(meetingUser))
       );

@@ -8,6 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useReplies from '../hooks/useReplies';
 import { useEffect, useState } from 'react';
 import { postReplyFormDataType } from '../models/post.model';
+import useRepliesPut from '../hooks/useRepliesPut';
+import { useUserStore } from '../store/userStore';
+import useRepliesDelete from '../hooks/useRepliesDelete';
 
 export const PostDetailReplyScheme = z.object({
   reply: z.string({ message: '댓글을 입력하세요' }),
@@ -23,30 +26,58 @@ const PostDetail = () => {
   } = useForm<z.infer<typeof PostDetailReplyScheme>>({
     resolver: zodResolver(PostDetailReplyScheme),
   });
-
+  const user = useUserStore((state) => state.user_info);
   const { post, refetch, error } = usePost(Number(post_id));
   const [replyData, setReplyData] = useState<postReplyFormDataType | null>(null);
+  const [replyDataPut, setReplyDataPut] = useState<string>('');
+  const [replyId, setReplyId] = useState<number>(0);
+  const [replyIdDelete, setReplyIdDelete] = useState<number>(0);
 
-  const { status } = useReplies(replyData);
+  const { statusPost } = useReplies(replyData);
+  const { statusPut } = useRepliesPut(replyDataPut, replyId);
+  const { statusDelete } = useRepliesDelete(replyIdDelete);
 
   const onSubmit = (data: { reply: string }) => {
-    const formData: postReplyFormDataType = {
+    if (replyId) {
+      setReplyDataPut(data.reply);
+      setValue('reply', '');
+      return;
+    }
+    const formDataPost: postReplyFormDataType = {
       post_id: Number(post_id),
       content: data.reply,
       parent_reply_id: null,
     };
 
-    setReplyData(formData);
+    setReplyData(formDataPost);
     setValue('reply', '');
   };
 
   useEffect(() => {
-    if (status === 201) {
+    if (statusPost === 201) {
       refetch().then(() => setReplyData(null));
+    } else if (statusPut === 200) {
+      alert('수정 되었습니다.');
+      refetch().then(() => {
+        setReplyId(0), setReplyDataPut('');
+        setValue('reply', '');
+      });
+    } else if (statusDelete === 200) {
+      alert('삭제 되었습니다.');
+      refetch();
     }
-  }, [status, refetch, onSubmit]);
+  }, [statusPost, refetch, onSubmit, statusPut, statusDelete]);
 
   if (error || !post) return <div>404</div>;
+
+  const handleClick = (reply) => {
+    setValue('reply', reply.content);
+    setReplyId(reply.id);
+  };
+
+  const handleClickDelete = (reply) => {
+    setReplyIdDelete(reply.id);
+  };
 
   return (
     <div className="container mx-auto">
@@ -60,17 +91,39 @@ const PostDetail = () => {
         <div></div>
       </div>
       <div className="mb-6 rounded">
-        {/* 이부분은 댓글 모델을 정의한 뒤 추가작업이 필요합니다 */}
         <div>
-          {post.replies.map((reply) => (
-            <div key={reply.id} className="mb-4 pb-4">
-              <div className="mb-2 flex items-center text-gray-600">
-                <span className="mr-2">{`${post.user.username}`}</span>
-                <span>{reply.created_at.toLocaleString()}</span>
+          {post.replies.map((reply) =>
+            reply.is_show ? (
+              <div
+                key={reply.id}
+                className="mb-4 flex items-start justify-between border-b border-gray-200 pb-4"
+              >
+                <div>
+                  <div className="mb-2 flex items-center text-gray-600">
+                    <span className="mr-2">{`${reply.user_id}`}</span>
+                    <span>{new Date(reply.created_at).toLocaleString()}</span>
+                  </div>
+                  <p className="leading-relaxed text-gray-500">{reply.content}</p>
+                </div>
+                {user.sub === reply.user_id && (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleClick(reply)}
+                      className="text-blue-500 text-sm hover:underline"
+                    >
+                      수정
+                    </button>
+                    <button
+                      onClick={() => handleClickDelete(reply)}
+                      className="text-sm text-red-500 hover:underline"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                )}
               </div>
-              <p className="leading-relaxed text-gray-500">{reply.content}</p>
-            </div>
-          ))}
+            ) : null
+          )}
         </div>
       </div>
       <div className="rounded">
@@ -84,7 +137,7 @@ const PostDetail = () => {
             isReply={true}
           />
           <div className="flex justify-end">
-            <Button type="submit">댓글 등록</Button>
+            <Button type="submit">{replyId ? '댓글 수정' : '댓글 등록'}</Button>
           </div>
         </form>
       </div>

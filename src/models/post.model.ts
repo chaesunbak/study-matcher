@@ -28,6 +28,7 @@ export interface PostDetail extends Post {
 export interface postPostFromDataType {
   meeting_id: number;
   title: string;
+  img: string;
   content: string;
 }
 

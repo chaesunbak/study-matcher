@@ -26,5 +26,5 @@ export const getPost = async (postId: number): Promise<PostDetail> => {
 
 export const setPostData = async (formData: postPostFromDataType) => {
   const response = await requestHandlerUser('post', `/posts`, formData);
-  return response.data;
+  return response.status;
 };
