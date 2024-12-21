@@ -65,7 +65,7 @@ const PostDetail = () => {
           {post.replies.map((reply) => (
             <div key={reply.id} className="mb-4 pb-4">
               <div className="mb-2 flex items-center text-gray-600">
-                <span className="mr-2">닉네임</span>
+                <span className="mr-2">{`${post.user.username}`}</span>
                 <span>{reply.created_at.toLocaleString()}</span>
               </div>
               <p className="leading-relaxed text-gray-500">{reply.content}</p>
