@@ -8,11 +8,7 @@ import ErrorComponent from '../common/ErrorComponent';
 
 const GroupLayout = () => {
   const { group_id } = useParams();
-
   const { meeting, loading, error } = useMeeting(Number(group_id));
-  console.log(meeting);
-  console.log(loading);
-  console.log(error);
 
   if (loading) {
     return (
