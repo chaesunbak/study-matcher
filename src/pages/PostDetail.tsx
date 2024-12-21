@@ -1,16 +1,53 @@
 import { useParams } from 'react-router';
 import Button from '../components/common/Button';
 import usePost from '../hooks/usePost';
+import Input from '../components/user/InputForm';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useReplies from '../hooks/useReplies';
+import { useEffect, useState } from 'react';
+import { postReplyFormDataType } from '../models/post.model';
+
+export const PostDetailReplyScheme = z.object({
+  reply: z.string({ message: '댓글을 입력하세요' }),
+});
 
 const PostDetail = () => {
   const { post_id } = useParams();
-  const { post } = usePost(Number(post_id));
-  console.log(post);
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    setValue,
+  } = useForm<z.infer<typeof PostDetailReplyScheme>>({
+    resolver: zodResolver(PostDetailReplyScheme),
+  });
 
-  // TODO : 404 페이지를 추가합니다.
-  if (!post) {
-    return <div>404</div>;
-  }
+  const { post, isLoading, refetch, error } = usePost(Number(post_id));
+  const [replyData, setReplyData] = useState<postReplyFormDataType | null>(null);
+
+  const { status, loading: replyLoading, replyError } = useReplies(replyData);
+
+  const onSubmit = (data: { reply: string }) => {
+    const formData: postReplyFormDataType = {
+      post_id: Number(post_id),
+      content: data.reply,
+      parent_reply_id: null,
+    };
+
+    setReplyData(formData);
+    setValue('reply', '');
+  };
+
+  useEffect(() => {
+    if (status === 201) {
+      refetch().then((res) => setReplyData(null));
+    }
+  }, [status, refetch, onSubmit]);
+
+  if (error || !post) return <div>404</div>;
+
   return (
     <div className="container mx-auto">
       <div className="mb-6 rounded">
@@ -37,13 +74,17 @@ const PostDetail = () => {
         </div>
       </div>
       <div className="rounded">
-        <form>
-          <textarea
-            className="mb-4 h-24 w-full rounded border border-gray-500 p-2"
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name="reply"
+            type="textarea"
             placeholder="댓글을 입력하세요"
-          ></textarea>
+            control={control}
+            errors={errors}
+            isReply={true}
+          />
           <div className="flex justify-end">
-            <Button>댓글 등록</Button>
+            <Button type="submit">댓글 등록</Button>
           </div>
         </form>
       </div>
