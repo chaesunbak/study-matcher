@@ -68,7 +68,7 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
               <span>{member.user.username}</span>
               <span>{member.user.introduction}</span>
             </div>
-            {isAdmin && (
+            {isAdmin && !preview && (
               <div className="ml-auto flex items-center gap-2">
                 <button
                   className="mr-2 text-red-500"
