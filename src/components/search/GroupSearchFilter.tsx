@@ -27,24 +27,42 @@ const GroupSearchFilter = () => {
           ))}
         </div>
       </div>
-      {/* TODO : 정렬과 관련한 기능은 나중에 구현할 예정입니다 */}
-      {/* <div>
-        <h3 className="mb-2">정렬</h3>
+
+      <div>
+        <h3 className="mb-2">필터</h3>
         <div className="flex gap-2">
-          {SortList.map((sort) => (
-            <CategoryButton
-              key={sort.value}
-              category={sort.label}
-              onClick={() => {
+          <CategoryButton
+            category="진행중인 모임만"
+            onClick={() => {
+              if (searchParams.has('ongoingOnly')) {
                 const newSearchParams = new URLSearchParams(searchParams);
-                newSearchParams.set('sort', sort.value);
+                newSearchParams.delete('ongoingOnly');
                 setSearchParams(newSearchParams);
-              }}
-              isActive={sort.value === searchParams.get('sort')}
-            />
-          ))}
+                return;
+              }
+              const newSearchParams = new URLSearchParams(searchParams);
+              newSearchParams.set('ongoingOnly', 'true');
+              setSearchParams(newSearchParams);
+            }}
+            isActive={searchParams.has('ongoingOnly')}
+          />
+          <CategoryButton
+            category="참여가능한 모임만"
+            onClick={() => {
+              if (searchParams.has('availableOnly')) {
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.delete('availableOnly');
+                setSearchParams(newSearchParams);
+                return;
+              }
+              const newSearchParams = new URLSearchParams(searchParams);
+              newSearchParams.set('availableOnly', 'true');
+              setSearchParams(newSearchParams);
+            }}
+            isActive={searchParams.has('availableOnly')}
+          />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

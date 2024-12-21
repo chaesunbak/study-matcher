@@ -18,7 +18,7 @@ const useMeetings = () => {
       const keyword = searchParams.get('keyword');
       const page = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : 1;
       const topicId = searchParams.get('topic');
-      const params: getMeetingsParams = { page };
+      const params: getMeetingsParams = { page, per_page: 10 };
 
       if (keyword) {
         params.keyword = keyword;

@@ -13,7 +13,13 @@ const TopicCarouselItem = ({ topic }: { topic: Topic }) => {
   useEffect(() => {
     const fetchMeetings = async () => {
       setLoading(true);
-      await getMeetings({ topic_id: topic.id, page: 1, per_page: 5 })
+      await getMeetings({
+        topic_id: topic.id,
+        page: 1,
+        per_page: 5,
+        availableOnly: true,
+        ongoingOnly: true,
+      })
         .then((data) => {
           setMeetings(data.meeting);
         })

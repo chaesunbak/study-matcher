@@ -3,6 +3,7 @@ import SearchInput from '../components/SearchInput';
 import GroupSearchFilter from '../components/search/GroupSearchFilter';
 import useMeetingsInfinite from '../hooks/useMeetingsInfinite';
 import GroupSummary from '../components/GroupSummary';
+import SkeletonGroupSummary from '../components/skeleton/SkeletonGroupSummary';
 
 const Search = () => {
   const { data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } =
@@ -20,7 +21,7 @@ const Search = () => {
           fetchNextPage();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 1.0 }
     );
 
     observerRef.current.observe(loadMoreRef.current);
@@ -43,7 +44,15 @@ const Search = () => {
           <GroupSummary key={meeting.id} meeting={meeting} />
         ))}
 
-        {isFetching && !isFetchingNextPage && <div>로딩중...</div>}
+        {isFetching && !isFetchingNextPage && (
+          <>
+            <SkeletonGroupSummary />
+            <SkeletonGroupSummary />
+            <SkeletonGroupSummary />
+            <SkeletonGroupSummary />
+            <SkeletonGroupSummary />
+          </>
+        )}
         {!isFetching && meetings.length === 0 && <div>검색 결과가 없습니다.</div>}
         {isFetchingNextPage && <div>추가 데이터 로딩중...</div>}
 
