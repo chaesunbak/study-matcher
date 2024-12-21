@@ -24,10 +24,10 @@ const PostDetail = () => {
     resolver: zodResolver(PostDetailReplyScheme),
   });
 
-  const { post, isLoading, refetch, error } = usePost(Number(post_id));
+  const { post, refetch, error } = usePost(Number(post_id));
   const [replyData, setReplyData] = useState<postReplyFormDataType | null>(null);
 
-  const { status, loading: replyLoading, replyError } = useReplies(replyData);
+  const { status } = useReplies(replyData);
 
   const onSubmit = (data: { reply: string }) => {
     const formData: postReplyFormDataType = {
@@ -42,7 +42,7 @@ const PostDetail = () => {
 
   useEffect(() => {
     if (status === 201) {
-      refetch().then((res) => setReplyData(null));
+      refetch().then(() => setReplyData(null));
     }
   }, [status, refetch, onSubmit]);
 
