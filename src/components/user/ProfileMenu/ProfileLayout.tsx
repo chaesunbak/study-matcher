@@ -7,7 +7,7 @@ const ProfileLayout = () => {
       <UserHeaderForm mode="leftMenu" className="hidden md:flex" />
 
       {/* 오른쪽 콘텐츠 */}
-      <div className="mx-auto w-3/4">
+      <div className="mx-auto w-full md:w-3/4">
         <Outlet />
       </div>
     </div>
