@@ -75,7 +75,7 @@ const UserHeaderForm = ({ mode = 'dropdown', className }: UserHeaderFormProps) =
     </div>
   ) : (
     // 왼쪽 메뉴 모드
-    <div className={cn('w-1/4 rounded-lg border border-gray-700', className)}>
+    <div className={cn('w-1/4 rounded-lg border border-slate-500', className)}>
       <div className="p-6">
         <h2 className="mb-4 text-xl font-bold">{selectedMenu}</h2>
         <ul className="space-y-3">
@@ -84,7 +84,9 @@ const UserHeaderForm = ({ mode = 'dropdown', className }: UserHeaderFormProps) =
               key={index}
               onClick={() => handleMenuClick(menu)}
               className={`cursor-pointer ${
-                selectedMenu === menu.name ? 'text-green-500 font-semibold' : 'text-gray-700'
+                selectedMenu === menu.name
+                  ? 'font-semibold text-green-500'
+                  : 'text-gray-700 dark:text-gray-300'
               }`}
             >
               {menu.name}

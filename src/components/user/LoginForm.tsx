@@ -90,7 +90,7 @@ const LoginForm = () => {
             {/* TODO /users/reset-password 는 로그인하지 않으면 접속 불가 */}
             <Link
               to="/reset-password"
-              className="text-indigo-500 ml-2 cursor-pointer hover:underline"
+              className="ml-2 cursor-pointer text-blue-400 hover:underline"
             >
               재설정
             </Link>

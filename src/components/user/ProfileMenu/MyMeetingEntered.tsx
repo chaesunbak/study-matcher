@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { MeetingDetail, MeetingUser } from '../../../models/meeting.model';
 import { requestHandlerUser } from '../../../api/usersApi/userHttp';
 import { formatDate } from '../../../utils/format';
@@ -35,16 +35,16 @@ const MyMeetingEntered = () => {
   }, []);
 
   return (
-    <div className="rounded-lg border border-gray-700 p-6">
+    <div className="rounded-lg border border-slate-500 p-6">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">내가 참여한 모임</h2>
+        <h2>내가 참여한 모임</h2>
 
-        <Link
+        {/* <Link
           className="font-normal text-gray-500 underline-offset-1 hover:underline"
           to={`/meeting`}
         >
-          더보기 &gt;{' '}
-        </Link>
+          더보기
+        </Link> */}
       </div>
 
       {userMeeting.length > 0 ? (

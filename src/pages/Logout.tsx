@@ -18,11 +18,13 @@ const Logout = () => {
       <div className="bg-gray-50 flex min-h-screen">
         <div className="flex w-3/4 flex-col items-center justify-center space-y-6 p-6">
           {isLogOut ? (
-            <div>
+            <div className="flex flex-col items-center justify-center space-y-6">
               {/* 로그아웃 상태 안내 메시지 */}
               <div className="space-y-3 text-center">
-                <h2 className="text-3xl font-bold text-slate-800">로그아웃 되었습니다</h2>
-                <p className="text-gray-600">서비스 이용을 원하시면 다시 로그인해 주세요.</p>
+                <h2 className="text-gray-700 dark:text-gray-300">로그아웃 되었습니다</h2>
+                <p className="text-gray-700 dark:text-gray-300">
+                  서비스 이용을 원하시면 다시 로그인해 주세요.
+                </p>
               </div>
 
               {/* 메인 페이지로 이동 */}
@@ -38,7 +40,7 @@ const Logout = () => {
           ) : (
             <>
               {/* 로그아웃 안내 텍스트 */}
-              <div className="text-2xl font-semibold text-slate-800">로그아웃 하시겠습니까?</div>
+              <h2 className="text-gray-700 dark:text-gray-300">로그아웃 하시겠습니까?</h2>
 
               {/* 로그아웃 버튼 */}
               <button

@@ -12,8 +12,18 @@ export const formatDate = (date: Date): string => {
   return `${year}년 ${month}월 ${day}일`;
 };
 
-export const formatDateYyyyMmDd = (dateString: Date) => {
-  const date = new Date(dateString);
+/**
+ * 주어진 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환합니다.
+ *
+ * @param {string | Date} dateString - 변환할 날짜 (ISO 문자열 또는 Date 객체)
+ * @returns {string} 'YYYY-MM-DD' 형식의 문자열
+ *
+ * @example
+ * formatDateYyyyMmDd('2014-12-24T00:00:00.000Z') // returns '2014-12-24'
+ * formatDateYyyyMmDd(new Date('2014-12-24')) // returns '2014-12-24'
+ */
+export const formatDateYyyyMmDd = (dateString: string | Date): string => {
+  const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
 
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

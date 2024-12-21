@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { requestHandlerUser } from '../../../api/usersApi/userHttp';
 import { useUserStore } from '../../../store/userStore';
 import { Meeting } from '../../../models/meeting.model';
@@ -24,16 +24,16 @@ const MyMeeting = () => {
   });
 
   return (
-    <div className="relative mb-6 rounded-lg border border-gray-700 p-6">
+    <div className="relative mb-6 rounded-lg border border-slate-500 p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold">내가 생성한 모임</h2>
 
-        <Link
+        {/* <Link
           className="font-normal text-gray-500 underline-offset-1 hover:underline"
           to={`/manage/0`}
         >
-          더보기 &gt;{' '}
-        </Link>
+          더보기
+        </Link> */}
       </div>
 
       {userMeeting.length > 0 ? (
@@ -58,8 +58,7 @@ const MyMeeting = () => {
                 <p className="mt-1 text-sm text-gray-600">
                   종료 날짜: {formatDate(new Date(meeting.end_date))}
                 </p>
-                <p className="mt-1 text-sm text-gray-600">전체 멤버 수: {meeting.max_members}</p>
-                <p className="mt-1 text-sm text-gray-600">전체 게시글 수: {meeting.topic_id}개</p>
+                <p className="mt-1 text-sm text-gray-600">정원: {meeting.max_members}</p>
               </div>
             </div>
           );
