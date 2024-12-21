@@ -29,7 +29,11 @@ export const createClient = (config?: AxiosRequestConfig) => {
     (error) => {
       if (error.response?.status === 401) {
         alert('로그인이 필요합니다.');
-        window.location.href = '/login';
+
+        if (confirm('로그인 하시겠습니다?')) {
+          window.location.href = '/login';
+        }
+
         return;
       }
       return Promise.reject(error);
