@@ -19,14 +19,13 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
   const membersToShow = preview ? membersActive.slice(0, 4) : membersActive;
 
   const handleDeleteMember = async (user_id: number) => {
-    if (confirm('정말로 추방하시겠습니까?') === false) {
+    if (confirm('해당 유저를 해당 그룹에서 내보냅니다.') === false) {
       return;
     }
 
     if (user_id === group.owner_user_id) {
-      if (confirm('본인이 그룹의 방장입니다. 정말 스스로를 추방하시겠습니까?') === false) {
-        return;
-      }
+      alert('그룹장은 추방할 수 없습니다');
+      return;
     }
 
     await deleteMeetingUser(group.id, user_id).then((response) => {
@@ -71,13 +70,16 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
               <span>{member.user.username}</span>
               <span>{member.user.introduction}</span>
             </div>
-            {isAdmin && !preview && (
+            {((isAdmin && !preview) || user_info.sub === member.user_id) && (
               <div className="ml-auto flex items-center gap-2">
                 <button
                   className="mr-2 text-red-500"
                   onClick={() => handleDeleteMember(member.user_id)}
                 >
-                  {member.user_id === group.owner_user_id ? '탈퇴' : '추방'}
+                  {member.user_id === group.owner_user_id ||
+                  (user_info.sub === member.user_id && !preview)
+                    ? '탈퇴'
+                    : '추방'}
                 </button>
               </div>
             )}
