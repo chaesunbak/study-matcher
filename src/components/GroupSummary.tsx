@@ -10,7 +10,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
   return (
     <Link
       to={`/groups/${meeting.id}`}
-      className="flex items-center gap-4 transition-all hover:opacity-90"
+      className="flex items-center gap-2 transition-all hover:opacity-90 md:gap-4"
     >
       <div>
         <div className="size-20 rounded-xl bg-gray-200 transition-all md:size-24 md:rounded-2xl" />
@@ -19,8 +19,8 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
       </div>
       <div className="flex h-full flex-col items-start justify-between">
         <h3 className="hover:underline">{meeting.title}</h3>
-        <p>{meeting.description}</p>
-        <div className="flex items-center gap-2 text-sm font-thin text-gray-500">
+        <p className="text-ellipsis">{meeting.description}</p>
+        <div className="flex flex-wrap items-center gap-1 text-xs font-thin text-gray-500 md:gap-2 md:text-sm">
           <span className="flex items-center gap-1">
             <LuCalendar />
             생성 {new Date(meeting.created_at).toLocaleDateString()}
@@ -28,7 +28,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
           {meeting.max_members && (
             <span className="flex items-center gap-1">
               <LuUser />
-              정원{meeting.max_members}명
+              정원 {meeting.max_members}명
             </span>
           )}
           {meeting.start_date && (
@@ -40,7 +40,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
           {meeting.end_date && (
             <span className="flex items-center gap-1">
               <LuCalendar />
-              시작 {new Date(meeting.end_date).toLocaleDateString()}
+              종료 {new Date(meeting.end_date).toLocaleDateString()}
             </span>
           )}
         </div>
