@@ -4,11 +4,15 @@ import useMeeting from '../../hooks/useMeeting';
 import { useParams } from 'react-router';
 import SkeletonGroupDetailHeader from '../skeleton/SkeletonGroupDetailHeader';
 import SkeletonGroupMemberSection from '../skeleton/SkeletonGroupMemberSection';
+import ErrorComponent from '../common/ErrorComponent';
 
 const GroupLayout = () => {
   const { group_id } = useParams();
 
   const { meeting, loading, error } = useMeeting(Number(group_id));
+  console.log(meeting);
+  console.log(loading);
+  console.log(error);
 
   if (loading) {
     return (
@@ -25,7 +29,7 @@ const GroupLayout = () => {
   if (error) {
     return (
       <div className="flex h-full flex-col items-center justify-center">
-        에러가 발생했습니다. 다시 시도해주세요.
+        <ErrorComponent message={error} />
       </div>
     );
   }
@@ -33,7 +37,7 @@ const GroupLayout = () => {
   if (!meeting) {
     return (
       <div className="flex h-full flex-col items-center justify-center">
-        존재하지 않는 그룹입니다.
+        <ErrorComponent message="그룹을 찾을 수 없습니다." />
       </div>
     );
   }

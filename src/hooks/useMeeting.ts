@@ -11,9 +11,9 @@ const useMeeting = (id: number) => {
     const fetchMeeting = async () => {
       setLoading(true);
       setError(null);
-
       await getMeeting(id)
         .then((response) => {
+          console.log(response);
           if (response.status === 200) {
             setMeeting(response.data);
           } else if (response.status === 404) {
@@ -23,7 +23,9 @@ const useMeeting = (id: number) => {
           }
         })
         .catch((error) => {
-          setError(error);
+          if (error.response.status === 404) {
+            setMeeting(null);
+          }
         })
         .finally(() => {
           setLoading(false);
