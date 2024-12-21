@@ -36,7 +36,6 @@ const GroupManage = () => {
 
   return (
     <div>
-      <Button>그룹 멤버 관리</Button>
       <Dialog>
         <DialogTrigger>
           <Button>그룹 수정</Button>
