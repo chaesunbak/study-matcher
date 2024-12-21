@@ -92,7 +92,7 @@ const SignUpForm = () => {
     formData.append('username', data.username);
     formData.append('gender', data.gender);
     formData.append('birth_date', data.birthdate);
-    // formData.append('profile_img', data.profile_img[0]);
+    formData.append('profile_img', '/images/123');
     formData.append('introduction', data.introduction || '');
 
     postUserData(formData);

@@ -1,5 +1,5 @@
 import { httpClient } from './http';
-import { Post, PostDetail } from '../models/post.model';
+import { Post, PostDetail, postPostFromDataType } from '../models/post.model';
 import { requestHandlerUser } from './usersApi/userHttp';
 
 interface PostsResponse {
@@ -24,7 +24,7 @@ export const getPost = async (postId: number): Promise<PostDetail> => {
   return response.data;
 };
 
-export const setPostData = async (formData: FormData) => {
+export const setPostData = async (formData: postPostFromDataType) => {
   const response = await requestHandlerUser('post', `/posts`, formData);
   return response.data;
 };

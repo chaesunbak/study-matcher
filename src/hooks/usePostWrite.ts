@@ -1,12 +1,13 @@
 import { useState, useCallback } from 'react';
 import { setPostData } from '../api/posts.api';
+import { postPostFromDataType } from '../models/post.model';
 
 const usePostWrite = () => {
   const [status, setStatus] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPost = useCallback(async (formData: FormData) => {
+  const fetchPost = useCallback(async (formData: postPostFromDataType) => {
     setLoading(true);
     setError(null);
 

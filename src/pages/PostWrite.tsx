@@ -5,9 +5,10 @@ import { useParams } from 'react-router';
 import Button from '../components/common/Button';
 import Input from '../components/user/InputForm';
 import usePostWrite from '../hooks/usePostWrite';
+import { postPostFromDataType } from '../models/post.model';
 
 const postSchema = z.object({
-  meeting_id: z.number(),
+  meeting_id: z.string(),
   title: z.string().nonempty('제목을 입력해주세요.'),
   content: z.string().nonempty('내용을 입력해주세요.'),
 });
@@ -23,17 +24,18 @@ const PostWrite = () => {
   } = useForm<PostFormData>({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      meeting_id: Number(group_id),
+      meeting_id: group_id,
     },
   });
 
   const { status, fetchPost } = usePostWrite();
 
   const onSubmit = (data: PostFormData) => {
-    const formData = new FormData();
-    formData.append('meeting_id', `${data.meeting_id}`);
-    formData.append('title', data.title);
-    formData.append('content', data.content);
+    const formData: postPostFromDataType = {
+      meeting_id: parseInt(data.meeting_id),
+      title: data.title,
+      content: data.content,
+    };
 
     fetchPost(formData);
     switch (status) {
