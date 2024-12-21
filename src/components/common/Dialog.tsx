@@ -81,7 +81,7 @@ interface DialogHeaderProps {
 
 const DialogHeader: FC<DialogHeaderProps> = ({ children, className }) => {
   return (
-    <div className={cn('flex flex-col space-y-1.5 text-center text-black sm:text-left', className)}>
+    <div className={cn('flex flex-col space-y-1.5 text-left text-black', className)}>
       {children}
     </div>
   );

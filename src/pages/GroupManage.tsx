@@ -20,6 +20,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { updateMeeting } from '../api/meetings.api';
 import useTopics from '../hooks/useTopics';
 import { z } from 'zod';
+import { useUserStore } from '../store/userStore';
+import ErrorComponent from '../components/common/ErrorComponent';
+import { formatDateYyyyMmDd } from '../utils/format';
 
 const GroupManage = () => {
   const { group_id } = useParams();
@@ -34,6 +37,15 @@ const GroupManage = () => {
     resolver: zodResolver(groupCreateSchema),
   });
   const { topics } = useTopics();
+  const { user_info } = useUserStore();
+
+  if (meeting.owner_user_id !== user_info.sub) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center">
+        <ErrorComponent message="권한이 없습니다." />
+      </div>
+    );
+  }
 
   //TODO: 에러처리를 추가합니다
   const onSubmit = async (data: GroupFormData) => {
@@ -77,16 +89,19 @@ const GroupManage = () => {
   const handleDeleteMeeting = async () => {
     setLoading(true);
     if (confirm('정말 그룹을 삭제하시겠습니까?') === false) {
+      setLoading(false);
       return;
     }
     await deleteMeeting(Number(group_id))
       .then((response) => {
-        if (response.status === 204) {
+        if (response.status === 200) {
           alert('그룹을 삭제했습니다.');
           navigate('/');
+        } else if (response.status === 401 || response.status === 403) {
+          alert('권한이 없습니다.');
         } else {
           console.error(response);
-          alert('그룹을 삭제에 실패했습니다.');
+          alert('그룹을 삭제에 실패했습니다');
         }
       })
       .finally(() => {
@@ -144,7 +159,7 @@ const GroupManage = () => {
                   name="max_members"
                   type="number"
                   placeholder="정원을 입력해주세요.(선택)"
-                  defaultValue={meeting.max_members}
+                  defaultValue={String(meeting.max_members)}
                   control={control}
                   errors={errors}
                 />
@@ -153,7 +168,7 @@ const GroupManage = () => {
                   name="start_date"
                   type="text"
                   placeholder="YYYY-MM-DD 형식으로 시작일을 입력해주세요.(선택)"
-                  defaultValue={meeting.start_date}
+                  defaultValue={formatDateYyyyMmDd(meeting.start_date)}
                   control={control}
                   errors={errors}
                 />
@@ -162,12 +177,12 @@ const GroupManage = () => {
                   name="end_date"
                   type="text"
                   placeholder="YYYY-MM-DD 형식으로 종료일을 입력해주세요.(선택)"
-                  defaultValue={meeting.end_date}
+                  defaultValue={formatDateYyyyMmDd(meeting.end_date)}
                   control={control}
                   errors={errors}
                 />
 
-                <Button className="w-full" type="submit" disabled={loading}>
+                <Button className="mb-4 w-full" type="submit" disabled={loading}>
                   그룹 정보 수정하기
                 </Button>
               </form>
