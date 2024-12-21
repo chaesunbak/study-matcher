@@ -10,7 +10,7 @@ const Login = () => {
         <LoginForm />
         <div className="mt-6 flex items-center justify-center text-sm text-gray-700">
           <span>계정이 없으신가요?</span>
-          <Link to="/signup" className="text-blue-400 ml-2 cursor-pointer hover:underline">
+          <Link to="/signup" className="ml-2 cursor-pointer text-blue-400 hover:underline">
             계정 만들기
           </Link>
         </div>

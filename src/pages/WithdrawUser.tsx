@@ -42,10 +42,12 @@ const WithdrawUser = () => {
       <div className="bg-gray-50 flex min-h-screen">
         <div className="flex w-3/4 flex-col items-center justify-center space-y-6 p-6">
           {isWithDraw ? (
-            <div>
+            <div className="flex flex-col items-center justify-center space-y-6">
               <div className="space-y-3 text-center">
-                <h2 className="text-3xl font-bold text-gray-700">회원 정보가 삭제되었습니다.</h2>
-                <p className="text-gray-700">서비스 이용을 원하시면 회원 가입 해주세요.</p>
+                <h2 className="text-gray-700 dark:text-gray-300">회원 정보가 삭제되었습니다.</h2>
+                <p className="text-gray-700 dark:text-gray-300">
+                  서비스 이용을 원하시면 회원 가입 해주세요.
+                </p>
               </div>
 
               <div>
@@ -60,7 +62,7 @@ const WithdrawUser = () => {
           ) : (
             <>
               {/* 로그아웃 안내 텍스트 */}
-              <div className="text-2xl font-semibold text-gray-700">계정을 삭제하시겠습니까?</div>
+              <h2 className="text-gray-700 dark:text-gray-300">계정을 삭제하시겠습니까?</h2>
 
               <button
                 onClick={handleLogout}
