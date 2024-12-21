@@ -30,8 +30,11 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
     await deleteMeetingUser(group.id, user_id).then((response) => {
       if (response.status === 200) {
         alert('멤버를 추방했습니다');
+      } else if (response.status === 401 || response.status === 403) {
+        alert('권한이 없습니다');
       } else {
-        alert('멤버를 추방할 수 없습니다');
+        console.error(response);
+        alert('멤버를 추방하는데 실패했습니다');
       }
     });
   };
