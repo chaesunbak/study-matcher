@@ -80,9 +80,6 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
         <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
           {`종료일 : ${new Date(group.end_date).toLocaleDateString()}`}
         </span>
-        <span className="rounded-lg bg-slate-600 px-2 py-1 text-sm text-white dark:bg-slate-800">
-          {`방장 ID : ${group.owner_user_id}`}
-        </span>
       </div>
       {group.participation ? (
         <Button
