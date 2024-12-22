@@ -11,6 +11,7 @@ import { postReplyFormDataType } from '../models/post.model';
 import useRepliesPut from '../hooks/useRepliesPut';
 import { useUserStore } from '../store/userStore';
 import useRepliesDelete from '../hooks/useRepliesDelete';
+import { Reply } from '../models/reply.model';
 
 export const PostDetailReplyScheme = z.object({
   reply: z.string({ message: '댓글을 입력하세요' }),
@@ -70,12 +71,12 @@ const PostDetail = () => {
 
   if (error || !post) return <div>404</div>;
 
-  const handleClick = (reply) => {
+  const handleClick = (reply: Reply) => {
     setValue('reply', reply.content);
     setReplyId(reply.id);
   };
 
-  const handleClickDelete = (reply) => {
+  const handleClickDelete = (reply: Reply) => {
     setReplyIdDelete(reply.id);
   };
 
@@ -100,7 +101,7 @@ const PostDetail = () => {
               >
                 <div>
                   <div className="mb-2 flex items-center text-gray-600">
-                    <span className="mr-2">{`${reply.user_id}`}</span>
+                    <span className="mr-2">익명</span>
                     <span>{new Date(reply.created_at).toLocaleString()}</span>
                   </div>
                   <p className="leading-relaxed text-gray-500">{reply.content}</p>

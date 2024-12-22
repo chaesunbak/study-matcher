@@ -1,9 +1,14 @@
 import { httpClient } from './http';
-import { Post, PostDetail, postPostFromDataType } from '../models/post.model';
+import {
+  PostDetail,
+  postPostFromDataType,
+  PostWithUser,
+  putPostFormDataType,
+} from '../models/post.model';
 import { requestHandlerUser } from './usersApi/userHttp';
 
 interface PostsResponse {
-  posts: Post[];
+  posts: PostWithUser[];
   total: number;
   currentPage: number;
   totalPage: number;
@@ -26,5 +31,15 @@ export const getPost = async (postId: number): Promise<PostDetail> => {
 
 export const setPostData = async (formData: postPostFromDataType) => {
   const response = await requestHandlerUser('post', `/posts`, formData);
+  return response.status;
+};
+
+export const putPostData = async (formData: putPostFormDataType, postId: number) => {
+  const response = await requestHandlerUser('put', `/posts/${postId}`, formData);
+  return response.status;
+};
+
+export const deletePostData = async (id: number) => {
+  const response = await requestHandlerUser('delete', `/posts/${id}`);
   return response.status;
 };
