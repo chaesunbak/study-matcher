@@ -24,6 +24,6 @@
   }
 
   p {
-    @apply text-sm font-light md:text-base;
+    @apply text-sm font-normal md:text-base;
   }
 }

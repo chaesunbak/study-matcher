@@ -91,7 +91,7 @@ const PostDetail = () => {
     <section className="container mx-auto">
       <div className="mb-6 border-b border-gray-200 pb-4">
         <h2 className="mb-2">{post.title}</h2>
-        <div className="mb-4 flex items-center gap-2 font-thin text-gray-500">
+        <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
           <span>{post.user.username}</span>
           <span>{new Date(post.created_at).toLocaleDateString()}</span>
         </div>
@@ -107,7 +107,7 @@ const PostDetail = () => {
                 className="mb-4 flex items-start justify-between border-b border-gray-200 pb-4"
               >
                 <div>
-                  <div className="mb-2 flex items-center font-thin text-gray-500">
+                  <div className="mb-2 flex items-center font-thin text-gray-700 dark:text-gray-300">
                     <span className="mr-2">익명</span>
                     <span>{new Date(reply.created_at).toLocaleString()}</span>
                   </div>
