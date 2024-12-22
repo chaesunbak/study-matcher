@@ -12,24 +12,24 @@ export const groupCreateSchema = z.object({
   title: z.string().nonempty('모임 이름 입력해주세요.'),
   topic_id: z.string().nonempty('카테고리를 선택해주세요.'),
   description: z.string().nonempty('모임 설명을 입력해주세요.'),
-  max_members: z.string().nullable().optional(),
+  max_members: z.string().nonempty('정원을 입력해주세요.'),
   start_date: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD이어야 합니다.')
-    .optional(),
+    .regex(/^\d{8}$/, '날짜 형식은 YYYYMMDD이어야 합니다.')
+    .nonempty('시작일을 입력해주세요.'),
   end_date: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD이어야 합니다.')
-    .optional(),
+    .regex(/^\d{8}$/, '날짜 형식은 YYYYMMDD이어야 합니다.')
+    .nonempty('종료일을 입력해주세요.'),
 });
 
 export interface GroupCreateForm {
   title: string;
   topic_id: number;
   description: string;
-  start_date?: string;
-  end_date?: string;
-  max_members?: number;
+  start_date: string;
+  end_date: string;
+  max_members: number;
 }
 
 type GroupFormData = z.infer<typeof groupCreateSchema>;
@@ -57,17 +57,10 @@ const GroupCreate = () => {
       title: data.title,
       topic_id: parseInt(data.topic_id),
       description: data.description,
+      max_members: parseInt(data.max_members),
+      start_date: `${data.start_date.slice(0, 4)}-${data.start_date.slice(4, 6)}-${data.start_date.slice(6, 8)}`,
+      end_date: `${data.end_date.slice(0, 4)}-${data.end_date.slice(4, 6)}-${data.end_date.slice(6, 8)}`,
     };
-
-    if (data.max_members) {
-      params.max_members = parseInt(data.max_members);
-    }
-    if (data.start_date) {
-      params.start_date = data.start_date;
-    }
-    if (data.end_date) {
-      params.end_date = data.end_date;
-    }
 
     setLoading(true);
     createMeeting(params)
@@ -88,7 +81,7 @@ const GroupCreate = () => {
     <div className="mx-auto flex w-full flex-col gap-4 p-4 md:w-9/12 lg:w-7/12">
       <h2>모임 만들기</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <label htmlFor="title">모임 이름(필수)</label>
+        <label htmlFor="title">모임 이름</label>
         <Input
           name="title"
           type="text"
@@ -96,7 +89,7 @@ const GroupCreate = () => {
           control={control}
           errors={errors}
         />
-        <label htmlFor="topic_id">카테고리(필수)</label>
+        <label htmlFor="topic_id">카테고리</label>
         <Input
           name="topic_id"
           type="select"
@@ -108,7 +101,7 @@ const GroupCreate = () => {
             label: topic.name,
           }))}
         />
-        <label htmlFor="description">모임 설명(필수)</label>
+        <label htmlFor="description">모임 설명</label>
         <Input
           name="description"
           type="textarea"
@@ -116,27 +109,27 @@ const GroupCreate = () => {
           control={control}
           errors={errors}
         />
-        <label htmlFor="max_members">정원(선택)</label>
+        <label htmlFor="max_members">정원</label>
         <Input
           name="max_members"
           type="number"
-          placeholder="정원을 입력해주세요.(선택)"
+          placeholder="정원을 입력해주세요."
           control={control}
           errors={errors}
         />
-        <label htmlFor="start_date">시작일(선택)</label>
+        <label htmlFor="start_date">시작일</label>
         <Input
           name="start_date"
           type="text"
-          placeholder="YYYY-MM-DD 형식으로 시작일을 입력해주세요.(선택)"
+          placeholder="YYYYMMDD 형식으로 시작일을 입력해주세요."
           control={control}
           errors={errors}
         />
-        <label htmlFor="end_date">종료일(선택)</label>
+        <label htmlFor="end_date">종료일</label>
         <Input
           name="end_date"
           type="text"
-          placeholder="YYYY-MM-DD 형식으로 종료일을 입력해주세요.(선택)"
+          placeholder="YYYYMMDD 형식으로 종료일을 입력해주세요."
           control={control}
           errors={errors}
         />
