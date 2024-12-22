@@ -33,7 +33,7 @@ const UserHeaderForm = ({ mode = 'dropdown', className }: UserHeaderFormProps) =
   };
 
   const handleMenuClick = (menu: toggleMenu) => {
-    navigate(`/users/0/${menu.link}`);
+    navigate(`/profile/${menu.link}`);
 
     setIsOpen(false);
     setSelectedMenu(menu.name);
