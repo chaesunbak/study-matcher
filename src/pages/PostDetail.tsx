@@ -100,7 +100,7 @@ const PostDetail = () => {
               >
                 <div>
                   <div className="mb-2 flex items-center text-gray-600">
-                    <span className="mr-2">{`${reply.user_id}`}</span>
+                    <span className="mr-2">익명</span>
                     <span>{new Date(reply.created_at).toLocaleString()}</span>
                   </div>
                   <p className="leading-relaxed text-gray-500">{reply.content}</p>
