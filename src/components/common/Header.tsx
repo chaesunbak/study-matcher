@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <header className="container sticky top-0 z-40 mx-auto flex items-center justify-between bg-white p-4 dark:bg-black">
-      <Link to="/" className="flex items-center rounded-lg bg-primary p-2 text-white">
+      <Link to="/" className="flex items-center rounded-md bg-primary p-2 text-white">
         <h1>★Link Up</h1>
       </Link>
       <nav className="hidden md:flex">
