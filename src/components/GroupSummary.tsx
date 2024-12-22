@@ -19,7 +19,7 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
       </div>
       <div className="flex h-full flex-col items-start justify-between">
         <h3 className="hover:underline">{meeting.title}</h3>
-        <p className="text-ellipsis">{meeting.description}</p>
+        <p className="w-48 truncate md:w-72 lg:w-80 xl:w-96">{meeting.description}</p>
         <div className="flex flex-wrap items-center gap-1 text-xs font-thin text-gray-500 md:gap-2 md:text-sm">
           <span className="flex items-center gap-1">
             <LuCalendar />
