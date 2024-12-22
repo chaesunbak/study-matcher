@@ -86,7 +86,7 @@ const PostWrite = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-bold">{group_id} Write Post</h1>
+      <h2 className="mb-4 text-2xl font-bold">글 작성하기</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <label htmlFor="title" className="font-medium">
           제목
