@@ -67,7 +67,15 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
               alt={`${member.user.username}의 프로필 이미지`}
             /> */}
             <div className="flex flex-col">
-              <span>{member.user.username}</span>
+              <div className="flex items-center gap-2">
+                <span>{member.user.username}</span>
+                {member.user_id === group.owner_user_id && (
+                  <span className="rounded bg-primary px-1 text-sm font-medium text-white">
+                    방장
+                  </span>
+                )}
+              </div>
+
               <span>{member.user.introduction}</span>
             </div>
             {((isAdmin && !preview) || user_info.sub === member.user_id) && (
