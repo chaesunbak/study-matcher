@@ -1,6 +1,7 @@
 import { Meeting } from '../models/meeting.model';
 import { Link } from 'react-router';
 import { LuCalendar, LuUser } from 'react-icons/lu';
+import DefaultProfile from './common/DefaultProfile';
 
 interface MeetingSummaryProps {
   meeting: Meeting;
@@ -13,7 +14,11 @@ const GroupSummary = ({ meeting }: MeetingSummaryProps) => {
       className="flex items-center gap-2 transition-all hover:opacity-90 md:gap-4"
     >
       <div>
-        <div className="size-20 rounded-xl bg-gray-200 transition-all md:size-24 md:rounded-2xl" />
+        <DefaultProfile
+          id={meeting.id}
+          className="size-20 rounded-xl transition-all md:size-24 md:rounded-2xl"
+          topic={meeting.topic.name}
+        />
         {/* TDOO: 현재는 스켈레톤을 띄우고 있으나 나중에 실제 이미지로 변경 */}
         {/* <img src={meeting.imgUrl} alt={meeting.title} /> */}
       </div>

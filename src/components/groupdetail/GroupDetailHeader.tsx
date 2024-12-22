@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router';
 import { LuSettings } from 'react-icons/lu';
 import { useUserStore } from '../../store/userStore';
 import { useState } from 'react';
+import DefaultProfile from '../common/DefaultProfile';
 
 const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const GroupDetailHeader = ({ group }: { group: MeetingDetail }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
-        <div className="size-12 rounded-md bg-gray-200 transition-all" />
+        <DefaultProfile id={group.id} className="size-12 rounded-md" />
         {/* TODO : 그룹의 이미지를 보여줍니다. */}
         {/* TODO : 이미지가 없는 경우 기본 이미지를 보여줍니다. */}
         {/* <img className='size-12 rounded-md'/> */}
