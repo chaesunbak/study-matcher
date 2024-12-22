@@ -68,7 +68,7 @@ const SignUpForm = () => {
     try {
       const response = await requestHandlerUser('post', '/users/signup', formData);
       if (response.status === 201) {
-        alert('회원가입 성공!');
+        alert('회원가입에 성공했습니다.');
         navigate('/login');
       }
     } catch (e) {
