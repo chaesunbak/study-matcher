@@ -1,3 +1,5 @@
+import { Reply } from './reply.model';
+
 export interface Post {
   id: number;
   meeting_id: number;
@@ -22,7 +24,7 @@ export interface PostDetail extends Post {
     profile_img: string;
     username: string;
   };
-  replies: any[]; // TODO : any 타입을 Reply 타입으로 변경합니다.
+  replies: Reply[]; // TODO : any 타입을 Reply 타입으로 변경합니다.
 }
 
 export interface postReplyFormDataType {

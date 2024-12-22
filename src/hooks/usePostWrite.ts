@@ -1,4 +1,3 @@
-import { useState, useCallback } from 'react';
 import { setPostData } from '../api/posts.api';
 import { postPostFromDataType } from '../models/post.model';
 import { useQuery } from '@tanstack/react-query';
