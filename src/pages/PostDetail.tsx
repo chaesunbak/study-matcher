@@ -38,7 +38,14 @@ const PostDetail = () => {
   const { statusPut } = useRepliesPut(replyDataPut, replyId);
   const { statusDelete } = useRepliesDelete(replyIdDelete);
 
+  const accessToken = sessionStorage.getItem('access_token');
+
   const onSubmit = (data: { reply: string }) => {
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
     if (replyId) {
       setReplyDataPut(data.reply);
       setValue('reply', '');
@@ -81,18 +88,18 @@ const PostDetail = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="mb-6 rounded">
-        <h2 className="mb-2 font-bold">{post.title}</h2>
-        <div className="mb-4 flex items-center gap-2 font-thin text-gray-500">
+    <section className="container mx-auto">
+      <div className="mb-6 border-b border-gray-200 pb-4">
+        <h2 className="mb-2">{post.title}</h2>
+        <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
           <span>{post.user.username}</span>
           <span>{new Date(post.created_at).toLocaleDateString()}</span>
         </div>
-        <p className="text-lg leading-relaxed">{post.content}</p>
-        <div></div>
+        <p className="leading-relaxed">{post.content}</p>
       </div>
       <div className="mb-6 rounded">
         <div>
+          <h3>댓글 목록</h3>
           {post.replies.map((reply) =>
             reply.is_show ? (
               <div
@@ -100,11 +107,11 @@ const PostDetail = () => {
                 className="mb-4 flex items-start justify-between border-b border-gray-200 pb-4"
               >
                 <div>
-                  <div className="mb-2 flex items-center text-gray-600">
+                  <div className="mb-2 flex items-center font-thin text-gray-700 dark:text-gray-300">
                     <span className="mr-2">익명</span>
                     <span>{new Date(reply.created_at).toLocaleString()}</span>
                   </div>
-                  <p className="leading-relaxed text-gray-500">{reply.content}</p>
+                  <p className="leading-relaxed">{reply.content}</p>
                 </div>
                 {user.sub === reply.user_id && (
                   <div className="flex gap-2">
@@ -142,7 +149,7 @@ const PostDetail = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

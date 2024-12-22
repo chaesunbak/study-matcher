@@ -42,7 +42,7 @@ const LoginForm = () => {
         loginUser(user_info);
         sessionStorage.setItem('access_token', access_token);
 
-        alert('로그인 성공!');
+        alert('로그인에 성공했습니다.');
         navigate('/');
       } else if (responseCode === 401) {
         alert('비밀번호가 일치하지 않습니다.');

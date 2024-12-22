@@ -51,14 +51,14 @@ const GroupPostSection = ({ preview = false }: GroupPostSectionProps) => {
         {postsToShow.map((post) => (
           <div
             key={post.id}
-            className="flex items-start justify-between border-b border-gray-200 pb-4"
+            className="flex items-start justify-between border-b border-gray-500 pb-4"
           >
             <Link to={`/groups/${group_id}/posts/${post.id}`}>
               <div className="flex gap-4">
                 <div>
-                  <h4>{post.title}</h4>
+                  <h4 className="hover:underline">{post.title}</h4>
                   <p>{post.content}</p>
-                  <div className="flex gap-2 text-sm font-light text-gray-500">
+                  <div className="flex gap-2 text-sm font-normal text-gray-500">
                     <span>{post.user.username}</span>
                     <span>{formatDate(new Date(post.created_at))}</span>
                   </div>

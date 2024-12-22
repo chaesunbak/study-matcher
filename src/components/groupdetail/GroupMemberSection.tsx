@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { MeetingDetail } from '../../models/meeting.model';
 import { useUserStore } from '../../store/userStore';
 import { deleteMeetingUser } from '../../api/meetings.api';
+import DefaultProfile from '../common/DefaultProfile';
 
 interface GroupMemberSectionProps {
   group: MeetingDetail;
@@ -60,14 +61,22 @@ const GroupMemberSection = ({ group, preview = false }: GroupMemberSectionProps)
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
         {membersToShow.map((member) => (
           <div key={member.id} className="flex items-center gap-2">
-            <div className="size-12 rounded-full bg-gray-200 transition-all" />
+            <DefaultProfile id={member.user_id} className="size-12 rounded-full transition-all" />
             {/* <img
               className="size-12 rounded-full"
               src={member.user.profile_img}
               alt={`${member.user.username}의 프로필 이미지`}
             /> */}
             <div className="flex flex-col">
-              <span>{member.user.username}</span>
+              <div className="flex items-center gap-2">
+                <span>{member.user.username}</span>
+                {member.user_id === group.owner_user_id && (
+                  <span className="rounded bg-primary px-1 text-sm font-medium text-white">
+                    방장
+                  </span>
+                )}
+              </div>
+
               <span>{member.user.introduction}</span>
             </div>
             {((isAdmin && !preview) || user_info.sub === member.user_id) && (
