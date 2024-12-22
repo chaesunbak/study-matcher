@@ -12,7 +12,7 @@ export const groupCreateSchema = z.object({
   title: z.string().nonempty('모임 이름 입력해주세요.'),
   topic_id: z.string().nonempty('카테고리를 선택해주세요.'),
   description: z.string().nonempty('모임 설명을 입력해주세요.'),
-  max_members: z.string().optional(),
+  max_members: z.string().nullable().optional(),
   start_date: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD이어야 합니다.')
