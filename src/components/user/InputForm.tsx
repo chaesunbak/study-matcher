@@ -39,7 +39,7 @@ const Input = ({
   const hasError = Boolean(errors?.[name]);
   // const [previewUrl, setPreviewUrl] = useState<string | null>('');
 
-  const baseClass = `w-full rounded-lg border px-4 py-2 text-sm 
+  const baseClass = `w-full rounded-lg border px-4 py-2 text-sm text-black
                      placeholder-gray-400 focus:outline-none focus:ring-2 
                      ${
                        hasError
