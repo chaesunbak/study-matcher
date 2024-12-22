@@ -25,15 +25,18 @@ export interface PostDetail extends Post {
   replies: any[]; // TODO : any 타입을 Reply 타입으로 변경합니다.
 }
 
-export interface postPostFromDataType {
-  meeting_id: number;
+export interface postReplyFormDataType {
+  post_id: number;
+  content: string;
+  parent_reply_id: number | null;
+}
+
+export interface putPostFormDataType {
   title: string;
   img: string;
   content: string;
 }
 
-export interface postReplyFormDataType {
-  post_id: number;
-  content: string;
-  parent_reply_id: number | null;
+export interface postPostFromDataType extends putPostFormDataType {
+  meeting_id: number;
 }
