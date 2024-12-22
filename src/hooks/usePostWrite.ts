@@ -1,28 +1,20 @@
 import { useState, useCallback } from 'react';
 import { setPostData } from '../api/posts.api';
 import { postPostFromDataType } from '../models/post.model';
+import { useQuery } from '@tanstack/react-query';
 
-const usePostWrite = () => {
-  const [status, setStatus] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+const usePostWrite = (formData: postPostFromDataType) => {
+  const {
+    data: status,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['postWrite', formData],
+    queryFn: async () => await setPostData(formData),
+    enabled: !!formData,
+  });
 
-  const fetchPost = useCallback(async (formData: postPostFromDataType) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await setPostData(formData);
-      setStatus(data.status);
-    } catch (error) {
-      console.error(error);
-      setError('Failed to fetch post');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  return { status, fetchPost, loading, error };
+  return { status, isLoading, error };
 };
 
 export default usePostWrite;

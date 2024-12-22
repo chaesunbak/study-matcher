@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useReplies = (postReply: postReplyFormDataType | null) => {
   const {
-    data: status,
+    data: statusPost,
     isLoading: loading,
     error: replyError,
   } = useQuery({
@@ -14,7 +14,7 @@ const useReplies = (postReply: postReplyFormDataType | null) => {
     structuralSharing: true,
   });
 
-  return { status, loading, replyError };
+  return { statusPost, loading, replyError };
 };
 
 export default useReplies;

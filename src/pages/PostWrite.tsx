@@ -4,12 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams } from 'react-router';
 import Button from '../components/common/Button';
 import Input from '../components/user/InputForm';
-import usePostWrite from '../hooks/usePostWrite';
 import { postPostFromDataType } from '../models/post.model';
+import { setPostData } from '../api/posts.api';
 
 const postSchema = z.object({
   meeting_id: z.string(),
   title: z.string().nonempty('제목을 입력해주세요.'),
+  img: z.any(),
   content: z.string().nonempty('내용을 입력해주세요.'),
 });
 
@@ -28,27 +29,27 @@ const PostWrite = () => {
     },
   });
 
-  const { status, fetchPost } = usePostWrite();
-
   const onSubmit = (data: PostFormData) => {
     const formData: postPostFromDataType = {
       meeting_id: parseInt(data.meeting_id),
       title: data.title,
+      img: '/images/default',
       content: data.content,
     };
 
-    fetchPost(formData);
-    switch (status) {
-      case 201:
-        alert('�� 작성 성공!');
-        break;
-      case 400:
-        alert('�� 작성 실��!');
-        break;
-      default:
-        alert('서버 에러');
-        break;
-    }
+    setPostData(formData).then((data) => {
+      switch (data) {
+        case 201:
+          alert('작성되었습니다.!');
+          break;
+        case 400:
+          alert('게시글 작성을 실패했습니다.!');
+          break;
+        default:
+          alert('서버 에러');
+          break;
+      }
+    });
   };
 
   return (
