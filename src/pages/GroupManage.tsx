@@ -53,17 +53,10 @@ const GroupManage = () => {
       title: data.title,
       topic_id: parseInt(data.topic_id),
       description: data.description,
+      max_members: parseInt(data.max_members),
+      start_date: `${data.start_date.slice(0, 4)}-${data.start_date.slice(4, 6)}-${data.start_date.slice(6, 8)}`,
+      end_date: `${data.end_date.slice(0, 4)}-${data.end_date.slice(4, 6)}-${data.end_date.slice(6, 8)}`,
     };
-
-    if (data.max_members) {
-      params.max_members = parseInt(data.max_members);
-    }
-    if (data.start_date) {
-      params.start_date = data.start_date;
-    }
-    if (data.end_date) {
-      params.end_date = data.end_date;
-    }
 
     setLoading(true);
     await updateMeeting(Number(group_id), params)
